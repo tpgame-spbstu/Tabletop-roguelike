@@ -1,17 +1,17 @@
 # Tabletop Roguelike
-Spring 2022 SPbSTUproject
+Учебный проект по предмету "Технология программирования", СПбПУ
 
-## Team
-* [Gabdushev Rushan](https://github.com/maloxit) - TechLead
-* [Fisyuk Aleksey](https://github.com/ayu-f) - TeamLead
-* [Mordovin Nikolay](https://github.com/MordovinNik)
-* [Ahmetshin Raul](https://github.com/Enoras)
-* [Strukov Aleksander](https://github.com/lyphrowny)
+## Комнада
+* [Габдушев Рушна](https://github.com/maloxit) - TechLead
+* [Фисюк Алексей](https://github.com/ayu-f) - TeamLead
+* [Мордовин Николай](https://github.com/MordovinNik) - Developer
+* [Ахметшин Рауль](https://github.com/Enoras) - Developer
+* [Струков Александр](https://github.com/lyphrowny) - Developer
 
-## Technology stack
-Game engine Gadot
+## Используемые технологии 
+Игровой движок Godot
 
-## Requirements
-### Commit rules
+## Ссылки
+### [Commit rules](docs/commit_rules.md)
 ### [Code style](https://docs.godotengine.org/en/stable/tutorials/scripting/gdscript/gdscript_styleguide.html)
-### Git-workflow
+### [Git-workflow](docs/git_workfkow.md)
