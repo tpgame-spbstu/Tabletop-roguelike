@@ -2,8 +2,8 @@
 Spring 2022 SPbSTUproject
 
 ## Team
-* [Gabdushev Rushan](https://github.com/maloxit)
-* [Fisyuk Aleksey](https://github.com/ayu-f)
+* [Gabdushev Rushan](https://github.com/maloxit) - TechLead
+* [Fisyuk Aleksey](https://github.com/ayu-f) - TeamLead
 * [Mordovin Nikolay](https://github.com/MordovinNik)
 * [Ahmetshin Raul](https://github.com/Enoras)
 * [Strukov Aleksander](https://github.com/lyphrowny)
