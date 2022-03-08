@@ -2,7 +2,7 @@
 Учебный проект по предмету "Технология программирования", СПбПУ
 
 ## Комнада
-* [Габдушев Рушна](https://github.com/maloxit) - TechLead
+* [Габдушев Рушан](https://github.com/maloxit) - TechLead
 * [Фисюк Алексей](https://github.com/ayu-f) - TeamLead
 * [Мордовин Николай](https://github.com/MordovinNik) - Developer
 * [Ахметшин Рауль](https://github.com/Enoras) - Developer
