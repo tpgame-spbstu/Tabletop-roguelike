@@ -11,7 +11,7 @@
 * Сливаются в develop
 
 ## Процесс выполнения задачи
-1. Создать новую локальную ветку(feature_<номер задачи>) из develop
+1. Создать новую локальную ветку(feature_<номер задачи>_<some_mechanic>) из develop
 2. Выполнить всю функциональность
 3. Закоммитить по утвержденным правилам на Github
 4. Создать Pull Request из своей ветки feature в develop
@@ -21,5 +21,5 @@
 
 ## Пример
 ```
-git checkout -b feature_10
+git checkout -b feature_10_basic_move
 ```
