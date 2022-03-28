@@ -1,7 +1,6 @@
 extends Reference
 
-class_name GameConfig
+var map_config
+var deck_config
+var inventory_config
 
-var map_config : MapConfig
-var deck_config : DeckConfig
-var inventory_config : InventoryConfig
