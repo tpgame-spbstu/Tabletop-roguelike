@@ -9,43 +9,13 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "Reference",
-"class": "DeckConfig",
-"language": "GDScript",
-"path": "res://deck_config.gd"
-}, {
-"base": "Reference",
-"class": "GameConfig",
-"language": "GDScript",
-"path": "res://game_config.gd"
-}, {
 "base": "Object",
 "class": "GameLoadManager",
 "language": "GDScript",
 "path": "res://game_load_manager.gd"
-}, {
-"base": "Reference",
-"class": "InventoryConfig",
-"language": "GDScript",
-"path": "res://inventory_config.gd"
-}, {
-"base": "Reference",
-"class": "MapConfig",
-"language": "GDScript",
-"path": "res://map_config.gd"
-}, {
-"base": "Reference",
-"class": "MapLocation",
-"language": "GDScript",
-"path": "res://map_location.gd"
 } ]
 _global_script_class_icons={
-"DeckConfig": "",
-"GameConfig": "",
-"GameLoadManager": "",
-"InventoryConfig": "",
-"MapConfig": "",
-"MapLocation": ""
+"GameLoadManager": ""
 }
 
 [application]
