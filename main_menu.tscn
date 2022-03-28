@@ -9,3 +9,31 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="NewGame" type="Button" parent="."]
+margin_left = 424.0
+margin_top = 161.0
+margin_right = 570.0
+margin_bottom = 201.0
+text = "New game"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Exit" type="Button" parent="."]
+margin_left = 423.0
+margin_top = 291.0
+margin_right = 569.0
+margin_bottom = 331.0
+text = "Exit"
+
+[node name="Continue" type="Button" parent="."]
+margin_left = 425.0
+margin_top = 224.0
+margin_right = 571.0
+margin_bottom = 264.0
+text = "Continue"
+
+[connection signal="pressed" from="NewGame" to="." method="_on_new_game_pressed"]
+[connection signal="pressed" from="Exit" to="." method="_on_exit_pressed"]
+[connection signal="pressed" from="Continue" to="." method="_on_continue_pressed"]
