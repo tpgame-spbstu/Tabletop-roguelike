@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Fight/cell.gd" type="Script" id=1]
+
+[sub_resource type="QuadMesh" id=1]
+
+[sub_resource type="BoxShape" id=2]
+extents = Vector3( 0.454644, 0.0142178, 0.453687 )
+
+[node name="cell" type="Spatial"]
+script = ExtResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+transform = Transform( 0.9, 0, 0, 0, -4.37114e-08, 1, 0, -0.9, -3.93403e-08, 0, 0, 0 )
+mesh = SubResource( 1 )
+material/0 = null
+
+[node name="Area" type="Area" parent="."]
+
+[node name="CollisionShape" type="CollisionShape" parent="Area"]
+shape = SubResource( 2 )
+
+[connection signal="input_event" from="Area" to="." method="_on_Area_input_event"]

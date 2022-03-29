@@ -14,9 +14,9 @@ onready var character = $character
 const SPACE = 15.0
 
 func init_temp_map_config():
-	var loc4 = MapLocation.new("res://location.tscn", {}, [], -1, 3)
-	var loc3 = MapLocation.new("res://location.tscn", {}, [loc4], 1, 2)
-	var loc2 = MapLocation.new("res://location.tscn", {}, [loc3], 1, 1)
+	var loc4 = MapLocation.new("res://Fight/fight_location.tscn", {}, [], -1, 3)
+	var loc3 = MapLocation.new("res://Fight/fight_location.tscn", {}, [loc4], 1, 2)
+	var loc2 = MapLocation.new("res://Fight/fight_location.tscn", {}, [loc3], 1, 1)
 	var loc1 = MapLocation.new("", {}, [loc2], 0, 0)
 	temp_map_config = MapConfig.new()
 	temp_map_config.map_location_grapth = loc1
@@ -95,14 +95,11 @@ func _on_map_point_click(map_point):
 		current_map_point = map_point
 		
 		var cur_scene = load(map_config.current_map_location.scene).instance()
-		get_tree().get_root().add_child(cur_scene)
-		cur_scene.initialize(self, null, null, {})
-		# get_tree().change_scene_to(cur_scene)
-		self.set_visible(false)
+		get_parent().add_child(cur_scene)
+		cur_scene.initialize(null, null, {})
+		$character/Camera.clear_current()
+		self.hide()
+		yield(cur_scene, "return_to_map")
+		cur_scene.queue_free()
+		self.show()
 		print("next")
-		# yield(cur_scene, "return_to_map")
-		
-
-func _on_location_return_to_map():
-	self.set_visible(true)
-	

@@ -1,10 +1,12 @@
 extends Spatial
 
+
+var deck_config
+var inventory_config
+var params
 signal return_to_map()
 
-func initialize(map, deck_config, inventory_config, params : Dictionary):
-	connect("return_to_map", map, "_on_location_return_to_map")
-	
-func _on_Button_pressed():
-	emit_signal("return_to_map")
-	queue_free()
+func initialize(deck_config, inventory_config, params : Dictionary):
+	self.deck_config = deck_config
+	self.inventory_config = inventory_config
+	self.params = params
