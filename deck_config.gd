@@ -1,2 +1,4 @@
 extends Reference
 
+var cards := []
+
