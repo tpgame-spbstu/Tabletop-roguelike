@@ -30,6 +30,7 @@ Hearthstone - коллекционная карточная игра, поэто
 ### [Commit rules](docs/commit_rules.md)
 ### [Code style](https://docs.godotengine.org/en/stable/tutorials/scripting/gdscript/gdscript_styleguide.html)
 ### [Git-workflow](docs/git_workfkow.md)
+### [Необходимое ПО для разработки](docs/development_software_requirements.md)
 ### [Общее описание правил игры](docs/general_game_rules.md)
 ### [Общие правила сражений](docs/general_fight_rules.md)
 ### [Отдельные идеи по геймплею](docs/gameplay_ideas.md)
