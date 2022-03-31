@@ -5,8 +5,6 @@ signal cell_click(cell, card)
 
 func initialize(fight_location):
 	connect("cell_click", fight_location, "_on_board_click")
-
-func _ready():
 	var rows = get_children()
 	for row_index in range(rows.size()):
 		var cells = rows[row_index].get_children()

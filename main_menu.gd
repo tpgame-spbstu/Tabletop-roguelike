@@ -9,8 +9,8 @@ func _on_exit_pressed():
 func _on_new_game_pressed():
 	var gameConfig = GameLoadManager.generate_new_game()
 	var mapScene = preload("res://map.tscn").instance()
-	mapScene.initialize(gameConfig)
 	self.get_parent().add_child(mapScene)
+	mapScene.initialize(gameConfig)
 	self.hide()
 	yield(mapScene,"return_to_main_menu")
 	print("ok")
@@ -20,8 +20,8 @@ func _on_new_game_pressed():
 func _on_continue_pressed():
 	var gameConfig = GameLoadManager.load_game()
 	var mapScene = preload("res://map.tscn").instance()
-	mapScene.initialize(gameConfig)
 	self.get_parent().add_child(mapScene)
+	mapScene.initialize(gameConfig)
 	self.hide()
 	yield(mapScene,"return_to_main_menu")
 	print("ok")

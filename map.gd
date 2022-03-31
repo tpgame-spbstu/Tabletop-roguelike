@@ -2,65 +2,29 @@ extends Spatial
 
 signal return_to_main_menu()
 
-var MapLocation = load("res://map_location.gd")
-var MapConfig = load("res://map_config.gd")
 var GameConfig = load("res://game_config.gd")
 var game_config
 var map_config
-var temp_map_config
 var current_map_point
 onready var character = $character
 
 const SPACE = 15.0
 
-func init_temp_map_config():
-	var loc4 = MapLocation.new("res://Fight/fight_location.tscn", {}, [], -1, 3)
-	var loc3 = MapLocation.new("res://Fight/fight_location.tscn", {}, [loc4], 1, 2)
-	var loc2 = MapLocation.new("res://Fight/fight_location.tscn", {}, [loc3], 1, 1)
-	var loc1 = MapLocation.new("", {}, [loc2], 0, 0)
-	temp_map_config = MapConfig.new()
-	temp_map_config.map_location_grapth = loc1
-	temp_map_config.current_map_location = loc1
 
 
 func initialize(game_config):
-	if game_config == null:
-		game_config = GameConfig.new()
-	if game_config.map_config == null:
-		init_temp_map_config()
-		game_config.map_config = temp_map_config
+	$character/Camera.make_current()
+	assert(game_config != null)
+	assert(game_config.map_config != null)
+	assert(game_config.deck_config != null)
 	self.game_config = game_config
-	
-
-func _ready():
-	initialize(null)
 	map_config = game_config.map_config
 	generate_points()
 	character.transform = current_map_point.transform
+	
 
-class LinMoveAnimation:
-
-	var start_transform : Transform
-	var end_transform : Transform
-	var speed : float
-	var spatial : Spatial
-	var progress : float = 0.0
-
-
-	func _init(start_transform : Transform, end_transform : Transform, speed : float, spatial : Spatial):
-		self.start_transform = start_transform
-		self.end_transform = end_transform
-		self.speed = speed
-		self.spatial = spatial
-
-	func process(delta : float) -> bool:
-		progress += delta * speed
-		if progress >= 1.0:
-			progress = 1.0
-		spatial.global_transform = start_transform.interpolate_with(end_transform, progress)
-		if progress == 1.0:
-			return true
-		return false
+func _ready():
+	pass
 
 
 func generate_points():
@@ -94,12 +58,12 @@ func _on_map_point_click(map_point):
 		map_config.current_map_location = map_point.map_location
 		current_map_point = map_point
 		
-		var cur_scene = load(map_config.current_map_location.scene).instance()
-		get_parent().add_child(cur_scene)
-		cur_scene.initialize(null, null, {})
-		$character/Camera.clear_current()
+		var cur_location_scene = load(map_config.current_map_location.scene).instance()
+		get_parent().add_child(cur_location_scene)
+		cur_location_scene.initialize(game_config.deck_config, game_config.inventory_config, map_config.current_map_location.params)
 		self.hide()
-		yield(cur_scene, "return_to_map")
-		cur_scene.queue_free()
+		yield(cur_location_scene, "return_to_map")
+		cur_location_scene.queue_free()
 		self.show()
+		$character/Camera.make_current()
 		print("next")
