@@ -13,9 +13,15 @@ _global_script_classes=[ {
 "class": "GameLoadManager",
 "language": "GDScript",
 "path": "res://game_load_manager.gd"
+}, {
+"base": "Reference",
+"class": "LinMoveAnimation",
+"language": "GDScript",
+"path": "res://lin_move_animation.gd"
 } ]
 _global_script_class_icons={
-"GameLoadManager": ""
+"GameLoadManager": "",
+"LinMoveAnimation": ""
 }
 
 [application]

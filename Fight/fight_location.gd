@@ -1,10 +1,6 @@
 extends "res://location.gd"
 
-var CardConfig := preload("res://Card/card_config.gd")
-var DeckConfig := preload("res://deck_config.gd")
 onready var selector : Spatial = get_node("selector")
-
-
 
 const color_move := Color(1, 0, 0, 0.5)
 const color_add := Color(0, 1, 0, 0.5)
@@ -30,7 +26,7 @@ class MoveTool:
 				return
 			var prev_cell = selected_card.get_parent()
 			selected_card.animation = LinMoveAnimation.new(prev_cell.global_transform, 
-				cell.global_transform, 2, selected_card)
+				cell.global_transform, 0.1, selected_card)
 			print("anim_start")
 			fight_location.is_anim = true
 			yield(selected_card, "animation_ended")
@@ -66,22 +62,16 @@ class RemoveTool:
 			cell.remove_child(card)
 			card.queue_free()
 
-
 class ChangeTool:
 	extends Reference
 	func _on_board_click(cell, card):
 		pass
 
-
-
 var card_tool = null
 
 func initialize(deck_config , inventory_config , params : Dictionary):
 	.initialize(deck_config , inventory_config , params)
-	self.deck_config = DeckConfig.new()
-	self.deck_config.cards.append(CardConfig.new(
-		"Карта 1", "цена", [], 3, 2, 1, "range", 1
-		))
+	$Camera.make_current()
 	$board.initialize(self)
 
 func _ready():
@@ -94,32 +84,6 @@ func _on_board_click(cell, card):
 	selector.global_translate(cell.to_global(Vector3.ZERO) - selector.to_global(Vector3.ZERO))
 	if card_tool != null:
 		card_tool._on_board_click(cell, card)
-
-
-
-class LinMoveAnimation:
-	
-	var start_transform : Transform
-	var end_transform : Transform
-	var speed : float
-	var spatial : Spatial
-	var progress : float = 0.0
-	
-	
-	func _init(start_transform : Transform, end_transform : Transform, speed : float, spatial : Spatial):
-		self.start_transform = start_transform
-		self.end_transform = end_transform
-		self.speed = speed
-		self.spatial = spatial
-	
-	func process(delta : float) -> bool:
-		progress += delta * speed
-		if progress >= 1.0:
-			progress = 1.0
-		spatial.global_transform = start_transform.interpolate_with(end_transform, progress)
-		if progress == 1.0:
-			return true
-		return false
 
 
 func _on_button_move_pressed():
