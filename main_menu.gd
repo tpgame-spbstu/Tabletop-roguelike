@@ -7,6 +7,7 @@ func _on_exit_pressed():
 
 
 func _on_new_game_pressed():
+	var GameLoadManager = preload("res://game_load_manager.gd")
 	var gameConfig = GameLoadManager.generate_new_game()
 	var mapScene = preload("res://map.tscn").instance()
 	self.get_parent().add_child(mapScene)
@@ -18,6 +19,7 @@ func _on_new_game_pressed():
 	self.show()
 
 func _on_continue_pressed():
+	var GameLoadManager = preload("res://game_load_manager.gd")
 	var gameConfig = GameLoadManager.load_game()
 	var mapScene = preload("res://map.tscn").instance()
 	self.get_parent().add_child(mapScene)

@@ -28,7 +28,6 @@ _global_script_class_icons={
 
 config/name="Tabletop-roguelike"
 run/main_scene="res://main_menu.tscn"
-config/icon="res://icon.png"
 
 [physics]
 
