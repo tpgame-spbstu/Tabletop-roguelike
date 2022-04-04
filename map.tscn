@@ -20,6 +20,10 @@ albedo_color = Color( 0.105882, 0.454902, 0, 1 )
 [node name="map" type="Spatial"]
 transform = Transform( 5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0 )
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true
+}
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource( 2 )
@@ -46,3 +50,5 @@ material/0 = null
 transform = Transform( -1, 4.37114e-08, -7.57103e-08, 0, 0.866025, 0.5, 8.74228e-08, 0.5, -0.866025, 1.90735e-06, 18.6789, -15.8874 )
 fov = 79.5
 far = 406.3
+
+[node name="Paths" type="Spatial" parent="."]
