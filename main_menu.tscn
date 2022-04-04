@@ -5,35 +5,183 @@
 [node name="main_menu" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="NewGame" type="Button" parent="."]
-margin_left = 424.0
-margin_top = 161.0
-margin_right = 570.0
-margin_bottom = 201.0
+[node name="main" type="Control" parent="."]
+visible = false
+anchor_right = 1.003
+anchor_bottom = 1.005
+margin_right = -0.0720215
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NewGame" type="Button" parent="main"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -88.5
+margin_top = -136.5
+margin_right = 83.5
+margin_bottom = -81.5
 text = "New game"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Exit" type="Button" parent="."]
-margin_left = 423.0
-margin_top = 291.0
-margin_right = 569.0
-margin_bottom = 331.0
+[node name="Continue" type="Button" parent="main"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -87.5
+margin_top = -61.5
+margin_right = 83.5
+margin_bottom = -2.5
+text = "Continue"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Exit" type="Button" parent="main"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -87.5
+margin_top = 88.5
+margin_right = 86.5
+margin_bottom = 145.5
 text = "Exit"
 
-[node name="Continue" type="Button" parent="."]
-margin_left = 425.0
-margin_top = 224.0
-margin_right = 571.0
-margin_bottom = 264.0
-text = "Continue"
+[node name="Option" type="Button" parent="main"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -86.5
+margin_top = 13.5
+margin_right = 85.5
+margin_bottom = 70.5
+text = "Option"
 
-[connection signal="pressed" from="NewGame" to="." method="_on_new_game_pressed"]
-[connection signal="pressed" from="Exit" to="." method="_on_exit_pressed"]
-[connection signal="pressed" from="Continue" to="." method="_on_continue_pressed"]
+[node name="OptionMenu" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.003
+margin_top = 1.0
+margin_right = -2.0
+margin_bottom = 0.200012
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Back" type="Button" parent="OptionMenu"]
+anchor_left = 0.503
+anchor_top = 0.5
+anchor_right = 0.503
+anchor_bottom = 0.5
+margin_left = -74.066
+margin_top = 48.5
+margin_right = 73.934
+margin_bottom = 92.5
+text = "Back"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="EffectsScroll" type="HScrollBar" parent="OptionMenu"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -65.0
+margin_top = -90.5
+margin_right = 206.0
+margin_bottom = -48.5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextLabel" type="RichTextLabel" parent="OptionMenu"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -171.0
+margin_top = -76.5
+margin_right = -73.0
+margin_bottom = -33.5
+text = "Effects volume"
+scroll_active = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="FullScreen" type="Button" parent="OptionMenu"]
+anchor_left = 0.5
+anchor_top = 0.494
+anchor_right = 0.5
+anchor_bottom = 0.494
+margin_left = -107.0
+margin_top = -19.894
+margin_right = -5.0
+margin_bottom = 26.106
+text = "Full Screen"
+
+[node name="WindScreen" type="Button" parent="OptionMenu"]
+anchor_left = 0.5
+anchor_top = 0.494
+anchor_right = 0.5
+anchor_bottom = 0.494
+margin_left = 15.0
+margin_top = -19.894
+margin_right = 117.0
+margin_bottom = 26.106
+text = "Window"
+
+[node name="MusicScroll" type="HScrollBar" parent="OptionMenu"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -63.0
+margin_top = -156.5
+margin_right = 208.0
+margin_bottom = -114.5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextLabel2" type="RichTextLabel" parent="OptionMenu"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -170.0
+margin_top = -142.5
+margin_right = -71.0
+margin_bottom = -99.5
+text = "Music volume"
+scroll_active = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+volume_db = -12.984
+
+[connection signal="pressed" from="main/NewGame" to="." method="_on_new_game_pressed"]
+[connection signal="pressed" from="main/Continue" to="." method="_on_continue_pressed"]
+[connection signal="pressed" from="main/Exit" to="." method="_on_exit_pressed"]
+[connection signal="pressed" from="main/Option" to="." method="_on_option_pressed"]
+[connection signal="pressed" from="OptionMenu/Back" to="." method="_on_back_pressed"]
+[connection signal="scrolling" from="OptionMenu/EffectsScroll" to="." method="_on_effects_scrolling"]
+[connection signal="pressed" from="OptionMenu/FullScreen" to="." method="_on_fullscreen_pressed"]
+[connection signal="pressed" from="OptionMenu/WindScreen" to="." method="_on_windscreen_pressed"]
+[connection signal="scrolling" from="OptionMenu/MusicScroll" to="." method="_on_music_scrolling"]
