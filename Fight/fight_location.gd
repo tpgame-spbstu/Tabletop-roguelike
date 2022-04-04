@@ -1,4 +1,4 @@
-extends "res://location.gd"
+extends "res://Map/Location/location.gd"
 
 onready var selector : Spatial = get_node("selector")
 

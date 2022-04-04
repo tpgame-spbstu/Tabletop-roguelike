@@ -4,8 +4,8 @@ class_name GameLoadManager
 
 
 static func get_temp_map_config():
-	var MapConfig = preload("res://map_config.gd")
-	var MapLocation = preload("res://map_location.gd")
+	var MapConfig = preload("res://Map/map_config.gd")
+	var MapLocation = preload("res://Map/Location/map_location.gd")
 
 	var fight_scene : String = "res://Fight/fight_location.tscn"
 	var loc5 = MapLocation.new(fight_scene, {}, Vector2(-1, 1))

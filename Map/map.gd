@@ -6,7 +6,7 @@ var GameConfig = load("res://game_config.gd")
 var game_config
 var map_config
 var current_map_point
-var PathSection = load("res://path_section.tscn")
+var PathSection = load("res://Map/Path/path_section.tscn")
 onready var Paths = $Paths
 onready var character = $character
 
@@ -40,7 +40,7 @@ func generate_points() -> void:
 	# they're added dynamically
 	var destinations = $Destinations
 	# load the scene, representing the location tile on the map
-	var map_point_scene = load("res://map_point.tscn")
+	var map_point_scene = load("res://Map/Location/map_point.tscn")
 
 	for tile in map_config.map_location_graph:
 		var point = map_point_scene.instance()
