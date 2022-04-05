@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Reference",
+"class": "Cost",
+"language": "GDScript",
+"path": "res://Card/cost.gd"
+}, {
 "base": "Object",
 "class": "GameLoadManager",
 "language": "GDScript",
@@ -20,6 +25,7 @@ _global_script_classes=[ {
 "path": "res://lin_move_animation.gd"
 } ]
 _global_script_class_icons={
+"Cost": "",
 "GameLoadManager": "",
 "LinMoveAnimation": ""
 }
@@ -28,7 +34,6 @@ _global_script_class_icons={
 
 config/name="Tabletop-roguelike"
 run/main_scene="res://main_menu.tscn"
-config/icon="res://icon.png"
 
 [autoload]
 

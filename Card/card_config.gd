@@ -1,26 +1,15 @@
 extends Reference
 
 var card_name : String
-var cost
-var symbols
-var health
-var power
-var attack_range
-var attack_type
-var move_cost
+var play_cost : Cost
+var symbols : Array = [PackedScene]
+var health : int
+var power : int
 
-func _init(card_name, cost, symbols, health, power, attack_range, attack_type, move_cost):
+func _init(card_name, play_cost, symbols, health, power):
 	self.card_name = card_name
-	self.cost = cost
+	self.play_cost = play_cost
 	self.symbols = symbols
 	self.health = health
 	self.power = power
-	self.attack_range = attack_range
-	self.attack_type = attack_type
-	self.move_cost = move_cost
 
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass

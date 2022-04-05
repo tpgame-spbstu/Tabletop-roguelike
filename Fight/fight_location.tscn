@@ -1,8 +1,12 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Fight/fight_location.gd" type="Script" id=1]
+[ext_resource path="res://Fight/hand.gd" type="Script" id=2]
 [ext_resource path="res://Fight/board.gd" type="Script" id=3]
-[ext_resource path="res://Fight/cell.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Fight/board_cell.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Fight/deck.gd" type="Script" id=5]
+[ext_resource path="res://Fight/selector.gd" type="Script" id=6]
+[ext_resource path="res://Fight/bell.gd" type="Script" id=7]
 
 [sub_resource type="CubeMesh" id=1]
 
@@ -10,12 +14,23 @@
 flags_transparent = true
 albedo_color = Color( 1, 1, 0, 0.501961 )
 
+[sub_resource type="BoxShape" id=5]
+extents = Vector3( 0.5, 0.5, 0.5 )
+
+[sub_resource type="CubeMesh" id=6]
+size = Vector3( 1, 1, 1 )
+
+[sub_resource type="BoxShape" id=4]
+extents = Vector3( 0.45, 0.1, 0.5 )
+
 [sub_resource type="ButtonGroup" id=3]
 
 [node name="fight_location" type="Spatial"]
 script = ExtResource( 1 )
 
 [node name="selector" type="Spatial" parent="."]
+visible = false
+script = ExtResource( 6 )
 
 [node name="MeshInstance" type="MeshInstance" parent="selector"]
 transform = Transform( 0.4, 0, 0, 0, 0.1, 0, 0, 0, 0.4, 0, 0, 0 )
@@ -85,23 +100,34 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 0 )
 [node name="cell_3" parent="board/row_3" instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 0, 0 )
 
-[node name="row_4" type="Spatial" parent="board"]
+[node name="hand" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.5 )
+script = ExtResource( 2 )
 
-[node name="cell_0" parent="board/row_4" instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, 0 )
+[node name="bell" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, 2 )
+script = ExtResource( 7 )
 
-[node name="cell_1" parent="board/row_4" instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0 )
+[node name="Area" type="Area" parent="bell"]
 
-[node name="cell_2" parent="board/row_4" instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 0 )
+[node name="CollisionShape" type="CollisionShape" parent="bell/Area"]
+shape = SubResource( 5 )
 
-[node name="cell_3" parent="board/row_4" instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 0, 0 )
+[node name="MeshInstance" type="MeshInstance" parent="bell"]
+mesh = SubResource( 6 )
+material/0 = null
 
-[node name="Camera" type="Camera" parent="."]
-transform = Transform( -1, 8.51491e-08, -1.98085e-08, 0, 0.226583, 0.973992, 8.74228e-08, 0.973992, -0.226583, 0, 3.485, -0.677 )
+[node name="deck" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, 0 )
+script = ExtResource( 5 )
+
+[node name="Area" type="Area" parent="deck"]
+
+[node name="CollisionShape" type="CollisionShape" parent="deck/Area"]
+shape = SubResource( 4 )
+
+[node name="deck_list" type="Spatial" parent="deck"]
+transform = Transform( -1, -8.74228e-08, 0, 8.74228e-08, -1, 0, 0, 0, 1, 0, 0, 0 )
 
 [node name="Control" type="Control" parent="."]
 margin_right = 157.0
@@ -159,6 +185,11 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( -1, 8.51491e-08, -1.98085e-08, 0, 0.226583, 0.973992, 8.74228e-08, 0.973992, -0.226583, 0, 3.485, -0.677 )
+
+[connection signal="input_event" from="bell/Area" to="bell" method="_on_Area_input_event"]
+[connection signal="input_event" from="deck/Area" to="deck" method="_on_Area_input_event"]
 [connection signal="pressed" from="Control/button_move" to="." method="_on_button_move_pressed"]
 [connection signal="pressed" from="Control/button_add" to="." method="_on_button_add_pressed"]
 [connection signal="pressed" from="Control/button_remove" to="." method="_on_button_remove_pressed"]

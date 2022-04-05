@@ -53,10 +53,7 @@ text = "player
 cost
 symbols
 health
-power
-attack_range
-attack_type
-move_cost"
+power"
 __meta__ = {
 "_edit_use_anchors_": false
 }
