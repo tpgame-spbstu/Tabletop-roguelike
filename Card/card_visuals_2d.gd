@@ -6,7 +6,7 @@ onready var card_params_label = $card_params_label
 func update_to_card(card):
 	card_name_label.text = card.card_name
 	var params_text = ""
-	params_text += String(card.is_owned_by_player)
+	params_text += String(card.is_owned_by_player_1)
 	params_text += "\n"
 	params_text += String(card.play_cost.energy)
 	params_text += "\n"

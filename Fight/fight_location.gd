@@ -27,35 +27,35 @@ func initialize(deck_config , inventory_config , params : Dictionary):
 	deck.connect("deck_click", self, "_on_deck_click")
 	bell.connect("bell_click", self, "_on_bell_click")
 	fight_state = FightStateManager.new()
-	fight_state.connect("player_draw_cards_enter", self, "_on_player_draw_cards_enter")
-	fight_state.connect("player_place_and_move_enter", self, "_on_player_place_and_move_enter")
-	fight_state.connect("player_attack_enter", self, "_on_player_attack_enter")
+	fight_state.connect("player_1_draw_cards_enter", self, "_on_player_1_draw_cards_enter")
+	fight_state.connect("player_1_place_and_move_enter", self, "_on_player_1_place_and_move_enter")
+	fight_state.connect("player_1_attack_enter", self, "_on_player_1_attack_enter")
 	fight_state.start()
 
 
-func _on_player_draw_cards_enter():
+func _on_player_1_draw_cards_enter():
 	fight_state.restore_energy()
 	fight_state.card_to_play = null
 	fight_state.card_to_move = null
 
 
-func _on_player_place_and_move_enter():
+func _on_player_1_place_and_move_enter():
 	fight_state.set_extra_draws_count(1)
 
 
-func _on_player_attack_enter():
-	board._on_player_attack_enter()
+func _on_player_1_attack_enter():
+	board._on_player_attack_enter(fight_state)
 
 
 func _on_board_click(board_cell, card):
 	if !input_allowed:
 		return
-	if fight_state.state != FightStateManager.State.PLAYER_PLACE_AND_MOVE:
+	if fight_state.state != FightStateManager.State.PLAYER_1_PLACE_AND_MOVE:
 		return
 	if fight_state.card_to_play != null:
 		if card != null:
 			return
-		if board_cell.row_index != 0:
+		if !board_cell.is_player_1_base():
 			return
 		fight_state.card_to_play.play_cost.pay(fight_state)
 		yield(play_card(board_cell, fight_state.card_to_play), "completed")
@@ -78,7 +78,7 @@ func _on_board_click(board_cell, card):
 	else:
 		if card == null:
 			return
-		if !card.is_owned_by_player:
+		if !card.is_owned_by_player_1:
 			return
 		fight_state.card_to_move = card
 		selector.move_to(board_cell)
@@ -112,7 +112,7 @@ func play_card(board_cell, card_to_play):
 func _on_hand_click(hand_cell, card):
 	if !input_allowed:
 		return
-	if fight_state.state != FightStateManager.State.PLAYER_PLACE_AND_MOVE:
+	if fight_state.state != FightStateManager.State.PLAYER_1_PLACE_AND_MOVE:
 		return
 	if fight_state.card_to_play != null:
 		fight_state.card_to_play = null
@@ -134,10 +134,10 @@ func _on_deck_click(deck, card):
 	if card == null:
 		return
 	match fight_state.state:
-		FightStateManager.State.PLAYER_DRAW_CARDS:
+		FightStateManager.State.PLAYER_1_DRAW_CARDS:
 			yield(draw_card(deck, card), "completed")
 			fight_state.next_state()
-		FightStateManager.State.PLAYER_PLACE_AND_MOVE:
+		FightStateManager.State.PLAYER_1_PLACE_AND_MOVE:
 			if fight_state.energy >= 2 && fight_state.extra_draws_count > 0:
 				fight_state.energy -= 2
 				fight_state.extra_draws_count -= 1

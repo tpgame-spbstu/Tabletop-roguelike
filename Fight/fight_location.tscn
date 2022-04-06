@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Fight/fight_location.gd" type="Script" id=1]
 [ext_resource path="res://Fight/hand.gd" type="Script" id=2]
@@ -7,6 +7,8 @@
 [ext_resource path="res://Fight/deck.gd" type="Script" id=5]
 [ext_resource path="res://Fight/selector.gd" type="Script" id=6]
 [ext_resource path="res://Fight/bell.gd" type="Script" id=7]
+[ext_resource path="res://Card/card.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Fight/Camera.gd" type="Script" id=9]
 
 [sub_resource type="CubeMesh" id=1]
 
@@ -75,6 +77,9 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5 )
 
 [node name="cell_0" parent="board/row_2" instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, 0 )
+
+[node name="card" parent="board/row_2/cell_0" instance=ExtResource( 8 )]
+health = 1
 
 [node name="cell_1" parent="board/row_2" instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0 )
@@ -186,7 +191,8 @@ __meta__ = {
 }
 
 [node name="Camera" type="Camera" parent="."]
-transform = Transform( -1, 8.51491e-08, -1.98085e-08, 0, 0.226583, 0.973992, 8.74228e-08, 0.973992, -0.226583, 0, 3.485, -0.677 )
+transform = Transform( -1, -8.62331e-08, 1.43732e-08, 0, 0.164411, 0.986392, -8.74228e-08, 0.986392, -0.164411, 0, 2.91797, -0.677 )
+script = ExtResource( 9 )
 
 [connection signal="input_event" from="bell/Area" to="bell" method="_on_Area_input_event"]
 [connection signal="input_event" from="deck/Area" to="deck" method="_on_Area_input_event"]

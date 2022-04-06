@@ -16,7 +16,11 @@ func initialize(fight_location):
 			cell.connect("input_event", self, "_on_board_cell_input_event")
 
 func get_board_cell(row_index, column_index):
-	if row_index < 0 or row_index >= rows_count or column_index < 0 or column_index >= column_count:
+	if row_index < 0:
+		return "up"
+	if row_index >= rows_count:
+		return "down"
+	if column_index < 0 or column_index >= column_count:
 		return null
 	return get_child(row_index).get_child(column_index)
 
@@ -28,11 +32,11 @@ func _on_board_cell_input_event(board_cell, event):
 			emit_signal("board_click", board_cell, board_cell.get_card_or_null())
 
 
-func _on_player_attack_enter():
+func _on_player_attack_enter(fight_state):
 	for column_index in range(column_count):
 		for row_index in range(rows_count - 1, -1, -1):
 			var cell = get_board_cell(row_index, column_index)
 			var card = cell.get_card_or_null()
-			if card == null or !card.is_owned_by_player:
+			if card == null or !card.is_owned_by_player_1:
 				continue
-			card.process_attack()
+			card.process_attack(fight_state)

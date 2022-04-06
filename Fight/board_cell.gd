@@ -18,6 +18,14 @@ func get_card_or_null():
 	return null
 
 
+func is_player_1_base():
+	return row_index == 0
+
+
+func is_player_2_base():
+	return row_index == board.rows_count - 1
+
+
 func get_relative_board_cell(delta_row, delta_column):
 	return board.get_board_cell(row_index + delta_row, column_index + delta_column)
 
