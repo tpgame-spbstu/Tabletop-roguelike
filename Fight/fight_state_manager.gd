@@ -109,6 +109,13 @@ func set_extra_draws_count(new_value):
 	print("extra_draws_count changet to %d" % extra_draws_count)
 
 
+func reduse_enemy_health(attacker_number, delta):
+	if attacker_number == 1:
+		set_player_1_health(player_1_health - delta)
+	else:
+		set_player_2_health(player_2_health - delta)
+	
+
 func start():
 	set_loop_number(1)
 	set_player_1_health(5)

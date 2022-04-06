@@ -17,9 +17,9 @@ func initialize(fight_location):
 
 func get_board_cell(row_index, column_index):
 	if row_index < 0:
-		return "up"
+		return 2
 	if row_index >= rows_count:
-		return "down"
+		return 1
 	if column_index < 0 or column_index >= column_count:
 		return null
 	return get_child(row_index).get_child(column_index)
@@ -37,6 +37,6 @@ func _on_player_attack_enter(fight_state):
 		for row_index in range(rows_count - 1, -1, -1):
 			var cell = get_board_cell(row_index, column_index)
 			var card = cell.get_card_or_null()
-			if card == null or !card.is_owned_by_player_1:
+			if card == null or card.owner_number == 2:
 				continue
 			card.process_attack(fight_state)

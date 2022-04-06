@@ -17,9 +17,20 @@ func get_card_or_null():
 			return child
 	return null
 
-
 func is_player_1_base():
 	return row_index == 0
+
+func is_friendly_base(owner_number):
+	if owner_number == 1:
+		return is_player_1_base()
+	else:
+		return is_player_2_base()
+
+func is_enemy_base(owner_number):
+	if owner_number == 1:
+		return is_player_2_base()
+	else:
+		return is_player_1_base()
 
 
 func is_player_2_base():

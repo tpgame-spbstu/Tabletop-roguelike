@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Fight/fight_location.gd" type="Script" id=1]
 [ext_resource path="res://Fight/hand.gd" type="Script" id=2]
@@ -24,8 +24,6 @@ size = Vector3( 1, 1, 1 )
 
 [sub_resource type="BoxShape" id=4]
 extents = Vector3( 0.45, 0.1, 0.5 )
-
-[sub_resource type="ButtonGroup" id=3]
 
 [node name="fight_location" type="Spatial"]
 script = ExtResource( 1 )
@@ -79,6 +77,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, 0 )
 
 [node name="card" parent="board/row_2/cell_0" instance=ExtResource( 8 )]
+owner_number = 2
 health = 1
 
 [node name="cell_1" parent="board/row_2" instance=ExtResource( 4 )]
@@ -141,63 +140,20 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="button_move" type="Button" parent="Control"]
-margin_left = 3.0
-margin_top = 4.0
-margin_right = 147.0
-margin_bottom = 60.0
-toggle_mode = true
-group = SubResource( 3 )
-text = "Move"
-
-[node name="button_add" type="Button" parent="Control"]
-margin_left = 3.0
-margin_top = 69.0
-margin_right = 147.0
-margin_bottom = 125.0
-toggle_mode = true
-group = SubResource( 3 )
-text = "Add"
-
-[node name="button_remove" type="Button" parent="Control"]
-margin_left = 3.0
-margin_top = 132.0
-margin_right = 147.0
-margin_bottom = 188.0
-toggle_mode = true
-group = SubResource( 3 )
-text = "Remove"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="button_change" type="Button" parent="Control"]
-margin_left = 4.0
-margin_top = 198.0
-margin_right = 148.0
-margin_bottom = 254.0
-toggle_mode = true
-group = SubResource( 3 )
-text = "Change"
-
 [node name="button_exit_to_map" type="Button" parent="Control"]
-margin_left = 3.0
-margin_top = 312.0
-margin_right = 146.0
-margin_bottom = 363.0
+margin_top = 5.0
+margin_right = 143.0
+margin_bottom = 56.0
 text = "To Map"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Camera" type="Camera" parent="."]
-transform = Transform( -1, -8.62331e-08, 1.43732e-08, 0, 0.164411, 0.986392, -8.74228e-08, 0.986392, -0.164411, 0, 2.91797, -0.677 )
+transform = Transform( -1, -8.62331e-08, 1.43732e-08, 0, 0.164411, 0.986392, -8.74228e-08, 0.986392, -0.164411, 0, 3, -0.677 )
+current = true
 script = ExtResource( 9 )
 
 [connection signal="input_event" from="bell/Area" to="bell" method="_on_Area_input_event"]
 [connection signal="input_event" from="deck/Area" to="deck" method="_on_Area_input_event"]
-[connection signal="pressed" from="Control/button_move" to="." method="_on_button_move_pressed"]
-[connection signal="pressed" from="Control/button_add" to="." method="_on_button_add_pressed"]
-[connection signal="pressed" from="Control/button_remove" to="." method="_on_button_remove_pressed"]
-[connection signal="pressed" from="Control/button_change" to="." method="_on_button_change_pressed"]
 [connection signal="pressed" from="Control/button_exit_to_map" to="." method="_on_button_exit_to_map_pressed"]

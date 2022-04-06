@@ -18,7 +18,7 @@ func initialize(fight_location, deck_config, shuffle_seed):
 func add_new_card_to_bottom(card_config):
 	var new_card = CardScene.instance()
 	deck_list.add_child(new_card)
-	new_card.initialize(card_config, true)
+	new_card.initialize(card_config, 1)
 
 func _on_Area_input_event(camera: Node, event: InputEvent, position: Vector3, normal: Vector3, shape_idx: int):
 	if event is InputEventMouseButton:

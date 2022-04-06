@@ -7,8 +7,6 @@ onready var deck := $deck
 onready var bell := $bell
 
 
-
-
 var FightStateManager := preload("res://Fight/fight_state_manager.gd")
 
 
@@ -78,7 +76,7 @@ func _on_board_click(board_cell, card):
 	else:
 		if card == null:
 			return
-		if !card.is_owned_by_player_1:
+		if card.owner_number == 2:
 			return
 		fight_state.card_to_move = card
 		selector.move_to(board_cell)
@@ -166,10 +164,6 @@ func _on_button_move_pressed():
 
 func _on_button_add_pressed():
 	deck.add_new_card_to_bottom(deck_config.cards[randi() % deck_config.cards.size()])
-
-
-func _on_button_remove_pressed():
-	pass
 
 
 func _on_button_change_pressed():
