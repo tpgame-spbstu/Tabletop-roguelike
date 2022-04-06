@@ -6,7 +6,7 @@ var column_count
 signal board_click(board_cell, card)
 
 
-func initialize(fight_location):
+func initialize():
 	rows_count = get_child_count()
 	column_count = get_child(0).get_child_count()
 	for row_index in range(rows_count):
@@ -32,11 +32,20 @@ func _on_board_cell_input_event(board_cell, event):
 			emit_signal("board_click", board_cell, board_cell.get_card_or_null())
 
 
-func _on_player_attack_enter(fight_state):
+func _on_player_1_attack_enter(fight_state):
 	for column_index in range(column_count):
 		for row_index in range(rows_count - 1, -1, -1):
 			var cell = get_board_cell(row_index, column_index)
 			var card = cell.get_card_or_null()
 			if card == null or card.owner_number == 2:
+				continue
+			card.process_attack(fight_state)
+
+func _on_player_2_attack_enter(fight_state):
+	for column_index in range(column_count):
+		for row_index in range(1, rows_count):
+			var cell = get_board_cell(row_index, column_index)
+			var card = cell.get_card_or_null()
+			if card == null or card.owner_number == 1:
 				continue
 			card.process_attack(fight_state)

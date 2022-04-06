@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Fight/fight_location.gd" type="Script" id=1]
 [ext_resource path="res://Fight/hand.gd" type="Script" id=2]
@@ -7,8 +7,9 @@
 [ext_resource path="res://Fight/deck.gd" type="Script" id=5]
 [ext_resource path="res://Fight/selector.gd" type="Script" id=6]
 [ext_resource path="res://Fight/bell.gd" type="Script" id=7]
-[ext_resource path="res://Card/card.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Fight/Camera.gd" type="Script" id=9]
+[ext_resource path="res://Fight/player_1.gd" type="Script" id=10]
+[ext_resource path="res://Fight/player_2.gd" type="Script" id=11]
 
 [sub_resource type="CubeMesh" id=1]
 
@@ -16,26 +17,87 @@
 flags_transparent = true
 albedo_color = Color( 1, 1, 0, 0.501961 )
 
+[sub_resource type="BoxShape" id=4]
+extents = Vector3( 0.45, 0.1, 0.5 )
+
 [sub_resource type="BoxShape" id=5]
 extents = Vector3( 0.5, 0.5, 0.5 )
 
 [sub_resource type="CubeMesh" id=6]
 size = Vector3( 1, 1, 1 )
 
-[sub_resource type="BoxShape" id=4]
-extents = Vector3( 0.45, 0.1, 0.5 )
-
 [node name="fight_location" type="Spatial"]
 script = ExtResource( 1 )
 
-[node name="selector" type="Spatial" parent="."]
+[node name="player_1" type="Spatial" parent="."]
+script = ExtResource( 10 )
+
+[node name="selector" type="Spatial" parent="player_1"]
 visible = false
 script = ExtResource( 6 )
 
-[node name="MeshInstance" type="MeshInstance" parent="selector"]
+[node name="MeshInstance" type="MeshInstance" parent="player_1/selector"]
 transform = Transform( 0.4, 0, 0, 0, 0.1, 0, 0, 0, 0.4, 0, 0, 0 )
 mesh = SubResource( 1 )
 material/0 = SubResource( 2 )
+
+[node name="hand" type="Spatial" parent="player_1"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.5 )
+script = ExtResource( 2 )
+
+[node name="deck" type="Spatial" parent="player_1"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, -1 )
+script = ExtResource( 5 )
+
+[node name="Area" type="Area" parent="player_1/deck"]
+
+[node name="CollisionShape" type="CollisionShape" parent="player_1/deck/Area"]
+shape = SubResource( 4 )
+
+[node name="deck_list" type="Spatial" parent="player_1/deck"]
+transform = Transform( -1, -8.74228e-08, 0, 8.74228e-08, -1, 0, 0, 0, 1, 0, 0, 0 )
+
+[node name="bell" type="Spatial" parent="."]
+transform = Transform( 0.75, 0, 0, 0, 0.75, 0, 0, 0, 0.75, -2.5, 0, 0 )
+script = ExtResource( 7 )
+
+[node name="Area" type="Area" parent="bell"]
+
+[node name="CollisionShape" type="CollisionShape" parent="bell/Area"]
+shape = SubResource( 5 )
+
+[node name="MeshInstance" type="MeshInstance" parent="bell"]
+mesh = SubResource( 6 )
+material/0 = null
+
+[node name="player_2" type="Spatial" parent="."]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0 )
+script = ExtResource( 11 )
+
+[node name="selector" type="Spatial" parent="player_2"]
+visible = false
+script = ExtResource( 6 )
+
+[node name="MeshInstance" type="MeshInstance" parent="player_2/selector"]
+transform = Transform( 0.4, 0, 0, 0, 0.1, 0, 0, 0, 0.4, 0, 0, 0 )
+mesh = SubResource( 1 )
+material/0 = SubResource( 2 )
+
+[node name="hand" type="Spatial" parent="player_2"]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -1.98616e-08, 0, -2.5 )
+script = ExtResource( 2 )
+
+[node name="deck" type="Spatial" parent="player_2"]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 2.5, 0, -1 )
+script = ExtResource( 5 )
+
+[node name="Area" type="Area" parent="player_2/deck"]
+
+[node name="CollisionShape" type="CollisionShape" parent="player_2/deck/Area"]
+shape = SubResource( 4 )
+
+[node name="deck_list" type="Spatial" parent="player_2/deck"]
+transform = Transform( -1, -8.74228e-08, 0, 8.74228e-08, -1, 0, 0, 0, 1, 0, 0, 0 )
 
 [node name="board" type="Spatial" parent="."]
 script = ExtResource( 3 )
@@ -76,10 +138,6 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5 )
 [node name="cell_0" parent="board/row_2" instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, 0 )
 
-[node name="card" parent="board/row_2/cell_0" instance=ExtResource( 8 )]
-owner_number = 2
-health = 1
-
 [node name="cell_1" parent="board/row_2" instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0 )
 
@@ -104,35 +162,6 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 0 )
 [node name="cell_3" parent="board/row_3" instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 0, 0 )
 
-[node name="hand" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.5 )
-script = ExtResource( 2 )
-
-[node name="bell" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, 2 )
-script = ExtResource( 7 )
-
-[node name="Area" type="Area" parent="bell"]
-
-[node name="CollisionShape" type="CollisionShape" parent="bell/Area"]
-shape = SubResource( 5 )
-
-[node name="MeshInstance" type="MeshInstance" parent="bell"]
-mesh = SubResource( 6 )
-material/0 = null
-
-[node name="deck" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, 0 )
-script = ExtResource( 5 )
-
-[node name="Area" type="Area" parent="deck"]
-
-[node name="CollisionShape" type="CollisionShape" parent="deck/Area"]
-shape = SubResource( 4 )
-
-[node name="deck_list" type="Spatial" parent="deck"]
-transform = Transform( -1, -8.74228e-08, 0, 8.74228e-08, -1, 0, 0, 0, 1, 0, 0, 0 )
-
 [node name="Control" type="Control" parent="."]
 margin_right = 157.0
 margin_bottom = 263.0
@@ -150,10 +179,11 @@ __meta__ = {
 }
 
 [node name="Camera" type="Camera" parent="."]
-transform = Transform( -1, -8.62331e-08, 1.43732e-08, 0, 0.164411, 0.986392, -8.74228e-08, 0.986392, -0.164411, 0, 3, -0.677 )
+transform = Transform( -1, 8.74228e-08, 3.82137e-15, 0, -4.37114e-08, 1, 8.74228e-08, 1, 4.37114e-08, 0, 3, 0 )
 current = true
 script = ExtResource( 9 )
 
+[connection signal="input_event" from="player_1/deck/Area" to="player_1/deck" method="_on_Area_input_event"]
 [connection signal="input_event" from="bell/Area" to="bell" method="_on_Area_input_event"]
-[connection signal="input_event" from="deck/Area" to="deck" method="_on_Area_input_event"]
+[connection signal="input_event" from="player_2/deck/Area" to="player_2/deck" method="_on_Area_input_event"]
 [connection signal="pressed" from="Control/button_exit_to_map" to="." method="_on_button_exit_to_map_pressed"]

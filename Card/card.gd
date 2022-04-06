@@ -54,6 +54,7 @@ func get_hand_cell_or_null():
 
 func reduce_health(delta):
 	health -= delta
+	card_visuals_2d.update_to_card(self)
 	if health <= 0:
 		get_parent().remove_child(self)
 		queue_free()

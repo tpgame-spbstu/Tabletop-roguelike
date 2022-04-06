@@ -5,9 +5,6 @@ var Card = preload("res://Card/card.gd")
 signal hand_click(hand_cell, card)
 
 
-func initialize(fight_location):
-	pass
-
 func rearange():
 	if (get_child_count() == 1):
 		var hand_cell = get_child(0) as Spatial
