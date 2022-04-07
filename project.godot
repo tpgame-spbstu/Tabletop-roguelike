@@ -23,11 +23,17 @@ _global_script_classes=[ {
 "class": "LinMoveAnimation",
 "language": "GDScript",
 "path": "res://lin_move_animation.gd"
+}, {
+"base": "Reference",
+"class": "Symbol",
+"language": "GDScript",
+"path": "res://Symbols/symbol.gd"
 } ]
 _global_script_class_icons={
 "Cost": "",
 "GameLoadManager": "",
-"LinMoveAnimation": ""
+"LinMoveAnimation": "",
+"Symbol": ""
 }
 
 [application]
@@ -38,6 +44,7 @@ run/main_scene="res://main_menu.tscn"
 [autoload]
 
 GameSettings="*res://game_settings.gd"
+SymbolManager="*res://Symbols/symbol_manager.gd"
 
 [physics]
 

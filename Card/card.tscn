@@ -34,5 +34,3 @@ mesh = SubResource( 2 )
 material/0 = SubResource( 4 )
 
 [node name="unit_visuals" type="Spatial" parent="."]
-
-[node name="symbols" type="Node" parent="."]

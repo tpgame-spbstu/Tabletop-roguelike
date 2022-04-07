@@ -21,16 +21,16 @@ static func get_temp_deck_config():
 	var CardConfig := load("res://Card/card_config.gd")
 	var deck_config = DeckConfig.new()
 	deck_config.cards.append(CardConfig.new(
-		"Карта 1", Cost.new(1, 0, 0), [], 3, 2
+		"Карта быстрая", Cost.new(2, 0, 0), ["fast"], [], 1, 2
 		))
 	deck_config.cards.append(CardConfig.new(
-		"Карта 2", Cost.new(1, 0, 0), [], 3, 2
+		"Карта медленная", Cost.new(2, 0, 0), ["slow"], [], 3, 3
 		))
 	deck_config.cards.append(CardConfig.new(
-		"Карта 3", Cost.new(1, 0, 0), [], 3, 2
+		"Карта обычная", Cost.new(1, 0, 0), [], [], 2, 2
 		))
 	deck_config.cards.append(CardConfig.new(
-		"Карта 4", Cost.new(1, 0, 0), [], 3, 2
+		"Карта дальнобойная", Cost.new(3, 0, 0), ["range"], [], 2, 1
 		))
 	return deck_config
 

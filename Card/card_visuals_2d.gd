@@ -10,9 +10,13 @@ func update_to_card(card):
 	params_text += "\n"
 	params_text += String(card.play_cost.energy)
 	params_text += "\n"
-	params_text += String(card.symbols.get_children())
-	params_text += "\n"
 	params_text += String(card.health)
 	params_text += "\n"
 	params_text += String(card.power)
+	params_text += "\n"
+	for symbol_name in card.common_symbols.keys():
+		params_text += symbol_name + ", "
+	params_text += "\n"
+	for symbol_name in card.mod_symbols.keys():
+		params_text += symbol_name + ", "
 	card_params_label.text = params_text
