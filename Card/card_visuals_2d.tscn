@@ -1,24 +1,25 @@
 [gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://fonts/Wanted.otf" type="DynamicFontData" id=1]
+[ext_resource path="res://fonts/fantazer.otf" type="DynamicFontData" id=1]
 [ext_resource path="res://Card/card_visuals_2d.gd" type="Script" id=2]
 
 [sub_resource type="DynamicFont" id=1]
-size = 26
+size = 53
 font_data = ExtResource( 1 )
 
 [sub_resource type="Theme" id=2]
 default_font = SubResource( 1 )
 
 [sub_resource type="DynamicFont" id=4]
+size = 32
 font_data = ExtResource( 1 )
 
 [sub_resource type="Theme" id=3]
 default_font = SubResource( 4 )
 
 [node name="card_visuals_2d" type="Control"]
-margin_right = 200.0
-margin_bottom = 250.0
+margin_right = 400.0
+margin_bottom = 500.0
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -44,28 +45,26 @@ __meta__ = {
 }
 
 [node name="Label" type="Label" parent="."]
-margin_left = 5.0
-margin_top = 41.0
-margin_right = 90.0
-margin_bottom = 208.0
+margin_left = 23.0
+margin_top = 121.0
+margin_right = 157.0
+margin_bottom = 293.0
 theme = SubResource( 3 )
 text = "player
 cost
-symbols
 health
 power
-attack_range
-attack_type
-move_cost"
+com_sym
+mod_sym"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="card_params_label" type="Label" parent="."]
-margin_left = 109.0
-margin_top = 41.0
-margin_right = 194.0
-margin_bottom = 208.0
+margin_left = 218.0
+margin_top = 121.0
+margin_right = 303.0
+margin_bottom = 288.0
 theme = SubResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false

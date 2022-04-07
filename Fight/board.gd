@@ -1,15 +1,51 @@
 extends Spatial
 
+var rows_count
+var column_count
 
-signal cell_click(cell, card)
+signal board_click(board_cell, card)
 
-func initialize(fight_location):
-	connect("cell_click", fight_location, "_on_board_click")
-	var rows = get_children()
-	for row_index in range(rows.size()):
-		var cells = rows[row_index].get_children()
-		for cell_index in range(cells.size()):
-			cells[cell_index].connect_to_board(self, row_index, cell_index)
 
-func _on_cell_click(cell : Spatial):
-	emit_signal("cell_click", cell, cell.get_node_or_null("card"))
+func initialize():
+	rows_count = get_child_count()
+	column_count = get_child(0).get_child_count()
+	for row_index in range(rows_count):
+		for column_index in range(column_count):
+			var cell = get_board_cell(row_index, column_index)
+			cell.initialize(self, row_index, column_index)
+			cell.connect("input_event", self, "_on_board_cell_input_event")
+
+func get_board_cell(row_index, column_index):
+	if row_index < 0:
+		return 2
+	if row_index >= rows_count:
+		return 1
+	if column_index < 0 or column_index >= column_count:
+		return null
+	return get_child(row_index).get_child(column_index)
+
+
+func _on_board_cell_input_event(board_cell, event):
+	if event is InputEventMouseButton:
+		var mouse_button_event := event as InputEventMouseButton
+		if mouse_button_event.pressed and mouse_button_event.button_index == BUTTON_LEFT :
+			emit_signal("board_click", board_cell, board_cell.get_card_or_null())
+
+
+func _on_player_1_attack_enter(fight_state):
+	for column_index in range(column_count):
+		for row_index in range(rows_count - 1, -1, -1):
+			var cell = get_board_cell(row_index, column_index)
+			var card = cell.get_card_or_null()
+			if card == null or card.owner_number == 2:
+				continue
+			card.process_attack(fight_state)
+
+func _on_player_2_attack_enter(fight_state):
+	for column_index in range(column_count):
+		for row_index in range(1, rows_count):
+			var cell = get_board_cell(row_index, column_index)
+			var card = cell.get_card_or_null()
+			if card == null or card.owner_number == 1:
+				continue
+			card.process_attack(fight_state)
