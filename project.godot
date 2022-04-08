@@ -41,14 +41,14 @@ _global_script_class_icons={
 config/name="Tabletop-roguelike"
 run/main_scene="res://main_menu.tscn"
 
-[global]
-
-batching=false
-
 [autoload]
 
 GameSettings="*res://game_settings.gd"
 SymbolManager="*res://Symbols/symbol_manager.gd"
+
+[global]
+
+batching=true
 
 [physics]
 
@@ -56,6 +56,4 @@ common/enable_pause_aware_picking=true
 
 [rendering]
 
-batching/options/use_batching=false
-batching/options/use_batching_in_editor=false
 environment/default_environment="res://default_env.tres"
