@@ -1,26 +1,19 @@
 extends Reference
 
 var card_name : String
-var cost
-var symbols
-var health
-var power
-var attack_range
-var attack_type
-var move_cost
+var play_cost : Cost
+var common_symbols : Dictionary
+var mod_symbols : Dictionary
+var health : int
+var power : int
 
-func _init(card_name, cost, symbols, health, power, attack_range, attack_type, move_cost):
+func _init(card_name, play_cost, common_symbol_names, mod_symbol_names, health, power):
 	self.card_name = card_name
-	self.cost = cost
-	self.symbols = symbols
+	self.play_cost = play_cost
+	for symbol_name in common_symbol_names:
+		common_symbols[symbol_name] = SymbolManager.get_symbol_copy(symbol_name)
+	for symbol_name in mod_symbol_names:
+		mod_symbols[symbol_name] = SymbolManager.get_symbol_copy(symbol_name)
 	self.health = health
 	self.power = power
-	self.attack_range = attack_range
-	self.attack_type = attack_type
-	self.move_cost = move_cost
 
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass

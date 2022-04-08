@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Reference",
+"class": "Cost",
+"language": "GDScript",
+"path": "res://Card/cost.gd"
+}, {
 "base": "Object",
 "class": "GameLoadManager",
 "language": "GDScript",
@@ -18,10 +23,17 @@ _global_script_classes=[ {
 "class": "LinMoveAnimation",
 "language": "GDScript",
 "path": "res://Map/Character/lin_move_animation.gd"
+}, {
+"base": "Reference",
+"class": "Symbol",
+"language": "GDScript",
+"path": "res://Symbols/symbol.gd"
 } ]
 _global_script_class_icons={
+"Cost": "",
 "GameLoadManager": "",
-"LinMoveAnimation": ""
+"LinMoveAnimation": "",
+"Symbol": ""
 }
 
 [application]
@@ -32,6 +44,11 @@ run/main_scene="res://main_menu.tscn"
 [global]
 
 batching=false
+
+[autoload]
+
+GameSettings="*res://game_settings.gd"
+SymbolManager="*res://Symbols/symbol_manager.gd"
 
 [physics]
 
