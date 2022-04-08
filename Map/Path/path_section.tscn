@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="CubeMesh" id=6]
+size = Vector3( 1, 0.2, 1 )
+
+[node name="path_section" type="Spatial"]
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true
+}
+
+[node name="path_sec_body" type="MeshInstance" parent="."]
+mesh = SubResource( 6 )
+material/0 = null

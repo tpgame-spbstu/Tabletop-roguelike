@@ -1,4 +1,4 @@
-extends "res://location.gd"
+extends "res://Map/Location/location.gd"
 
 onready var board := $board
 onready var player_1 := $player_1

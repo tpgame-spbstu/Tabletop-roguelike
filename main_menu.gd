@@ -18,8 +18,9 @@ func _on_exit_pressed():
 
 
 func _on_new_game_pressed():
+	var GameLoadManager = preload("res://game_load_manager.gd")
 	var gameConfig = GameLoadManager.generate_new_game()
-	var mapScene = preload("res://map.tscn").instance()
+	var mapScene = preload("res://Map/map.tscn").instance()
 	self.get_parent().add_child(mapScene)
 	$AudioStreamPlayer.playing = false
 	self.hide()
@@ -31,8 +32,9 @@ func _on_new_game_pressed():
 	$AudioStreamPlayer.playing = true
 
 func _on_continue_pressed():
+	var GameLoadManager = preload("res://game_load_manager.gd")
 	var gameConfig = GameLoadManager.load_game()
-	var mapScene = preload("res://map.tscn").instance()
+	var mapScene = preload("res://Map/map.tscn").instance()
 	self.get_parent().add_child(mapScene)
 	self.hide()
 	mapScene.initialize(gameConfig)
