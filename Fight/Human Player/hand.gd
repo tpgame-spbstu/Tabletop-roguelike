@@ -16,7 +16,7 @@ func rearange():
 
 
 func add_card(card):
-	var hand_cell = load("res://Fight/hand_cell.tscn").instance()
+	var hand_cell = load("res://Fight/Human Player/hand_cell.tscn").instance()
 	add_child(hand_cell)
 	hand_cell.connect("input_event", self, "_on_hand_cell_input_event")
 	rearange()

@@ -31,6 +31,11 @@ func _on_board_cell_input_event(board_cell, event):
 		if mouse_button_event.pressed and mouse_button_event.button_index == BUTTON_LEFT :
 			emit_signal("board_click", board_cell, board_cell.get_card_or_null())
 
+func _on_attack_enter(fight_state, player_number):
+	if player_number == 1:
+		_on_player_1_attack_enter(fight_state)
+	else:
+		_on_player_2_attack_enter(fight_state)
 
 func _on_player_1_attack_enter(fight_state):
 	for column_index in range(column_count):
