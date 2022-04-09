@@ -6,9 +6,8 @@ onready var health_label = $Health/count
 onready var attack_label = $Attack/count
 onready var image = $Image
 onready var symbols = $Symbols
-onready var cost_label = $Cost/count
 
-var y_pos = 345
+var y_pos = 274
 var positions_symbols = [Vector2(70, y_pos), Vector2(200, y_pos), Vector2(330, y_pos)]
 
 func draw_symbols(path, sym_id):
@@ -26,7 +25,6 @@ func update_to_card(card):
 	card_name_label.text = card.card_name
 	var params_text = ""
 	params_text += String(card.owner_number)
-	cost_label.text = String(card.play_cost.energy)
 	health_label.text = String(card.health)
 	attack_label.text = String(card.power)
 	var cur_symb_id = 0
