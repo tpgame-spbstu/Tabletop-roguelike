@@ -1,11 +1,17 @@
 extends Node
 
 
+signal player_1_win()
+signal player_2_win()
+
+
 var player_1_health setget set_player_1_health
 signal player_1_health_changed(player_1_health)
 func set_player_1_health(new_value):
 	player_1_health = new_value
 	emit_signal("player_1_health_changed", player_1_health)
+	if player_1_health <= 0:
+		emit_signal("player_2_win")
 
 
 var player_2_health setget set_player_2_health
@@ -13,6 +19,8 @@ signal player_2_health_changed(player_2_health)
 func set_player_2_health(new_value):
 	player_2_health = new_value
 	emit_signal("player_2_health_changed", player_2_health)
+	if player_2_health <= 0:
+		emit_signal("player_1_win")
 
 
 func reduse_enemy_health(attacker_number, delta):
@@ -20,6 +28,13 @@ func reduse_enemy_health(attacker_number, delta):
 		set_player_2_health(player_2_health - delta)
 	else:
 		set_player_1_health(player_1_health - delta)
+
+
+func reduse_player_health(player_number, delta):
+	if player_number == 1:
+		set_player_1_health(player_1_health - delta)
+	else:
+		set_player_2_health(player_2_health - delta)
 
 
 var loop_number = 0 setget set_loop_number

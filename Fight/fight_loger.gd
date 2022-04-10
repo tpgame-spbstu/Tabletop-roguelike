@@ -34,3 +34,23 @@ func _on_fight_state_player_2_place_and_move_enter():
 
 func _on_fight_state_player_2_attack_enter():
 	print("Changed state to PLAYER_2_ATTACK")
+
+
+func _on_human_player_state_energy_changed(energy):
+	print("Energy changed to %d" % energy)
+
+
+func _on_human_player_state_bones_changed(bones):
+	print("Bones changed to %d" % bones)
+
+
+func _on_human_player_state_extra_draws_count_changed(extra_draws_count):
+	print("extra_draws_count changed to %d" % extra_draws_count)
+
+
+func _on_fight_state_player_1_win():
+	print("player_1_win")
+
+
+func _on_fight_state_player_2_win():
+	print("player_2_win")

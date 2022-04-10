@@ -26,4 +26,12 @@ func start():
 
 
 func _on_button_exit_to_map_pressed():
-	emit_signal("return_to_map")
+	emit_signal("return_to_map", true)
+
+
+func _on_fight_state_player_1_win():
+	emit_signal("return_to_map", true)
+
+
+func _on_fight_state_player_2_win():
+	emit_signal("return_to_map", false)

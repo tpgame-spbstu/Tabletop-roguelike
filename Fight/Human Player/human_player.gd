@@ -2,7 +2,8 @@ extends Spatial
 
 onready var selector := $selector
 onready var hand := $hand
-onready var deck := $deck
+onready var main_deck := $main_deck
+onready var dummy_deck := $dummy_deck
 onready var human_player_state := $human_player_state
 
 var board
@@ -17,10 +18,12 @@ func initialize(fight_state, board, bell, deck_config, player_number, params):
 	self.fight_state = fight_state
 	self.board = board
 	self.player_number = player_number
-	board.connect("board_click", self, "_on_board_click")
-	hand.connect("hand_click", self, "_on_hand_click")
-	deck.initialize(deck_config, params["shuffle_seed"], player_number)
-	deck.connect("deck_click", self, "_on_deck_click")
+	board.connect("board_left_click", self, "_on_board_left_click")
+	hand.connect("hand_left_click", self, "_on_left_hand_click")
+	main_deck.initialize(deck_config, params["shuffle_seed"], player_number)
+	main_deck.connect("deck_click", self, "_on_deck_click")
+	dummy_deck.initialize(null, null, player_number)
+	dummy_deck.connect("deck_click", self, "_on_deck_click")
 	bell.connect("bell_click", self, "_on_bell_click")
 	fight_state.connect(fight_state.get_turn_state_signal(TurnState.DRAW_CARDS, player_number), 
 		self, "_on_draw_cards_enter")
@@ -45,7 +48,7 @@ func _on_attack_enter():
 	fight_state.next_state()
 
 
-func _on_board_click(board_cell, card):
+func _on_board_left_click(board_cell, card):
 	if !input_allowed:
 		return
 	if fight_state.active_player_number != player_number:
@@ -109,7 +112,7 @@ func play_card(board_cell, card_to_play):
 	board_cell.add_card(card_to_play)
 
 
-func _on_hand_click(hand_cell, card):
+func _on_left_hand_click(hand_cell, card):
 	if !input_allowed:
 		return
 	if fight_state.active_player_number != player_number:
@@ -136,7 +139,7 @@ func _on_deck_click(deck, card):
 	if fight_state.active_player_number != player_number:
 		return
 	if card == null:
-		return
+		fight_state.reduse_player_health(player_number, 1)
 	match fight_state.turn_state:
 		TurnState.DRAW_CARDS:
 			yield(draw_card(deck, card), "completed")

@@ -3,7 +3,8 @@ extends Spatial
 var rows_count
 var column_count
 
-signal board_click(board_cell, card)
+signal board_left_click(board_cell, card)
+signal board_right_click(board_cell, card)
 
 
 func initialize():
@@ -29,7 +30,9 @@ func _on_board_cell_input_event(board_cell, event):
 	if event is InputEventMouseButton:
 		var mouse_button_event := event as InputEventMouseButton
 		if mouse_button_event.pressed and mouse_button_event.button_index == BUTTON_LEFT :
-			emit_signal("board_click", board_cell, board_cell.get_card_or_null())
+			emit_signal("board_left_click", board_cell, board_cell.get_card_or_null())
+		elif mouse_button_event.pressed and mouse_button_event.button_index == BUTTON_RIGHT :
+			emit_signal("board_right_click", board_cell, board_cell.get_card_or_null())
 
 func _on_attack_enter(fight_state, player_number):
 	if player_number == 1:

@@ -99,7 +99,10 @@ func _on_map_point_click(map_point):
 		get_parent().add_child(cur_location_scene)
 		cur_location_scene.initialize(game_config.deck_config, game_config.inventory_config, map_config.current_map_location.params)
 		self.hide()
-		yield(cur_location_scene, "return_to_map")
+		var is_win = yield(cur_location_scene, "return_to_map")
 		cur_location_scene.queue_free()
 		self.show()
 		get_node("character/Camera").make_current()
+		if !is_win:
+			emit_signal("return_to_main_menu")
+		GameLoadManager.save_game(game_config)
