@@ -17,7 +17,7 @@ var animation = null
 const player_attack_direction = {1: 1, 2: -1}
 
 onready var card_visuals_2d = $card_visuals/Viewport/card_visuals_2d
-
+onready var unit_visuals_2d = $unit_visuals2/Viewport/unit_visuals_2d
 
 signal animation_ended()
 
@@ -38,6 +38,7 @@ func initialize(card_config, owner_number):
 	health = card_config.health
 	power = card_config.power
 	card_visuals_2d.update_to_card(self)
+	unit_visuals_2d.update_to_card(self)
 
 
 func _process(delta):
