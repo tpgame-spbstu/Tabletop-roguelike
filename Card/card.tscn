@@ -55,7 +55,6 @@ transparent_bg = true
 gui_disable_input = true
 
 [node name="unit_visuals_2d" parent="unit_visuals2/Viewport" instance=ExtResource( 3 )]
-visible = false
 script = ExtResource( 4 )
 
 [node name="Sprite3D" type="Sprite3D" parent="unit_visuals2"]

@@ -18,9 +18,9 @@ func get_symbol_copy(symbol_name):
 	return symbol_dictionary[symbol_name].get_copy()
 	
 func _ready():
-	var fast_symbol = Symbol.new("fast", "res://symbols_images/Icon7.png", "Передвижение дешевле на 1 энергию.", true, true)
-	var slow_symbol = Symbol.new("slow", "res://symbols_images/Icon7.png", "Передвижение дороже на 1 энергию.", true, true)
-	var range_symbol = Symbol.new("range", "res://symbols_images/Icon7.png", "Атака на одну клетку дальше.", true, true)
+	var fast_symbol = Symbol.new("fast", "res://Symbols/Textures/sym_fast.tres", "Передвижение дешевле на 1 энергию.", true, true)
+	var slow_symbol = Symbol.new("slow", "res://Symbols/Textures/sym_fast.tres", "Передвижение дороже на 1 энергию.", true, true)
+	var range_symbol = Symbol.new("range", "res://Symbols/Textures/sym_fast.tres", "Атака на одну клетку дальше.", true, true)
 	list_symbol(fast_symbol)
 	list_symbol(slow_symbol)
 	list_symbol(range_symbol)
