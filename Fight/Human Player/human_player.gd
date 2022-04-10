@@ -8,21 +8,23 @@ onready var human_player_state := $human_player_state
 
 var board
 var fight_state
+var fight_global_signals
 var player_number
 
 var input_allowed := true
 
 var TurnState := preload("res://Fight/fight_state.gd").TurnState
 
-func initialize(fight_state, board, bell, deck_config, player_number, params):
+func initialize(fight_state, fight_global_signals, board, bell, deck_config, player_number, params):
 	self.fight_state = fight_state
+	self.fight_global_signals = fight_global_signals
 	self.board = board
 	self.player_number = player_number
 	board.connect("board_left_click", self, "_on_board_left_click")
 	hand.connect("hand_left_click", self, "_on_left_hand_click")
-	main_deck.initialize(deck_config, params["shuffle_seed"], player_number)
+	main_deck.initialize(fight_global_signals, deck_config, params["shuffle_seed"], player_number)
 	main_deck.connect("deck_click", self, "_on_deck_click")
-	dummy_deck.initialize(null, null, player_number)
+	dummy_deck.initialize(fight_global_signals, null, null, player_number)
 	dummy_deck.connect("deck_click", self, "_on_deck_click")
 	bell.connect("bell_click", self, "_on_bell_click")
 	fight_state.connect(fight_state.get_turn_state_signal(TurnState.DRAW_CARDS, player_number), 
@@ -60,8 +62,13 @@ func _on_board_left_click(board_cell, card):
 			return
 		if !board_cell.is_friendly_base(player_number):
 			return
-		human_player_state.card_to_play.play_cost.pay(human_player_state)
-		yield(play_card(board_cell, human_player_state.card_to_play), "completed")
+		var card_to_play = human_player_state.card_to_play
+		card_to_play.play_cost.pay(human_player_state)
+		hand.remove_card(card_to_play.get_hand_cell_or_null(), card_to_play)
+		self.add_child(card_to_play)
+		input_allowed = false
+		yield(board.play_card(hand, board_cell, card_to_play), "completed")
+		input_allowed = true
 		human_player_state.card_to_play = null
 		selector.set_state("hide")
 	elif human_player_state.card_to_move != null:
@@ -75,7 +82,9 @@ func _on_board_left_click(board_cell, card):
 		if !move_cost.is_obtainable(human_player_state):
 			return
 		move_cost.pay(human_player_state)
-		yield(move_card(board_cell, human_player_state.card_to_move), "completed")
+		input_allowed = false
+		yield(board.move_card(board_cell, human_player_state.card_to_move), "completed")
+		input_allowed = true
 		human_player_state.card_to_move = null
 		selector.set_state("hide")
 	else:
@@ -88,28 +97,6 @@ func _on_board_left_click(board_cell, card):
 		selector.set_state("move")
 
 
-func move_card(board_cell, card_to_move):
-	var prev_board_cell = card_to_move.get_board_cell_or_null()
-	assert(prev_board_cell != null)
-	card_to_move.animation = LinMoveAnimation.new(prev_board_cell.global_transform, 
-		board_cell.global_transform, 0.1, card_to_move)
-	input_allowed = false
-	yield(card_to_move, "animation_ended")
-	input_allowed = true
-	prev_board_cell.remove_card(card_to_move)
-	board_cell.add_card(card_to_move)
-
-
-func play_card(board_cell, card_to_play):
-	var hand_cell = card_to_play.get_hand_cell_or_null()
-	assert(hand_cell != null)
-	card_to_play.animation = LinMoveAnimation.new(hand_cell.global_transform, 
-		board_cell.global_transform, 0.1, card_to_play)
-	input_allowed = false
-	yield(card_to_play, "animation_ended")
-	input_allowed = true
-	hand.remove_card(hand_cell, card_to_play)
-	board_cell.add_card(card_to_play)
 
 
 func _on_left_hand_click(hand_cell, card):
@@ -148,7 +135,7 @@ func _on_deck_click(deck, card):
 			if human_player_state.extra_draw_cost.is_obtainable(human_player_state) && human_player_state.extra_draws_count > 0:
 				human_player_state.extra_draw_cost.pay(human_player_state)
 				human_player_state.extra_draws_count -= 1
-				draw_card(deck, card)
+				yield(draw_card(deck, card), "completed")
 
 
 func draw_card(deck, card):

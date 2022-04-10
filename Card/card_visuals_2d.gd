@@ -34,7 +34,10 @@ func set_platform_color(card_owner):
 func update_to_card(card):
 	card_name_label.text = card.card_name
 	self.set_platform_color(card.owner_number)
-	cost_label.text = String(card.play_cost.energy)
+	if card.play_cost != null:
+		cost_label.text = String(card.play_cost.energy)
+	else:
+		cost_label.text = ""
 	health_label.text = String(card.health)
 	attack_label.text = String(card.power)
 	for prev_symbol in symbols.get_children():

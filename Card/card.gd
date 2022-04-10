@@ -16,13 +16,16 @@ var power : int
 var animation = null
 const player_attack_direction = {1: 1, 2: -1}
 
+var fight_global_signals
+
 onready var card_visuals_2d = $card_visuals/Viewport/card_visuals_2d
 onready var unit_visuals_2d = $unit_visuals2/Viewport/unit_visuals_2d
 
 signal animation_ended()
 
 
-func initialize(card_config, owner_number):
+func initialize(card_config, owner_number, fight_global_signals):
+	self.fight_global_signals = fight_global_signals
 	self.owner_number = owner_number
 	src_config = card_config
 	card_name = card_config.card_name
@@ -63,6 +66,7 @@ func reduce_health(delta):
 	card_visuals_2d.update_to_card(self)
 	if health <= 0:
 		get_parent().remove_child(self)
+		
 		queue_free()
 
 
