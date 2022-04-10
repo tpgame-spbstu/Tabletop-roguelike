@@ -1,7 +1,6 @@
 extends Control
 
 onready var card_name_label = $Card_name
-onready var card_params_label = $card_params_label
 onready var health_label = $Health/count
 onready var attack_label = $Attack/count
 onready var image = $Image
