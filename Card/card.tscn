@@ -42,7 +42,7 @@ transform = Transform( -0.4, -6.03983e-08, 2.64009e-15, 0, -1.74846e-08, -0.4, 6
 pixel_size = 0.005
 texture = SubResource( 5 )
 
-[node name="MeshInstance" type="MeshInstance" parent="card_visuals"]
+[node name="platform" type="MeshInstance" parent="card_visuals"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 4 )
 
@@ -62,6 +62,6 @@ transform = Transform( -0.4, -3.49691e-08, 1.52855e-15, 0, -1.74846e-08, -0.4, 3
 pixel_size = 0.005
 texture = SubResource( 6 )
 
-[node name="MeshInstance" type="MeshInstance" parent="unit_visuals2"]
+[node name="platform" type="MeshInstance" parent="unit_visuals2"]
 mesh = SubResource( 8 )
 material/0 = null

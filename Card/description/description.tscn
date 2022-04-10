@@ -1,0 +1,164 @@
+[gd_scene load_steps=17 format=2]
+
+[ext_resource path="res://fonts/Wanted.otf" type="DynamicFontData" id=1]
+[ext_resource path="res://Symbols/Textures/attack.tres" type="Texture" id=2]
+[ext_resource path="res://Symbols/Textures/energy.tres" type="Texture" id=3]
+[ext_resource path="res://Symbols/Textures/health.tres" type="Texture" id=4]
+[ext_resource path="res://Card/description/one_symbol.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Card/description/description.gd" type="Script" id=7]
+
+[sub_resource type="CubeMesh" id=16]
+size = Vector3( 300, 270, 2 )
+
+[sub_resource type="SpatialMaterial" id=17]
+albedo_color = Color( 0.619608, 0.352941, 0.352941, 1 )
+
+[sub_resource type="Shader" id=18]
+
+[sub_resource type="ShaderMaterial" id=19]
+next_pass = SubResource( 17 )
+shader = SubResource( 18 )
+
+[sub_resource type="DynamicFont" id=20]
+size = 40
+font_data = ExtResource( 1 )
+
+[sub_resource type="Theme" id=21]
+default_font = SubResource( 20 )
+
+[sub_resource type="DynamicFont" id=15]
+size = 100
+font_data = ExtResource( 1 )
+
+[sub_resource type="Theme" id=22]
+default_font = SubResource( 15 )
+
+[sub_resource type="DynamicFont" id=1]
+size = 90
+font_data = ExtResource( 1 )
+
+[sub_resource type="Theme" id=23]
+default_font = SubResource( 1 )
+
+[node name="description" type="Control"]
+margin_right = 40.0
+margin_bottom = 40.0
+script = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ReferenceRect" type="ReferenceRect" parent="."]
+margin_right = 1000.0
+margin_bottom = 500.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Image" type="MeshInstance2D" parent="."]
+position = Vector2( 201, 221 )
+mesh = SubResource( 16 )
+
+[node name="card_name" type="Label" parent="."]
+material = SubResource( 19 )
+margin_left = 87.0
+margin_top = 17.0
+margin_right = 938.0
+margin_bottom = 72.0
+theme = SubResource( 21 )
+text = "Card_name"
+align = 1
+valign = 1
+uppercase = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="detailed_symbols" type="Control" parent="."]
+margin_left = 435.0
+margin_top = 87.0
+margin_right = 995.0
+margin_bottom = 467.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Symbol" parent="detailed_symbols" instance=ExtResource( 5 )]
+visible = false
+
+[node name="Cost" type="Control" parent="."]
+margin_left = 164.0
+margin_top = 449.0
+margin_right = 164.0
+margin_bottom = 449.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="Cost"]
+position = Vector2( 58, 4.00001 )
+scale = Vector2( 0.815937, 0.887024 )
+texture = ExtResource( 3 )
+
+[node name="count" type="Label" parent="Cost"]
+margin_left = -4.0
+margin_top = -66.0
+margin_right = 37.0
+margin_bottom = 52.0
+theme = SubResource( 22 )
+text = "5"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Health" type="Control" parent="."]
+margin_left = 331.0
+margin_top = 421.0
+margin_right = 381.0
+margin_bottom = 471.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="Health"]
+position = Vector2( 16, 21 )
+scale = Vector2( 1.59375, 1.59375 )
+texture = ExtResource( 4 )
+
+[node name="count" type="Label" parent="Health"]
+margin_top = -26.0
+margin_right = 37.0
+margin_bottom = 80.0
+theme = SubResource( 23 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "5"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Attack" type="Control" parent="."]
+margin_left = 2.0
+margin_top = 426.0
+margin_right = 52.0
+margin_bottom = 476.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="Attack"]
+position = Vector2( 1, -26 )
+scale = Vector2( 2.27679, 2.17949 )
+texture = ExtResource( 2 )
+centered = false
+
+[node name="count" type="Label" parent="Attack"]
+margin_left = 25.0
+margin_top = -34.0
+margin_right = 62.0
+margin_bottom = 72.0
+theme = SubResource( 23 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "5"
+__meta__ = {
+"_edit_use_anchors_": false
+}

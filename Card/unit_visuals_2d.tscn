@@ -1,8 +1,10 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://fonts/fantazer.otf" type="DynamicFontData" id=1]
 [ext_resource path="res://fonts/Wanted.otf" type="DynamicFontData" id=2]
-[ext_resource path="res://Symbols/Textures/sym_fast.tres" type="Texture" id=3]
+[ext_resource path="res://Symbols/Textures/attack.tres" type="Texture" id=3]
+[ext_resource path="res://Symbols/Textures/speed.tres" type="Texture" id=4]
+[ext_resource path="res://Symbols/Textures/health.tres" type="Texture" id=5]
 
 [sub_resource type="DynamicFont" id=17]
 size = 42
@@ -18,13 +20,13 @@ font_data = ExtResource( 1 )
 [sub_resource type="Theme" id=13]
 default_font = SubResource( 4 )
 
-[sub_resource type="DynamicFont" id=1]
-size = 58
+[sub_resource type="DynamicFont" id=19]
+size = 69
 outline_color = Color( 0.74902, 0.121569, 0.121569, 1 )
 font_data = ExtResource( 2 )
 
 [sub_resource type="Theme" id=12]
-default_font = SubResource( 1 )
+default_font = SubResource( 19 )
 
 [node name="Node2D" type="Control"]
 margin_right = 400.0
@@ -94,16 +96,16 @@ __meta__ = {
 }
 
 [node name="Sprite" type="Sprite" parent="Health"]
-scale = Vector2( 1.828, 1.903 )
-texture = ExtResource( 3 )
-centered = false
+position = Vector2( 14, 19 )
+scale = Vector2( 1.46875, 1.46875 )
+texture = ExtResource( 5 )
 
 [node name="count" type="Label" parent="Health"]
-margin_left = 16.0
-margin_right = 40.0
-margin_bottom = 69.0
+margin_top = -16.0
+margin_right = 28.0
+margin_bottom = 66.0
 theme = SubResource( 12 )
-custom_colors/font_color = Color( 0.00392157, 0.00392157, 0.00392157, 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "5"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -118,19 +120,27 @@ __meta__ = {
 }
 
 [node name="Sprite" type="Sprite" parent="Attack"]
-scale = Vector2( 1.828, 1.903 )
+position = Vector2( 1, -22 )
+scale = Vector2( 2.07692, 2.07692 )
 texture = ExtResource( 3 )
 centered = false
 
 [node name="count" type="Label" parent="Attack"]
-margin_left = 16.0
-margin_right = 40.0
-margin_bottom = 69.0
+margin_left = 26.0
+margin_top = -17.0
+margin_right = 54.0
+margin_bottom = 65.0
 theme = SubResource( 12 )
-custom_colors/font_color = Color( 0.00392157, 0.00392157, 0.00392157, 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "5"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Symbols" type="Node2D" parent="."]
+
+[node name="Sprite" type="Sprite" parent="Symbols"]
+visible = false
+position = Vector2( 55, 263 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 4 )

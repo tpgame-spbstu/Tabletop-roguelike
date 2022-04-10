@@ -1,0 +1,44 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://fonts/IdealGothic Bold.otf" type="DynamicFontData" id=1]
+
+[sub_resource type="DynamicFont" id=24]
+font_data = ExtResource( 1 )
+
+[sub_resource type="Theme" id=25]
+default_font = SubResource( 24 )
+
+[sub_resource type="DynamicFont" id=26]
+font_data = ExtResource( 1 )
+
+[sub_resource type="Theme" id=27]
+default_font = SubResource( 26 )
+
+[node name="Symbol" type="Node2D"]
+
+[node name="name" type="Label" parent="."]
+margin_left = 90.0
+margin_top = 3.0
+margin_right = 550.0
+margin_bottom = 25.0
+theme = SubResource( 25 )
+text = "NAME"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="details" type="Label" parent="."]
+margin_left = 90.0
+margin_top = 33.0
+margin_right = 550.0
+margin_bottom = 76.0
+theme = SubResource( 27 )
+text = "DESCRIPTION"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="sprite" type="Sprite" parent="."]
+position = Vector2( 38, 40 )
+scale = Vector2( 2.5, 2.5 )
