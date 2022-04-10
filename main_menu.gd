@@ -36,12 +36,14 @@ func _on_continue_pressed():
 	var gameConfig = GameLoadManager.load_game()
 	var mapScene = preload("res://Map/map.tscn").instance()
 	self.get_parent().add_child(mapScene)
+	$AudioStreamPlayer.playing = false
 	self.hide()
 	mapScene.initialize(gameConfig)
 	yield(mapScene,"return_to_main_menu")
 	print("ok")
 	mapScene.queue_free()
 	self.show()
+	$AudioStreamPlayer.playing = true
 	
 func _on_option_pressed():
 	$main.hide()

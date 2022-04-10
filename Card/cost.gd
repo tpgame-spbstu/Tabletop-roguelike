@@ -11,11 +11,11 @@ func _init(energy : int, bones : int, blood : int):
 	self.bones = bones
 	self.blood = blood
 
-func is_obtainable(fight_state):
-	return fight_state.energy >= energy
+func is_obtainable(human_player_state):
+	return human_player_state.energy >= energy
 
-func pay(fight_state):
-	fight_state.energy -= energy
+func pay(human_player_state):
+	human_player_state.energy -= energy
 
 func get_copy():
 	return get_script().new(energy, bones, blood)

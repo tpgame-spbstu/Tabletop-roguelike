@@ -2,7 +2,8 @@ extends Spatial
 
 var Card = preload("res://Card/card.gd")
 
-signal hand_click(hand_cell, card)
+signal hand_left_click(hand_cell, card)
+signal hand_right_click(hand_cell, card)
 
 
 func rearange():
@@ -16,7 +17,7 @@ func rearange():
 
 
 func add_card(card):
-	var hand_cell = load("res://Fight/hand_cell.tscn").instance()
+	var hand_cell = load("res://Fight/Human Player/hand_cell.tscn").instance()
 	add_child(hand_cell)
 	hand_cell.connect("input_event", self, "_on_hand_cell_input_event")
 	rearange()
@@ -42,4 +43,12 @@ func _on_hand_cell_input_event(hand_cell, event):
 				if child is Card:
 					card = child
 					break
-			emit_signal("hand_click", hand_cell, card)
+			emit_signal("hand_left_click", hand_cell, card)
+		elif mouse_button_event.pressed and mouse_button_event.button_index == BUTTON_RIGHT :
+			var card = null
+			for child in hand_cell.get_children():
+				if child is Card:
+					card = child
+					break
+			emit_signal("hand_right_click", hand_cell, card)
+		

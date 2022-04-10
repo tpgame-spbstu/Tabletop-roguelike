@@ -3,7 +3,7 @@ extends Spatial
 enum {DECK, HAND, BOARD}
 
 var BoardCell := load("res://Fight/board_cell.gd") as Script
-var HandCell := load("res://Fight/hand_cell.gd") as Script
+var HandCell := load("res://Fight/Human Player/hand_cell.gd") as Script
 var CardConfig := load("res://Card/card_config.gd")
 export var owner_number : int
 var common_symbols : Dictionary
