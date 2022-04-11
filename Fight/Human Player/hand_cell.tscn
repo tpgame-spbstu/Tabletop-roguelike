@@ -1,6 +1,7 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://Fight/hand_cell.gd" type="Script" id=1]
+[ext_resource path="res://Fight/Human Player/hand_cell.gd" type="Script" id=1]
+
 
 [sub_resource type="BoxShape" id=4]
 extents = Vector3( 0.4, 0.02, 0.5 )

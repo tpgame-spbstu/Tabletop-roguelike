@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Sacrifice_location/cell_sacrifice_loc.gd" type="Script" id=1]
+
+[sub_resource type="BoxShape" id=9]
+extents = Vector3( 0.455, 0.014, 0.454 )
+
+[node name="Spatial" type="Spatial"]
+script = ExtResource( 1 )
+
+[node name="cell" type="Area" parent="."]
+
+[node name="CollisionShape" type="CollisionShape" parent="cell"]
+shape = SubResource( 9 )
+
+[connection signal="input_event" from="cell" to="." method="_on_cell_input_event"]
