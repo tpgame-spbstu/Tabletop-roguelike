@@ -61,13 +61,27 @@ func get_hand_cell_or_null():
 	return parent if HandCell.instance_has(parent) else null
 
 
-func reduce_health(delta):
+func reduce_health(delta, fight_state):
 	health -= delta
 	card_visuals_2d.update_to_card(self)
 	if health <= 0:
-		get_parent().remove_child(self)
-		
-		queue_free()
+		die()
+		return
+	if has_symbol("counterattack"):
+		process_attack(fight_state)
+
+
+func die():
+	get_parent().remove_child(self)
+	fight_global_signals.emit_signal("card_is_dead", get_board_cell_or_null(), self)
+	queue_free()
+
+
+func get_attack_power():
+	var attack_power = power
+	if has_symbol("weakening effect"):
+		attack_power -= 1
+	return attack_power
 
 
 func process_attack(fight_state):
@@ -79,18 +93,18 @@ func process_attack(fight_state):
 	var target_board_cell = board_cell.get_relative_board_cell(attack_range * player_attack_direction[owner_number], 0)
 	if target_board_cell == null:
 		return
-	if BoardCell.instance_has(target_board_cell):
+	if typeof(target_board_cell) != TYPE_INT:
 		var target_card = target_board_cell.get_card_or_null()
 		if target_card == null:
 			if target_board_cell.is_enemy_base(owner_number):
-				fight_state.reduse_enemy_health(owner_number, power)
+				fight_state.reduse_enemy_health(owner_number, get_attack_power())
 			return
 		if target_card.owner_number == owner_number:
 			return
-		target_card.reduce_health(power)
+		target_card.reduce_health(get_attack_power(), fight_state)
 	else:
 		if target_board_cell != owner_number:
-			fight_state.reduse_enemy_health(owner_number, power)
+			fight_state.reduse_enemy_health(owner_number, get_attack_power())
 		
 
 
@@ -117,11 +131,26 @@ func get_move_cost_or_null(target_board_cell):
 	else:
 		return Cost.new(2 + delta, 0, 0)
 
+
 func get_symbol_or_null(symbol_name):
-	var symbol = common_symbols[symbol_name]
+	var symbol = common_symbols.get(symbol_name)
 	if symbol == null:
-		symbol = mod_symbols[symbol_name]
+		symbol = mod_symbols.get(symbol_name)
 	return symbol
+
 
 func has_symbol(symbol_name):
 	return common_symbols.has(symbol_name) || mod_symbols.has(symbol_name)
+
+
+func add_symbol(symbol):
+	mod_symbols[symbol.symbol_name] = symbol
+	symbol.initialize(self)
+	card_visuals_2d.update_to_card(self)
+	unit_visuals_2d.update_to_card(self)
+
+
+func remove_symbol(symbol_name):
+	mod_symbols.erase(symbol_name)
+	card_visuals_2d.update_to_card(self)
+	unit_visuals_2d.update_to_card(self)

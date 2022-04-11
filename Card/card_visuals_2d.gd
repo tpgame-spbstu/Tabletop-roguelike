@@ -39,7 +39,7 @@ func update_to_card(card):
 	else:
 		cost_label.text = ""
 	health_label.text = String(card.health)
-	attack_label.text = String(card.power)
+	attack_label.text = String(card.get_attack_power())
 	for prev_symbol in symbols.get_children():
 		symbols.remove_child(prev_symbol)
 		prev_symbol.queue_free()

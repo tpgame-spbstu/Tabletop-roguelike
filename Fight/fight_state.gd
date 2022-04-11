@@ -91,5 +91,6 @@ func next_state():
 			set_state(TurnState.ATTACK, active_player_number)
 		TurnState.ATTACK:
 			var next_player = 2 if active_player_number == 1 else 1
-			set_loop_number(loop_number + 1)
+			if next_player == 1:
+				set_loop_number(loop_number + 1)
 			set_state(TurnState.DRAW_CARDS, next_player)
