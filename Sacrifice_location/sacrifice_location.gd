@@ -1,4 +1,4 @@
-extends "res://location.gd"
+extends "res://Map/Location/location.gd"
 
 onready var deck = $deck;
 onready var card_scene = preload("res://Card/card.tscn")
@@ -18,6 +18,7 @@ var cur_card
 
 func initialize(deck_config, inventory_config, params : Dictionary):
 	.initialize(deck_config, inventory_config, params)
+	$Camera.make_current()
 	self.fill_deck()
 	pass
 
@@ -84,11 +85,15 @@ func _on_Area_2_input_event(camera, event, position, normal, shape_idx):
 				pass
 
 func choice_symbol_to_move(card_config):
+	var symbols = []
 	for symb_name in card_config.common_symbols.keys():
-		# заглушка
 		if(card_config.common_symbols[symb_name].can_be_transferred):
-			return card_config.common_symbols[symb_name]
-	return null
+			symbols.append(card_config.common_symbols[symb_name])
+			# return card_config.common_symbols[symb_name]
+	for symb_name in card_config.mod_symbols.keys():
+		if(card_config.mod_symbols[symb_name].can_be_transferred):
+			symbols.append(card_config.mod_symbols[symb_name])
+	return symbols
 	
 func get_symbols_by_card(card):
 	return card.get_node("card_visuals/Viewport/card_visuals_2d").get_node("Symbols").get_children()
@@ -96,17 +101,19 @@ func get_symbols_by_card(card):
 var symbol_script = preload("res://Card/card_visuals_2d.gd")
 
 func move_symbols(config_from, config_to):
-	var symbol = choice_symbol_to_move(config_from)
-	config_from.common_symbols.erase(symbol.symbol_name)
-	config_to.mod_symbols[symbol.symbol_name] = symbol
-	
-	# move symbols on real map
-	symbol = choice_symbol_to_move(card_on_from)
-	card_on_from.common_symbols.erase(symbol.symbol_name)
-	card_on_to.mod_symbols[symbol.symbol_name] = symbol
-	card_on_from.card_visuals_2d.update_to_card(card_on_from)
-	card_on_to.card_visuals_2d.update_to_card(card_on_to)
-	
+	var symbols = choice_symbol_to_move(config_from)
+	for symbol in symbols:
+		config_from.common_symbols.erase(symbol.symbol_name)
+		config_to.mod_symbols[symbol.symbol_name] = symbol
+		
+		# move symbols on real map
+	symbols = choice_symbol_to_move(card_on_from)
+	for symbol in symbols:
+		card_on_from.common_symbols.erase(symbol.symbol_name)
+		card_on_to.mod_symbols[symbol.symbol_name] = symbol
+		card_on_from.card_visuals_2d.update_to_card(card_on_from)
+		card_on_to.card_visuals_2d.update_to_card(card_on_to)
+		
 	card_on_from.queue_free()
 	self.deck_config.cards.erase(config_from)
 	pass
@@ -124,3 +131,6 @@ func _on_Button_pressed():
 			
 	move_symbols(config_on_from, config_on_to)
 	pass
+
+func _on_Return_to_map_pressed():
+	emit_signal("return_to_map", true)

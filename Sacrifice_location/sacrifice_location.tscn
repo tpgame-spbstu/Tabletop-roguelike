@@ -82,16 +82,27 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.97997, -0.100362, 0 )
 mesh = SubResource( 9 )
 material/0 = null
 
-[node name="Button" type="Button" parent="."]
+[node name="Sacrifice" type="Button" parent="."]
 margin_left = 21.0
 margin_top = 18.0
-margin_right = 119.0
+margin_right = 124.0
 margin_bottom = 72.0
 text = "Sacrifice"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Return_to_map" type="Button" parent="."]
+margin_left = 21.0
+margin_top = 85.0
+margin_right = 124.0
+margin_bottom = 137.0
+text = "Return to map"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [connection signal="input_event" from="cell_from/Area_1" to="." method="_on_Area_1_input_event"]
 [connection signal="input_event" from="cell_to/Area_2" to="." method="_on_Area_2_input_event"]
-[connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]
+[connection signal="pressed" from="Sacrifice" to="." method="_on_Button_pressed"]
+[connection signal="pressed" from="Return_to_map" to="." method="_on_Return_to_map_pressed"]
