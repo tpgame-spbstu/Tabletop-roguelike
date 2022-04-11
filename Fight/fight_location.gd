@@ -2,10 +2,11 @@ extends "res://Map/Location/location.gd"
 
 onready var board := $board
 onready var player_1 := $human_player_1
-onready var player_2 := $temp_human_player_2
+onready var player_2 := $ai_player_2
 onready var bell := $bell
 onready var fight_state := $fight_state
 onready var fight_loger := $fight_loger
+onready var fight_global_signals := $fight_global_signals
 
 
 var TurnState := preload("res://Fight/fight_state.gd").TurnState
@@ -13,9 +14,9 @@ var TurnState := preload("res://Fight/fight_state.gd").TurnState
 func initialize(deck_config , inventory_config , params : Dictionary):
 	.initialize(deck_config , inventory_config , params)
 	$Camera.make_current()
-	board.initialize()
-	player_1.initialize(fight_state, board, bell, self.deck_config, 1, self.params)
-	player_2.initialize(fight_state, board, bell, self.deck_config, 2, self.params)
+	board.initialize(fight_global_signals)
+	player_1.initialize(fight_state, fight_global_signals, board, bell, self.deck_config, 1, self.params)
+	player_2.initialize(fight_state, fight_global_signals, board, 2, self.params)
 	start()
 
 func start():
