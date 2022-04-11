@@ -72,17 +72,6 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="card_params_label" type="Label" parent="."]
-visible = false
-margin_left = 218.0
-margin_top = 121.0
-margin_right = 303.0
-margin_bottom = 288.0
-theme = SubResource( 13 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="Image" type="Sprite" parent="."]
 position = Vector2( 199, 130.5 )
 

@@ -5,7 +5,16 @@ signal deck_click(deck, card)
 onready var deck_list := $deck_list
 var CardScene := preload("res://Card/card.tscn") as PackedScene
 
+
+var dummy_count = 7
+var dummy_card_config := preload("res://Card/card_config.gd").new("Чучело", Cost.new(0, 0, 0), [], [], 0, 1)
+
 func initialize(deck_config, shuffle_seed, owner_number):
+	
+	if deck_config == null:
+		for i in range(dummy_count):
+			add_new_card_to_bottom(dummy_card_config, owner_number)
+		return
 	
 	var local_card_list = deck_config.cards.duplicate() as Array
 	rand_seed(shuffle_seed)
