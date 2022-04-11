@@ -49,5 +49,7 @@ func _init(symbol_name, symbol_texture, symbol_description, is_visible, can_be_t
 
 func initialize(card):
 	.initialize(card)
+	if card.fight_global_signals == null:
+		return
 	card.fight_global_signals.connect("card_moved", self, "_on_card_moved")
 	card.fight_global_signals.connect("card_is_dead", self, "_on_card_is_dead")
