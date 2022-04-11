@@ -9,7 +9,7 @@ var power : int
 
 func _init(card_name, play_cost, common_symbol_names, mod_symbol_names, power, health):
 	self.card_name = card_name
-	self.play_cost = play_cost
+	self.play_cost = play_cost	
 	for symbol_name in common_symbol_names:
 		common_symbols[symbol_name] = SymbolManager.get_symbol_copy(symbol_name)
 	for symbol_name in mod_symbol_names:

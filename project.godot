@@ -46,10 +46,6 @@ run/main_scene="res://main_menu.tscn"
 GameSettings="*res://game_settings.gd"
 SymbolManager="*res://Symbols/symbol_manager.gd"
 
-[global]
-
-batching=true
-
 [physics]
 
 common/enable_pause_aware_picking=true
