@@ -2,16 +2,16 @@ extends Object
 
 class_name GameLoadManager
 
-
 static func get_temp_map_config():
 	var MapConfig = preload("res://Map/map_config.gd")
 	var MapLocation = preload("res://Map/Location/map_location.gd")
 
 	var fight_scene : String = "res://Fight/fight_location.tscn"
+	var sacrifice_scene : String = "res://Sacrifice_location/sacrifice_location.tscn"
 	var loc5 = MapLocation.new(fight_scene, {"shuffle_seed": 5}, Vector2(-1, 1))
 	var loc4 = MapLocation.new(fight_scene, {"shuffle_seed": 1}, Vector2(-1, 3))
 	var loc3 = MapLocation.new(fight_scene, {"shuffle_seed": 1337}, Vector2(1, 2))
-	var loc2 = MapLocation.new(fight_scene, {"shuffle_seed": 1337}, Vector2(1, 1))
+	var loc2 = MapLocation.new(sacrifice_scene, {}, Vector2(1, 1))
 	var loc1 = MapLocation.new("", {}, Vector2(0, 0))
 
 	# creating the graph `vertex`: [`available_vertexes`]

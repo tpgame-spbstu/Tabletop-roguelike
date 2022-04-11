@@ -7,6 +7,7 @@ onready var image = $Image
 onready var symbols = $Symbols
 onready var cost_label = $Cost/count
 onready var platform = get_node("../../platform")
+var symbols_name_arr : Array
 
 const PLAYER_1 = 1
 const PLAYER_2 = 2
@@ -43,10 +44,12 @@ func update_to_card(card):
 	var cur_symb_id = 0
 	for symbol_name in card.common_symbols.keys():
 		var path = card.common_symbols[symbol_name].symbol_texture
+		symbols_name_arr.append(symbol_name)
 		self.draw_symbols(path, cur_symb_id)
 		cur_symb_id += 1
 		
 	for symbol_name in card.mod_symbols.keys():
 		var path = card.mod_symbols[symbol_name].symbol_texture
+		symbols_name_arr.append(symbol_name)
 		self.draw_symbols(path, cur_symb_id)
 		cur_symb_id += 1
