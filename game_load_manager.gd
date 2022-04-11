@@ -2,11 +2,10 @@ extends Object
 
 class_name GameLoadManager
 
-
 static func get_temp_map_config():
 	var MapConfig = preload("res://map_config.gd")
 	var MapLocation = preload("res://map_location.gd")
-	var loc4 = MapLocation.new("res://Fight/fight_location.tscn", {"shuffle_seed": 5}, [], -1, 3)
+	var loc4 = MapLocation.new("res://Fight/fight_locat.tscn", {"shuffle_seed": 5}, [], -1, 3)
 	var loc3 = MapLocation.new("res://Fight/fight_location.tscn", {"shuffle_seed": 1}, [loc4], 1, 2)
 	var loc2 = MapLocation.new("res://Fight/fight_location.tscn", {"shuffle_seed": 1337}, [loc3], 1, 1)
 	var loc1 = MapLocation.new("", {}, [loc2], 0, 0)
