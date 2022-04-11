@@ -8,11 +8,43 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Reference",
+"class": "Cost",
+"language": "GDScript",
+"path": "res://Card/cost.gd"
+}, {
+"base": "Object",
+"class": "GameLoadManager",
+"language": "GDScript",
+"path": "res://game_load_manager.gd"
+}, {
+"base": "Reference",
+"class": "LinMoveAnimation",
+"language": "GDScript",
+"path": "res://Map/Character/lin_move_animation.gd"
+}, {
+"base": "Reference",
+"class": "Symbol",
+"language": "GDScript",
+"path": "res://Symbols/symbol.gd"
+} ]
+_global_script_class_icons={
+"Cost": "",
+"GameLoadManager": "",
+"LinMoveAnimation": "",
+"Symbol": ""
+}
+
 [application]
 
 config/name="Tabletop-roguelike"
-run/main_scene="res://MainMenuInterface.tscn"
-config/icon="res://icon.png"
+run/main_scene="res://main_menu.tscn"
+
+[autoload]
+
+GameSettings="*res://game_settings.gd"
+SymbolManager="*res://Symbols/symbol_manager.gd"
 
 [physics]
 

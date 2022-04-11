@@ -1,0 +1,43 @@
+[gd_scene load_steps=5 format=2]
+
+[sub_resource type="GDScript" id=39]
+script/source = "extends Area
+
+var map_location = null
+
+signal map_point_click(map_point)
+
+func initialize(map, map_location):
+	self.map_location = map_location
+	connect(\"map_point_click\", map, \"_on_map_point_click\")
+
+
+
+func _on_Point_input_event(camera, event, position, normal, shape_idx):
+	if event is InputEventMouseButton:
+		if event.get_button_mask() == BUTTON_LEFT:
+			emit_signal(\"map_point_click\", self)
+"
+
+[sub_resource type="BoxShape" id=36]
+extents = Vector3( 3, 0.15, 3 )
+
+[sub_resource type="SpatialMaterial" id=38]
+albedo_color = Color( 0.172549, 0, 0.184314, 1 )
+
+[sub_resource type="CubeMesh" id=37]
+material = SubResource( 38 )
+
+[node name="Point" type="Area"]
+script = SubResource( 39 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.999999, 0, 0, 0, 1, 0, 0, 0 )
+shape = SubResource( 36 )
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+transform = Transform( 3, 0, 0, 0, 0.15, 0, 0, 0, 3, 0, 0, 0 )
+mesh = SubResource( 37 )
+material/0 = null
+
+[connection signal="input_event" from="." to="." method="_on_Point_input_event"]
