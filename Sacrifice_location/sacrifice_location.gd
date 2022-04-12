@@ -46,7 +46,7 @@ func fill_deck():
 		
 		deck.add_child(cell)
 		cell.connect("input_event", self, "_on_card_input_event")
-		card.initialize(card_config, 1)
+		card.initialize(card_config, 1, null)
 		step += 1
 
 func _on_card_input_event(cell, event):
