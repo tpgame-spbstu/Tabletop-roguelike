@@ -10,7 +10,23 @@ signal map_point_click(map_point)
 func initialize(map, map_location):
 	self.map_location = map_location
 	connect(\"map_point_click\", map, \"_on_map_point_click\")
+	_set_textures(map_location.get_textures())
 
+
+func _set_textures(textures: Array):
+	var mesh = get_node(\"MeshInstance\")
+	# number of textures should be the >= than the number of surfaces
+	# if more, the excess ones will be ignored
+	if textures.size() >= mesh.get_surface_material_count():
+		for i in mesh.get_surface_material_count():
+			# if not duplicated, all other instances will share the same material
+			var mat = mesh.get_active_material(i).duplicate()
+			# iirc, texture is mixed with the color
+			# the white color shouldn't mess the texture img up
+			mat.set_albedo(Color(1, 1, 1, 1))
+			mat.set_texture(SpatialMaterial.TEXTURE_ALBEDO, load(textures[i]))
+			# it seems, get_active_material returns a copy, hence the need in reassignment
+			mesh.set_surface_material(i, mat)
 
 
 func _on_Point_input_event(camera, event, position, normal, shape_idx):
@@ -23,7 +39,7 @@ func _on_Point_input_event(camera, event, position, normal, shape_idx):
 extents = Vector3( 3, 0.15, 3 )
 
 [sub_resource type="SpatialMaterial" id=38]
-albedo_color = Color( 0.172549, 0, 0.184314, 1 )
+albedo_color = Color( 0.478431, 0.0901961, 0.0901961, 1 )
 
 [sub_resource type="CubeMesh" id=37]
 material = SubResource( 38 )
