@@ -43,7 +43,8 @@ static func get_temp_map_config():
 	var sacrifice_scene : String = "res://Sacrifice_location/sacrifice_location.tscn"
 	var loc5 = MapLocation.new(fight_scene, {"shuffle_seed": 5, "ai_card_queue": card_queue2}, Vector2(-1, 1))
 	var loc4 = MapLocation.new(fight_scene, {"shuffle_seed": 1, "ai_card_queue": card_queue3}, Vector2(-1, 3))
-	var loc3 = MapLocation.new(fight_scene, {"shuffle_seed": 1337, "ai_card_queue": card_queue2}, Vector2(1, 2))
+	var loc3 = MapLocation.new(fight_scene, {"shuffle_seed": 1337, "ai_card_queue": card_queue2}, Vector2(1, 2),
+		["res://Map/Location/point_textures/texture_cheese_albedo.png", "res://Map/Location/point_textures/texture_cheese_albedo.png"])
 	var loc2 = MapLocation.new(sacrifice_scene, {}, Vector2(1, 1))
 	var loc1 = MapLocation.new("", {}, Vector2(0, 0))
 
