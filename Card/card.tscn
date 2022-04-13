@@ -32,6 +32,8 @@ script = ExtResource( 1 )
 [node name="Viewport" type="Viewport" parent="card_visuals"]
 size = Vector2( 400, 500 )
 transparent_bg = true
+msaa = 3
+sharpen_intensity = 0.5
 render_target_update_mode = 3
 gui_disable_input = true
 
@@ -39,6 +41,7 @@ gui_disable_input = true
 
 [node name="Sprite3D" type="Sprite3D" parent="card_visuals"]
 transform = Transform( -0.4, -6.03983e-08, 2.64009e-15, 0, -1.74846e-08, -0.4, 6.03983e-08, -0.4, 1.74846e-08, 0, 0.03, 0 )
+portal_mode = 1
 pixel_size = 0.005
 texture = SubResource( 5 )
 
