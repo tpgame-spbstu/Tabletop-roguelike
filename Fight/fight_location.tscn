@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Fight/fight_location.gd" type="Script" id=1]
 [ext_resource path="res://Fight/ai_player.gd" type="Script" id=2]
@@ -10,7 +10,6 @@
 [ext_resource path="res://Fight/Camera.gd" type="Script" id=9]
 [ext_resource path="res://Fight/Human Player/human_player.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Fight/fight_loger.gd" type="Script" id=12]
-[ext_resource path="res://Fight/Human Player/human_player_state.gd" type="Script" id=13]
 [ext_resource path="res://Fight/fight_location_ui.gd" type="Script" id=14]
 [ext_resource path="res://fonts/Wanted.otf" type="DynamicFontData" id=15]
 [ext_resource path="res://fonts/IdealGothic Bold.otf" type="DynamicFontData" id=16]
@@ -20,15 +19,6 @@ extents = Vector3( 0.5, 0.5, 0.5 )
 
 [sub_resource type="CubeMesh" id=6]
 size = Vector3( 1, 1, 1 )
-
-[sub_resource type="CubeMesh" id=1]
-
-[sub_resource type="SpatialMaterial" id=2]
-flags_transparent = true
-albedo_color = Color( 1, 1, 0, 0.501961 )
-
-[sub_resource type="BoxShape" id=4]
-extents = Vector3( 0.45, 0.1, 0.5 )
 
 [sub_resource type="DynamicFont" id=7]
 size = 34

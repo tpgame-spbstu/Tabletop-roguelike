@@ -20,9 +20,9 @@ func initialize(fight_global_signals):
 
 func get_board_cell(row_index, column_index):
 	if row_index < 0:
-		return 2
-	if row_index >= rows_count:
 		return 1
+	if row_index >= rows_count:
+		return 2
 	if column_index < 0 or column_index >= column_count:
 		return null
 	return get_child(row_index).get_child(column_index)
@@ -81,18 +81,20 @@ func _on_player_2_attack_enter(fight_state):
 func move_card(board_cell, card_to_move):
 	var prev_board_cell = card_to_move.get_board_cell_or_null()
 	assert(prev_board_cell != null)
-	card_to_move.animation = LinMoveAnimation.new(prev_board_cell.global_transform, 
+	var animation = LinMoveAnimation.new(prev_board_cell.global_transform, 
 		board_cell.global_transform, 0.1, card_to_move)
-	yield(card_to_move, "animation_ended")
+	AnimationManager.add_animation(animation)
+	yield(animation, "animation_ended")
 	prev_board_cell.remove_card(card_to_move)
 	board_cell.add_card(card_to_move)
 	fight_global_signals.emit_signal("card_moved", prev_board_cell, board_cell, card_to_move)
 
 
 func play_card(start_point, board_cell, card_to_play):
-	card_to_play.animation = LinMoveAnimation.new(start_point.global_transform, 
+	var animation = LinMoveAnimation.new(start_point.global_transform, 
 		board_cell.global_transform, 0.1, card_to_play)
-	yield(card_to_play, "animation_ended")
+	AnimationManager.add_animation(animation)
+	yield(animation, "animation_ended")
 	card_to_play.get_parent().remove_child(card_to_play)
 	board_cell.add_card(card_to_play)
 	fight_global_signals.emit_signal("card_played", board_cell, card_to_play)

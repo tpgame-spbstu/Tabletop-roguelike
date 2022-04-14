@@ -5,50 +5,28 @@ enum {DECK, HAND, BOARD}
 var BoardCell := load("res://Fight/board_cell.gd") as Script
 var HandCell := load("res://Fight/Human Player/hand_cell.gd") as Script
 var CardConfig := load("res://Card/card_config.gd")
-export var owner_number : int
-var common_symbols : Dictionary
-var mod_symbols : Dictionary
+
+var owner_number
 var src_config
-var card_name : String
-var play_cost : Cost
-export var health : int
-var power : int
-var animation = null
+var card_config
+
 const player_attack_direction = {1: 1, 2: -1}
 
 var fight_global_signals
 
-onready var card_visuals_2d = $card_visuals/Viewport/card_visuals_2d
-onready var unit_visuals_2d = $unit_visuals2/Viewport/unit_visuals_2d
-
-signal animation_ended()
+onready var card_visuals = $card_visuals
+onready var unit_visuals = $unit_visuals
 
 
 func initialize(card_config, owner_number, fight_global_signals):
 	self.fight_global_signals = fight_global_signals
 	self.owner_number = owner_number
-	src_config = card_config
-	card_name = card_config.card_name
-	play_cost = card_config.play_cost
-	for symbol_name in card_config.common_symbols:
-		var symbol = SymbolManager.get_symbol_copy(symbol_name)
-		common_symbols[symbol_name] = symbol
-		symbol.initialize(self)
-	for symbol_name in card_config.mod_symbols:
-		var symbol = SymbolManager.get_symbol_copy(symbol_name)
-		mod_symbols[symbol_name] = symbol
-		symbol.initialize(self)
-	health = card_config.health
-	power = card_config.power
-	card_visuals_2d.update_to_card(self)
-	unit_visuals_2d.update_to_card(self)
-
-
-func _process(delta):
-	if animation != null:
-		if animation.process(delta):
-			animation = null
-			emit_signal("animation_ended")
+	self.src_config = card_config
+	self.card_config = card_config.get_copy()
+	self.card_config.initialize_symbols(self)
+	card_visuals.initialize(self.card_config, owner_number)
+	unit_visuals.initialize(self.card_config, owner_number)
+	fight_global_signals.connect("card_played", self, "_on_card_played")
 
 
 func get_board_cell_or_null():
@@ -62,13 +40,19 @@ func get_hand_cell_or_null():
 
 
 func reduce_health(delta, fight_state):
-	health -= delta
-	card_visuals_2d.update_to_card(self)
-	if health <= 0:
+	card_config.health -= delta
+	card_visuals.update()
+	if card_config.health <= 0:
 		die()
 		return
 	if has_symbol("counterattack"):
 		process_attack(fight_state)
+
+
+func _on_card_played(board_cell, card):
+	if card == self:
+		card_visuals.hide()
+		unit_visuals.show()
 
 
 func die():
@@ -77,34 +61,29 @@ func die():
 	queue_free()
 
 
-func get_attack_power():
-	var attack_power = power
-	if has_symbol("weakening effect"):
-		attack_power -= 1
-	return attack_power
-
-
 func process_attack(fight_state):
 	var board_cell = get_board_cell_or_null()
 	assert(board_cell != null)
+	if card_config.power <= 0:
+		return
 	var attack_range = 1
 	if has_symbol("range"):
 		attack_range += 1
 	var target_board_cell = board_cell.get_relative_board_cell(attack_range * player_attack_direction[owner_number], 0)
 	if target_board_cell == null:
 		return
-	if typeof(target_board_cell) != TYPE_INT:
-		var target_card = target_board_cell.get_card_or_null()
-		if target_card == null:
-			if target_board_cell.is_enemy_base(owner_number):
-				fight_state.reduse_enemy_health(owner_number, get_attack_power())
-			return
-		if target_card.owner_number == owner_number:
-			return
-		target_card.reduce_health(get_attack_power(), fight_state)
-	else:
+	if typeof(target_board_cell) == TYPE_INT:
 		if target_board_cell != owner_number:
-			fight_state.reduse_enemy_health(owner_number, get_attack_power())
+			fight_state.reduse_enemy_health(owner_number, card_config.power)
+		return
+	var target_card = target_board_cell.get_card_or_null()
+	if target_card == null:
+		if target_board_cell.is_enemy_base(owner_number):
+			fight_state.reduse_enemy_health(owner_number, card_config.power)
+		return
+	if target_card.owner_number == owner_number:
+		return
+	target_card.reduce_health(card_config.power, fight_state)
 		
 
 
@@ -133,24 +112,39 @@ func get_move_cost_or_null(target_board_cell):
 
 
 func get_symbol_or_null(symbol_name):
-	var symbol = common_symbols.get(symbol_name)
-	if symbol == null:
-		symbol = mod_symbols.get(symbol_name)
-	return symbol
+	for symbol in card_config.common_symbols:
+		if symbol.symbol_name == symbol_name:
+			return symbol
+	for symbol in card_config.mod_symbols:
+		if symbol.symbol_name == symbol_name:
+			return symbol
+	for symbol in card_config.effect_symbols:
+		if symbol.symbol_name == symbol_name:
+			return symbol
+	return null
 
 
 func has_symbol(symbol_name):
-	return common_symbols.has(symbol_name) || mod_symbols.has(symbol_name)
+	for symbol in card_config.common_symbols:
+		if symbol.symbol_name == symbol_name:
+			return true
+	for symbol in card_config.mod_symbols:
+		if symbol.symbol_name == symbol_name:
+			return true
+	for symbol in card_config.effect_symbols:
+		if symbol.symbol_name == symbol_name:
+			return true
+	return false
 
 
-func add_symbol(symbol):
-	mod_symbols[symbol.symbol_name] = symbol
+func add_effect_symbol(symbol):
+	card_config.effect_symbols.append(symbol)
 	symbol.initialize(self)
-	card_visuals_2d.update_to_card(self)
-	unit_visuals_2d.update_to_card(self)
+	card_visuals.update()
+	unit_visuals.update()
 
 
-func remove_symbol(symbol_name):
-	mod_symbols.erase(symbol_name)
-	card_visuals_2d.update_to_card(self)
-	unit_visuals_2d.update_to_card(self)
+func remove_effect_symbol(symbol):
+	card_config.effect_symbols.erase(symbol)
+	card_visuals.update()
+	unit_visuals.update()

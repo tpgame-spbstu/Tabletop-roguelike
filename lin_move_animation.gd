@@ -2,6 +2,7 @@ extends Reference
 
 class_name LinMoveAnimation
 
+signal animation_ended()
 
 var start_transform : Transform
 var end_transform : Transform

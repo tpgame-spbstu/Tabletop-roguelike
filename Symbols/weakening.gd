@@ -13,12 +13,14 @@ func analyze_board():
 	var effected_card = effected_cell.get_card_or_null()
 	if effected_card == null:
 		return
+	if effected_card.owner_number == card.owner_number:
+		return
 	var symbol = effected_card.get_symbol_or_null("weakening effect")
 	if symbol != null && symbol.source == self:
 		return
 	var effect = SymbolManager.get_symbol_copy("weakening effect")
 	effect.source = self
-	effected_card.add_symbol(effect)
+	effected_card.add_effect_symbol(effect)
 
 
 func _on_card_played(_board_cell, _card):
@@ -39,8 +41,6 @@ func _init(symbol_name, symbol_texture, symbol_description, is_visible, can_be_t
 
 func initialize(card):
 	.initialize(card)
-	if card.fight_global_signals == null:
-		return
 	card.fight_global_signals.connect("card_moved", self, "_on_card_moved")
 	card.fight_global_signals.connect("card_is_dead", self, "_on_card_is_dead")
 	card.fight_global_signals.connect("card_played", self, "_on_card_played")

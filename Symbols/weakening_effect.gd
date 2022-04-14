@@ -36,11 +36,12 @@ func analyze_board():
 
 
 func disconnect_and_remove():
+	card.card_config.power += 1
 	var connections = self.get_incoming_connections()
 	for cur_conn in connections:
 		cur_conn.source.disconnect(cur_conn.signal_name, self, cur_conn.method_name)
 	source = null
-	card.remove_symbol(symbol_name)
+	card.remove_effect_symbol(self)
 
 
 func _init(symbol_name, symbol_texture, symbol_description, is_visible, can_be_transferred).(symbol_name, symbol_texture, symbol_description, is_visible, can_be_transferred):
@@ -49,7 +50,6 @@ func _init(symbol_name, symbol_texture, symbol_description, is_visible, can_be_t
 
 func initialize(card):
 	.initialize(card)
-	if card.fight_global_signals == null:
-		return
+	card.card_config.power -= 1
 	card.fight_global_signals.connect("card_moved", self, "_on_card_moved")
 	card.fight_global_signals.connect("card_is_dead", self, "_on_card_is_dead")

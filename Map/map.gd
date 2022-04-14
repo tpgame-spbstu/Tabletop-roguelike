@@ -85,11 +85,11 @@ func _on_map_point_click(map_point):
 
 	# if the path from the current location to the clicked one exists
 	if map_point.map_location in map_config.map_location_graph[current_map_point.map_location]:
-		character.animation = LinMoveAnimation.new(current_map_point.global_transform, 
+		var animation = LinMoveAnimation.new(current_map_point.global_transform, 
 			map_point.global_transform, 1.0, character)
-
+		AnimationManager.add_animation(animation)
 		waiting_animation = true
-		yield(character, "animation_ended")
+		yield(animation, "animation_ended")
 		waiting_animation = false
 
 		map_config.current_map_location = map_point.map_location
@@ -99,10 +99,16 @@ func _on_map_point_click(map_point):
 		get_parent().add_child(cur_location_scene)
 		cur_location_scene.initialize(game_config.deck_config, game_config.inventory_config, map_config.current_map_location.params)
 		self.hide()
-		var is_win = yield(cur_location_scene, "return_to_map")
+		var result = yield(cur_location_scene, "return_to_map")
 		cur_location_scene.queue_free()
 		self.show()
 		get_node("character/Camera").make_current()
-		if !is_win:
-			emit_signal("return_to_main_menu")
+		match result:
+			"win":
+				pass
+			"lose":
+				emit_signal("return_to_main_menu")
+				return
+			_:
+				pass
 		GameLoadManager.save_game(game_config)

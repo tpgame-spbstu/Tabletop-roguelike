@@ -63,7 +63,7 @@ func _on_board_left_click(board_cell, card):
 		if !board_cell.is_friendly_base(player_number):
 			return
 		var card_to_play = human_player_state.card_to_play
-		card_to_play.play_cost.pay(human_player_state)
+		card_to_play.card_config.play_cost.pay(human_player_state)
 		hand.remove_card(card_to_play.get_hand_cell_or_null(), card_to_play)
 		self.add_child(card_to_play)
 		input_allowed = false
@@ -113,7 +113,7 @@ func _on_left_hand_click(hand_cell, card):
 		human_player_state.card_to_move = null
 		selector.set_state("hide")
 	else:
-		if !card.play_cost.is_obtainable(human_player_state):
+		if !card.card_config.play_cost.is_obtainable(human_player_state):
 			return
 		human_player_state.card_to_play = card
 		selector.move_to(hand_cell)
@@ -125,13 +125,16 @@ func _on_deck_click(deck, card):
 		return
 	if fight_state.active_player_number != player_number:
 		return
-	if card == null:
-		fight_state.reduse_player_health(player_number, 1)
 	match fight_state.turn_state:
 		TurnState.DRAW_CARDS:
-			yield(draw_card(deck, card), "completed")
+			if card == null:
+				fight_state.reduse_player_health(player_number, 1)
+			else:
+				yield(draw_card(deck, card), "completed")
 			fight_state.next_state()
 		TurnState.PLACE_AND_MOVE:
+			if card == null:
+				return
 			if human_player_state.extra_draw_cost.is_obtainable(human_player_state) && human_player_state.extra_draws_count > 0:
 				human_player_state.extra_draw_cost.pay(human_player_state)
 				human_player_state.extra_draws_count -= 1
@@ -139,10 +142,11 @@ func _on_deck_click(deck, card):
 
 
 func draw_card(deck, card):
-	card.animation = LinMoveAnimation.new(deck.global_transform,
+	var animation = LinMoveAnimation.new(deck.global_transform,
 		hand.global_transform, 0.1, card)
+	AnimationManager.add_animation(animation)
 	input_allowed = false
-	yield(card, "animation_ended")
+	yield(animation, "animation_ended")
 	input_allowed = true
 	card.get_parent().remove_child(card)
 	hand.add_card(card)

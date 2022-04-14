@@ -22,7 +22,7 @@ _global_script_classes=[ {
 "base": "Reference",
 "class": "LinMoveAnimation",
 "language": "GDScript",
-"path": "res://Map/Character/lin_move_animation.gd"
+"path": "res://lin_move_animation.gd"
 }, {
 "base": "Reference",
 "class": "Symbol",
@@ -45,6 +45,7 @@ run/main_scene="res://main_menu.tscn"
 
 GameSettings="*res://game_settings.gd"
 SymbolManager="*res://Symbols/symbol_manager.gd"
+AnimationManager="*res://animation_manager.gd"
 
 [physics]
 
