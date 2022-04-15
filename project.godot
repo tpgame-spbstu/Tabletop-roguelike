@@ -10,6 +10,11 @@ config_version=4
 
 _global_script_classes=[ {
 "base": "Reference",
+"class": "CardQueueItem",
+"language": "GDScript",
+"path": "res://Fight/AI Player/card_queue_item.gd"
+}, {
+"base": "Reference",
 "class": "Cost",
 "language": "GDScript",
 "path": "res://Card/cost.gd"
@@ -30,6 +35,7 @@ _global_script_classes=[ {
 "path": "res://Symbols/symbol.gd"
 } ]
 _global_script_class_icons={
+"CardQueueItem": "",
 "Cost": "",
 "GameLoadManager": "",
 "LinMoveAnimation": "",

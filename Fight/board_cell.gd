@@ -11,21 +11,40 @@ var board
 signal input_event(board_cell, event)
 
 
+# Set up exturnal nodes references and coordinates
+func initialize(board, row_index , column_index):
+	self.board = board
+	self.row_index = row_index
+	self.column_index = column_index
+
+
+# Get attached card if there is one
 func get_card_or_null():
 	for child in get_children():
 		if Card.instance_has(child):
 			return child
 	return null
 
+
+# Is this sell a part of player 1 base row
 func is_player_1_base():
 	return row_index == 0
 
+
+# Is this sell a part of player 2 base row
+func is_player_2_base():
+	return row_index == board.rows_count - 1
+
+
+# Is this sell a part of this player's base row
 func is_friendly_base(owner_number):
 	if owner_number == 1:
 		return is_player_1_base()
 	else:
 		return is_player_2_base()
 
+
+# Is this sell a part of other player's base row
 func is_enemy_base(owner_number):
 	if owner_number == 1:
 		return is_player_2_base()
@@ -33,28 +52,24 @@ func is_enemy_base(owner_number):
 		return is_player_1_base()
 
 
-func is_player_2_base():
-	return row_index == board.rows_count - 1
-
-
+# Get a cell that is shifted in coordinates relative to this cell
 func get_relative_board_cell(delta_row, delta_column):
 	return board.get_board_cell(row_index + delta_row, column_index + delta_column)
 
 
-func initialize(board, row_index , column_index):
-	self.board = board
-	self.row_index = row_index
-	self.column_index = column_index
-
-
+# Input event handler
 func _on_Area_input_event(camera: Node, event: InputEvent, position: Vector3, normal: Vector3, shape_idx: int):
+	# Reemit signal
 	emit_signal("input_event", self, event)
 
 
+# Attach card to this cell
 func add_card(card):
 	add_child(card)
 	card.transform = Transform()
 
+
+# Remove card from this cell
 func remove_card(card):
 	remove_child(card)
 	card.transform = Transform()

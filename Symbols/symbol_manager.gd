@@ -1,5 +1,7 @@
 extends Node
 
+# SymbolManager class - library of preloaded symbols, stored by name
+
 var symbol_dictionary : Dictionary
 
 var Weakening := preload("res://Symbols/weakening.gd")

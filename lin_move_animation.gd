@@ -2,6 +2,8 @@ extends Reference
 
 class_name LinMoveAnimation
 
+# LinMoveAnimation class - symple universal animation of linear interpolatin of spatials transform
+
 signal animation_ended()
 
 var start_transform : Transform

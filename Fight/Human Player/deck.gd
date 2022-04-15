@@ -1,16 +1,20 @@
 extends Spatial
 
+# Deck node - container for cards in deck
+
 signal deck_click(deck, card)
 
 onready var deck_list := $deck_list
 var CardScene := preload("res://Card/card.tscn") as PackedScene
 var fight_global_signals
+var fight_state
 
 var dummy_count = 7
 var dummy_card_config := preload("res://Card/card_config.gd").new("Чучело", Cost.new(0, 0, 0), [], [], [], 0, 1)
 
-func initialize(fight_global_signals, deck_config, shuffle_seed, owner_number):
+func initialize(fight_global_signals, fight_state, deck_config, shuffle_seed, owner_number):
 	self.fight_global_signals = fight_global_signals
+	self.fight_state = fight_state
 	if deck_config == null:
 		for i in range(dummy_count):
 			add_new_card_to_bottom(dummy_card_config, owner_number)
@@ -27,7 +31,7 @@ func initialize(fight_global_signals, deck_config, shuffle_seed, owner_number):
 func add_new_card_to_bottom(card_config, owner_number):
 	var new_card = CardScene.instance()
 	deck_list.add_child(new_card)
-	new_card.initialize(card_config, owner_number, fight_global_signals)
+	new_card.initialize(card_config, owner_number, fight_global_signals, fight_state)
 
 func _on_Area_input_event(camera: Node, event: InputEvent, position: Vector3, normal: Vector3, shape_idx: int):
 	if event is InputEventMouseButton:

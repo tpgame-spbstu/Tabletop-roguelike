@@ -1,5 +1,7 @@
 extends Spatial
 
+# CardVisuals node - visualization of CardConfig in card form
+
 onready var card_name_label = $Viewport/card_visuals_2d/Card_name
 onready var health_label = $Viewport/card_visuals_2d/Health/count
 onready var attack_label = $Viewport/card_visuals_2d/Attack/count
@@ -53,23 +55,10 @@ func update():
 		prev_symbol.queue_free()
 	var cur_symb_id = 0
 	
-	for symbol in card_config.common_symbols:
-		if !symbol.is_visible:
-			continue
-		var path = symbol.symbol_texture
-		self.draw_symbols(path, cur_symb_id)
-		cur_symb_id += 1
-		
-	for symbol in card_config.mod_symbols:
-		if !symbol.is_visible:
-			continue
-		var path = symbol.symbol_texture
-		self.draw_symbols(path, cur_symb_id)
-		cur_symb_id += 1
-		
-	for symbol in card_config.effect_symbols:
-		if !symbol.is_visible:
-			continue
-		var path = symbol.symbol_texture
-		self.draw_symbols(path, cur_symb_id)
-		cur_symb_id += 1
+	for symbol_list in [card_config.common_symbols, card_config.mod_symbols, card_config.effect_symbols]:
+		for symbol in symbol_list:
+			if !symbol.is_visible:
+				continue
+			var path = symbol.symbol_texture
+			self.draw_symbols(path, cur_symb_id)
+			cur_symb_id += 1

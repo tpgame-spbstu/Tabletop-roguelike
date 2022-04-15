@@ -1,5 +1,7 @@
 extends "res://Map/Location/location.gd"
 
+# FightLocation class - location for card fight
+
 onready var board := $board
 onready var player_1 := $human_player_1
 onready var player_2 := $ai_player_2

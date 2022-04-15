@@ -1,5 +1,4 @@
 extends Reference
-# class_name MapLocation
 
 
 var scene: String
@@ -14,7 +13,7 @@ func _init(scene: String, params: Dictionary, pos: Vector2, textures: Array=[]):
 	# scene to be opened
 	self.scene = scene
 	self.params = params
-	# position of the current location
+	# position of the current map point
 	self.pos = pos
 	_textures = textures
 

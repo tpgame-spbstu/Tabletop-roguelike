@@ -42,22 +42,22 @@ func generate_points() -> void:
 	# load the scene, representing the location tile on the map
 	var map_point_scene = load("res://Map/Location/map_point.tscn")
 
-	for tile in map_config.map_location_graph:
+	for point_config in map_config.map_point_graph:
 		var point = map_point_scene.instance()
 		# if this tile is the starting point
-		if tile == map_config.current_map_location:
+		if point_config == map_config.current_map_point_config:
 			current_map_point = point
 		destinations.add_child(point)
 		# put the tile on the map
-		point.translate(Vector3(tile.pos.x, 0, tile.pos.y) * SPACE)
-		# initialize the tile
-		point.initialize(self, tile)
+		point.translate(Vector3(point_config.pos.x, 0, point_config.pos.y) * SPACE)
+		# initialize the map_point
+		point.initialize(self, point_config)
 
 		# draw the paths
-		for dest in map_config.map_location_graph[tile]:
+		for dest in map_config.map_point_graph[point_config]:
 			var path_sec = PathSection.instance()
-			var dx = (dest.pos.x - tile.pos.x) * SPACE
-			var dy = (dest.pos.y - tile.pos.y) * SPACE
+			var dx = (dest.pos.x - point_config.pos.x) * SPACE
+			var dy = (dest.pos.y - point_config.pos.y) * SPACE
 			# rotate the section
 			# ATTENTION the rotation is done clockwise, not anticlockwise
 			var angle = -PI / 2
@@ -67,7 +67,7 @@ func generate_points() -> void:
 			path_sec.rotate_y(angle)
 
 			# put the section's center to the medium point of the line between two locations' points
-			path_sec.set_translation(Vector3((tile.pos.x + dest.pos.x)/ 2, 0, (tile.pos.y + dest.pos.y) / 2) * SPACE)
+			path_sec.set_translation(Vector3((point_config.pos.x + dest.pos.x)/ 2, 0, (point_config.pos.y + dest.pos.y) / 2) * SPACE)
 
 			var scale: Vector3 = path_sec.get_scale()
 			# | | -> |     |, | is PATH_WIDTH, z^->x
@@ -84,25 +84,30 @@ func _on_map_point_click(map_point):
 		return
 
 	# if the path from the current location to the clicked one exists
-	if map_point.map_location in map_config.map_location_graph[current_map_point.map_location]:
+	if map_point.map_point_config in map_config.map_point_graph[current_map_point.map_point_config]:
+		# Wait for character move animation
 		var animation = LinMoveAnimation.new(current_map_point.global_transform, 
 			map_point.global_transform, 1.0, character)
 		AnimationManager.add_animation(animation)
 		waiting_animation = true
 		yield(animation, "animation_ended")
 		waiting_animation = false
-
-		map_config.current_map_location = map_point.map_location
+		# Change current map point
+		map_config.current_map_point_config = map_point.map_point_config
 		current_map_point = map_point
-
-		var cur_location_scene = load(map_config.current_map_location.scene).instance()
+		# Load next location scene
+		var cur_location_scene = load(map_config.current_map_point_config.scene).instance()
 		get_parent().add_child(cur_location_scene)
-		cur_location_scene.initialize(game_config.deck_config, game_config.inventory_config, map_config.current_map_location.params)
+		cur_location_scene.initialize(game_config.deck_config, 
+			game_config.inventory_config, map_config.current_map_point_config.params)
+		# Hide map and wait for exit from location
 		self.hide()
 		var result = yield(cur_location_scene, "return_to_map")
+		# Delete location and show map
 		cur_location_scene.queue_free()
 		self.show()
 		get_node("character/Camera").make_current()
+		# Process location interaction result
 		match result:
 			"win":
 				pass

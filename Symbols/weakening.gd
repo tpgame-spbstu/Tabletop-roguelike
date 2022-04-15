@@ -1,22 +1,29 @@
 extends "res://Symbols/symbol.gd"
 
+# Weakening symbol - symbol, that lowers oposit card's attack power by adding "weakening effect"
 
+# Check if there is a new card to apply effect
 func analyze_board():
-	if card == null:
-		return
+	assert(card != null)
 	var board_cell = card.get_board_cell_or_null()
 	if board_cell == null:
+		# Card not on board
 		return
 	var effected_cell = board_cell.get_relative_board_cell(card.player_attack_direction[card.owner_number], 0)
 	if effected_cell == null or typeof(effected_cell) == TYPE_INT:
+		# Effected cell does not exist
 		return
 	var effected_card = effected_cell.get_card_or_null()
 	if effected_card == null:
+		# Effected cell is empty
 		return
 	if effected_card.owner_number == card.owner_number:
+		# Effected card is friendly
 		return
 	var symbol = effected_card.get_symbol_or_null("weakening effect")
+	# POTENTIAL BUG when card have more then one effect of same type
 	if symbol != null && symbol.source == self:
+		# Effected card already has effect
 		return
 	var effect = SymbolManager.get_symbol_copy("weakening effect")
 	effect.source = self

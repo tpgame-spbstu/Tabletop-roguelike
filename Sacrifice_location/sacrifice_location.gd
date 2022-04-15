@@ -82,12 +82,10 @@ func _on_Area_2_input_event(camera, event, position, normal, shape_idx):
 
 func choice_symbol_to_move(card_config):
 	var symbols = []
-	for symbol in card_config.common_symbols:
-		if(symbol.can_be_transferred):
-			symbols.append(symbol)
-	for symbol in card_config.mod_symbols:
-		if(symbol.can_be_transferred):
-			symbols.append(symbol)
+	for symbol_list in [card_config.common_symbols, card_config.mod_symbols, card_config.effect_symbols]:
+		for symbol in symbol_list:
+			if(symbol.can_be_transferred):
+				symbols.append(symbol)
 	return symbols
 	
 func get_symbols_by_card(card):
@@ -97,7 +95,6 @@ func get_symbols_by_card(card):
 func move_symbols(config_from, config_to):
 	var symbols = choice_symbol_to_move(config_from)
 	for symbol in symbols:
-		config_from.common_symbols.erase(symbol)
 		config_to.mod_symbols.append(symbol)
 	
 	card_on_from.update()

@@ -1,25 +1,29 @@
 extends Spatial
 
-enum {DECK, HAND, BOARD}
+# Card class - card class for fight
 
 var BoardCell := load("res://Fight/board_cell.gd") as Script
 var HandCell := load("res://Fight/Human Player/hand_cell.gd") as Script
 var CardConfig := load("res://Card/card_config.gd")
 
 var owner_number
-var src_config
+# Personal copy of src_config
 var card_config
+# Original card config
+var src_config
 
 const player_attack_direction = {1: 1, 2: -1}
 
 var fight_global_signals
+var fight_state
 
 onready var card_visuals = $card_visuals
 onready var unit_visuals = $unit_visuals
 
 
-func initialize(card_config, owner_number, fight_global_signals):
+func initialize(card_config, owner_number, fight_global_signals, fight_state):
 	self.fight_global_signals = fight_global_signals
+	self.fight_state = fight_state
 	self.owner_number = owner_number
 	self.src_config = card_config
 	self.card_config = card_config.get_copy()
@@ -39,51 +43,64 @@ func get_hand_cell_or_null():
 	return parent if HandCell.instance_has(parent) else null
 
 
-func reduce_health(delta, fight_state):
+# Process incoming damage
+func reduce_health(delta):
 	card_config.health -= delta
 	card_visuals.update()
+	unit_visuals.update()
 	if card_config.health <= 0:
 		die()
 		return
 	if has_symbol("counterattack"):
-		process_attack(fight_state)
+		process_attack()
 
 
 func _on_card_played(board_cell, card):
 	if card == self:
+		# if this card is played, change visuals mode
 		card_visuals.hide()
 		unit_visuals.show()
 
 
 func die():
-	get_parent().remove_child(self)
+	var board_cell = get_board_cell_or_null()
+	assert(board_cell != null)
+	board_cell.remove_card(self)
 	fight_global_signals.emit_signal("card_is_dead", get_board_cell_or_null(), self)
 	queue_free()
 
 
-func process_attack(fight_state):
+func process_attack():
 	var board_cell = get_board_cell_or_null()
 	assert(board_cell != null)
 	if card_config.power <= 0:
+		# can't attack if power 0 or less
 		return
+	# Get target cell to attack
 	var attack_range = 1
 	if has_symbol("range"):
 		attack_range += 1
 	var target_board_cell = board_cell.get_relative_board_cell(attack_range * player_attack_direction[owner_number], 0)
 	if target_board_cell == null:
+		# can't attack if target cell completely out of bounds
 		return
 	if typeof(target_board_cell) == TYPE_INT:
+		# If target cell is out of bounds, but base
 		if target_board_cell != owner_number:
+			# Attack enemy base
 			fight_state.reduse_enemy_health(owner_number, card_config.power)
 		return
 	var target_card = target_board_cell.get_card_or_null()
 	if target_card == null:
 		if target_board_cell.is_enemy_base(owner_number):
+			# Attack if target cell is enemy base and empty
 			fight_state.reduse_enemy_health(owner_number, card_config.power)
 		return
 	if target_card.owner_number == owner_number:
+		# can't attack friendly card
 		return
-	target_card.reduce_health(card_config.power, fight_state)
+	# Attack enemy card
+	target_card.reduce_health(card_config.power)
 		
 
 
@@ -91,49 +108,47 @@ func get_move_cost_or_null(target_board_cell):
 	var board_cell = get_board_cell_or_null()
 	assert(board_cell != null)
 	if target_board_cell == board_cell:
+		# target cell is a current cell
 		return null
 	if target_board_cell.get_card_or_null() != null:
+		# target cell is not enpty
 		return null
 	var delta_row_abs = target_board_cell.row_index - board_cell.row_index
 	delta_row_abs *= 1 if delta_row_abs > 0 else -1
 	var delta_column_abs = target_board_cell.column_index - board_cell.column_index
 	delta_column_abs *= 1 if delta_column_abs > 0 else -1
-	if target_board_cell.is_enemy_base(owner_number) or (delta_row_abs + delta_column_abs != 1):
+	if delta_row_abs + delta_column_abs != 1:
+		# not a neighbour cell
+		return null
+	if target_board_cell.is_enemy_base(owner_number):
+		# can't move to enemy base
 		return null
 	var delta = 0
 	if has_symbol("fast"):
 		delta -= 1
 	if has_symbol("slow"):
 		delta += 1
+		
 	if board_cell.is_friendly_base(owner_number) && delta_row_abs == 1:
+		# Discount for exiting base
 		return Cost.new(1 + delta, 0, 0)
 	else:
 		return Cost.new(2 + delta, 0, 0)
 
 
 func get_symbol_or_null(symbol_name):
-	for symbol in card_config.common_symbols:
-		if symbol.symbol_name == symbol_name:
-			return symbol
-	for symbol in card_config.mod_symbols:
-		if symbol.symbol_name == symbol_name:
-			return symbol
-	for symbol in card_config.effect_symbols:
-		if symbol.symbol_name == symbol_name:
-			return symbol
+	for symbol_list in [card_config.common_symbols, card_config.mod_symbols, card_config.effect_symbols]:
+		for symbol in symbol_list:
+			if symbol.symbol_name == symbol_name:
+				return symbol
 	return null
 
 
 func has_symbol(symbol_name):
-	for symbol in card_config.common_symbols:
-		if symbol.symbol_name == symbol_name:
-			return true
-	for symbol in card_config.mod_symbols:
-		if symbol.symbol_name == symbol_name:
-			return true
-	for symbol in card_config.effect_symbols:
-		if symbol.symbol_name == symbol_name:
-			return true
+	for symbol_list in [card_config.common_symbols, card_config.mod_symbols, card_config.effect_symbols]:
+		for symbol in symbol_list:
+			if symbol.symbol_name == symbol_name:
+				return true
 	return false
 
 
