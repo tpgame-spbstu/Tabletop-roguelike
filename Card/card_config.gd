@@ -3,6 +3,7 @@ extends Reference
 # CardConfig class - class for storing card configuration
 
 var card_name : String
+var card_texture
 var play_cost : Cost
 var common_symbols : Array
 var mod_symbols : Array
@@ -11,9 +12,10 @@ var health : int
 var power : int
 
 
-func _init(card_name, play_cost, common_symbols, mod_symbols, effect_symbols, power, health):
+func _init(card_name, card_texture, play_cost, common_symbols, mod_symbols, effect_symbols, power, health):
 	self.card_name = card_name
 	self.play_cost = play_cost
+	self.card_texture = card_texture
 	
 	for symbol in common_symbols:
 		self.common_symbols.append(symbol.get_copy())
@@ -26,7 +28,7 @@ func _init(card_name, play_cost, common_symbols, mod_symbols, effect_symbols, po
 
 
 func get_copy():
-	return get_script().new(card_name, play_cost, common_symbols, mod_symbols, effect_symbols, power, health)
+	return get_script().new(card_name, card_texture, play_cost, common_symbols, mod_symbols, effect_symbols, power, health)
 
 
 func initialize_symbols(card):

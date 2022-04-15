@@ -44,6 +44,8 @@ func set_owner_number(owner_number):
 
 func update():
 	card_name_label.text = card_config.card_name
+	var card_texture  = load(card_config.card_texture)
+	image.texture = card_texture
 	if card_config.play_cost != null:
 		cost_label.text = String(card_config.play_cost.energy)
 	else:

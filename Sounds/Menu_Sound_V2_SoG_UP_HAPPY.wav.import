@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Menu_Sound_V2_SoG_UP_HAPPY.wav-bd9a5f7428b732ca29363c7f95649634.sample"
+
+[deps]
+
+source_file="res://Sounds/Menu_Sound_V2_SoG_UP_HAPPY.wav"
+dest_files=[ "res://.import/Menu_Sound_V2_SoG_UP_HAPPY.wav-bd9a5f7428b732ca29363c7f95649634.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

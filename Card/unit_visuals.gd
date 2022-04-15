@@ -43,6 +43,8 @@ func draw_symbols(path, sym_id):
 
 func update():
 	card_name_label.text = card_config.card_name
+	var card_texture  = load(card_config.card_texture)
+	image.texture = card_texture
 	health_label.text = String(card_config.health)
 	attack_label.text = String(card_config.power)
 	for prev_symbol in symbols.get_children():
