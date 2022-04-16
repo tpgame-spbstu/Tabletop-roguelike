@@ -1,9 +1,8 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://fonts/fantazer.otf" type="DynamicFontData" id=1]
 [ext_resource path="res://fonts/Wanted.otf" type="DynamicFontData" id=2]
 [ext_resource path="res://Symbols/Textures/attack.tres" type="Texture" id=3]
-[ext_resource path="res://Symbols/Textures/speed.tres" type="Texture" id=4]
 [ext_resource path="res://Symbols/Textures/health.tres" type="Texture" id=5]
 
 [sub_resource type="DynamicFont" id=17]
@@ -73,7 +72,7 @@ __meta__ = {
 }
 
 [node name="Image" type="Sprite" parent="."]
-position = Vector2( 199, 130.5 )
+position = Vector2( 197, 142 )
 
 [node name="Health" type="Control" parent="."]
 margin_left = 341.0
@@ -127,9 +126,3 @@ __meta__ = {
 }
 
 [node name="Symbols" type="Node2D" parent="."]
-
-[node name="Sprite" type="Sprite" parent="Symbols"]
-visible = false
-position = Vector2( 55, 263 )
-scale = Vector2( 2, 2 )
-texture = ExtResource( 4 )

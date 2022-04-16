@@ -1,6 +1,8 @@
 extends Node
 
-#Audio
+# GameSettings class - class for storing game settings values
+
+# Audio
 
 signal change_music_settings
 signal change_effects_settings

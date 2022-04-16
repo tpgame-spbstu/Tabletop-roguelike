@@ -174,7 +174,6 @@ __meta__ = {
 }
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-volume_db = -12.984
 
 [connection signal="pressed" from="main/NewGame" to="." method="_on_new_game_pressed"]
 [connection signal="pressed" from="main/Continue" to="." method="_on_continue_pressed"]

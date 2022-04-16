@@ -1,5 +1,6 @@
 extends Node
 
+# FightState class - node to manage fight state data and transitions
 
 signal player_1_win()
 signal player_2_win()
