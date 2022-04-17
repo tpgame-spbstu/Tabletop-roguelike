@@ -146,6 +146,9 @@ margin_bottom = 22.499
 theme = ExtResource( 11 )
 custom_colors/default_color = Color( 0.898039, 0.490196, 0.490196, 1 )
 text = "5"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="HP1" type="RichTextLabel" parent="Control"]
 anchor_top = 0.574

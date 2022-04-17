@@ -129,3 +129,6 @@ margin_bottom = 69.0
 theme = SubResource( 14 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "5"
+__meta__ = {
+"_edit_use_anchors_": false
+}
