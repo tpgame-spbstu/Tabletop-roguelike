@@ -1,5 +1,7 @@
 extends Spatial
 
+# Hand node - container for cards on hand
+
 var Card = preload("res://Card/card.gd")
 
 signal hand_left_click(hand_cell, card)
@@ -23,6 +25,12 @@ func add_card(card):
 	rearange()
 	card.transform = Transform()
 	hand_cell.add_child(card)
+
+
+func remove_hand_cell(hand_cell):
+	remove_child(hand_cell)
+	hand_cell.queue_free()
+	rearange()
 
 
 func remove_card(hand_cell, card):

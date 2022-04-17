@@ -2,6 +2,8 @@ extends Reference
 
 class_name Symbol
 
+# Symbol class - simple card symbol class, base class for more complex symbols
+
 var symbol_name
 
 var symbol_texture

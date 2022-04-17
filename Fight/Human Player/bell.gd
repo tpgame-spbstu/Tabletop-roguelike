@@ -1,5 +1,7 @@
 extends Spatial
 
+#Bell class - symple 3d scene object, that can be clicked
+
 signal bell_click(bell)
 
 

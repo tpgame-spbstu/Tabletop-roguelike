@@ -1,7 +1,7 @@
 [gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://Fight/fight_location.gd" type="Script" id=1]
-[ext_resource path="res://Fight/ai_player.gd" type="Script" id=2]
+[ext_resource path="res://Fight/AI Player/ai_player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Fight/board.gd" type="Script" id=3]
 [ext_resource path="res://Fight/board_cell.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Fight/fight_global_signals.gd" type="Script" id=5]
@@ -40,12 +40,7 @@ script = ExtResource( 8 )
 
 [node name="human_player_1" parent="." instance=ExtResource( 10 )]
 
-[node name="ai_player_2" type="Spatial" parent="."]
-transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0 )
-script = ExtResource( 2 )
-
-[node name="card_spawn_point" type="Spatial" parent="ai_player_2"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.62268e-07, 0, -3 )
+[node name="ai_player_2" parent="." instance=ExtResource( 2 )]
 
 [node name="bell" type="Spatial" parent="."]
 transform = Transform( 0.75, 0, 0, 0, 0.75, 0, 0, 0, 0.75, -2.5, 0, 0 )
