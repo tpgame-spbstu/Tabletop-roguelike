@@ -15,6 +15,7 @@ var is_place_pressed = false
 var card_on_from = null
 var card_on_to = null
 var cur_card
+var is_sacrifice = false
 
 func initialize(deck_config, inventory_config, params : Dictionary):
 	.initialize(deck_config, inventory_config, params)
@@ -94,7 +95,7 @@ func choice_symbol_to_move(card_config):
 		if(card_config.mod_symbols[symb_name].can_be_transferred):
 			symbols.append(card_config.mod_symbols[symb_name])
 	return symbols
-	
+
 func get_symbols_by_card(card):
 	return card.get_node("card_visuals/Viewport/card_visuals_2d").get_node("Symbols").get_children()
 
@@ -118,19 +119,43 @@ func move_symbols(config_from, config_to):
 	self.deck_config.cards.erase(config_from)
 	pass
 
+func end_of_sacrifice():
+	for card in $deck.get_children():
+		card.hide()
+	
+	card_on_to.get_parent().show()
+	var spatial = card_on_to
+	spatial.scale = card_on_to.scale * 2.8
+	spatial.translate(Vector3(0.3, 0.6, -0.4))
+	# spatial.rotate_x(-PI/6)
+	pass
+
+# sacrifice 
 func _on_Button_pressed():
+	if card_on_from == null or card_on_to == null:
+		return
 	var config_on_from
 	var config_on_to
 	for card_conf in self.deck_config.cards:
 		if card_conf.card_name == card_on_from.card_name:
 			config_on_from = card_conf
-			
+	
 	for card_conf in self.deck_config.cards:
 		if card_conf.card_name == card_on_to.card_name:
 			config_on_to = card_conf
-			
+	
 	move_symbols(config_on_from, config_on_to)
+	end_of_sacrifice()
+	$Sacrifice.hide()
+	is_sacrifice = true
+	# self._on_Return_to_map_pressed()
 	pass
 
 func _on_Return_to_map_pressed():
 	emit_signal("return_to_map", true)
+	
+func _process(delta):
+	if is_sacrifice:
+		# добавить анимацию там, поворот мб
+		# card_on_to.rotate_z(PI/100)
+		pass

@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Sacrifice_location/sacrifice_location.gd" type="Script" id=1]
 
@@ -24,15 +24,6 @@ albedo_color = Color( 0.309804, 0.341176, 0.776471, 1 )
 
 [sub_resource type="BoxShape" id=8]
 extents = Vector3( 0.455, 0.014, 0.454 )
-
-[sub_resource type="SpatialMaterial" id=10]
-albedo_color = Color( 0.980392, 0.843137, 0.223529, 1 )
-
-[sub_resource type="CapsuleMesh" id=9]
-material = SubResource( 10 )
-radius = 0.4
-mid_height = 0.001
-radial_segments = 61
 
 [node name="sacrifice_location" type="Spatial"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000866532, -0.00209808, 0.00696051 )
@@ -77,16 +68,11 @@ shape = SubResource( 8 )
 [node name="reference_frame_card" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8, 0, -1.3 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.97997, -0.100362, 0 )
-mesh = SubResource( 9 )
-material/0 = null
-
 [node name="Sacrifice" type="Button" parent="."]
 margin_left = 21.0
-margin_top = 18.0
+margin_top = 85.0
 margin_right = 124.0
-margin_bottom = 72.0
+margin_bottom = 139.0
 text = "Sacrifice"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -94,9 +80,9 @@ __meta__ = {
 
 [node name="Return_to_map" type="Button" parent="."]
 margin_left = 21.0
-margin_top = 85.0
+margin_top = 18.0
 margin_right = 124.0
-margin_bottom = 137.0
+margin_bottom = 70.0
 text = "Return to map"
 __meta__ = {
 "_edit_use_anchors_": false
