@@ -53,10 +53,19 @@ GameSettings="*res://game_settings.gd"
 SymbolManager="*res://Symbols/symbol_manager.gd"
 AnimationManager="*res://animation_manager.gd"
 
+[global]
+
+font=false
+
 [physics]
 
 common/enable_pause_aware_picking=true
 
 [rendering]
 
+quality/filters/sharpen_intensity=0.498
+quality/filters/anisotropic_filter_level=8
+quality/subsurface_scattering/quality=2
+quality/voxel_cone_tracing/high_quality=true
+quality/filters/msaa=3
 environment/default_environment="res://default_env.tres"

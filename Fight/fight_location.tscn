@@ -1,17 +1,19 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://Fight/fight_location.gd" type="Script" id=1]
 [ext_resource path="res://Fight/AI Player/ai_player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Fight/board.gd" type="Script" id=3]
 [ext_resource path="res://Fight/board_cell.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Fight/fight_global_signals.gd" type="Script" id=5]
+[ext_resource path="res://fonts/ubuntu_b_16.tres" type="Theme" id=6]
 [ext_resource path="res://Fight/Human Player/bell.gd" type="Script" id=7]
 [ext_resource path="res://Fight/fight_state.gd" type="Script" id=8]
 [ext_resource path="res://Fight/Camera.gd" type="Script" id=9]
 [ext_resource path="res://Fight/Human Player/human_player.tscn" type="PackedScene" id=10]
+[ext_resource path="res://fonts/ubuntu_b_32.tres" type="Theme" id=11]
 [ext_resource path="res://Fight/fight_loger.gd" type="Script" id=12]
+[ext_resource path="res://fonts/ubuntu_b_13.tres" type="Theme" id=13]
 [ext_resource path="res://Fight/fight_location_ui.gd" type="Script" id=14]
-[ext_resource path="res://fonts/Wanted.otf" type="DynamicFontData" id=15]
 [ext_resource path="res://fonts/IdealGothic Bold.otf" type="DynamicFontData" id=16]
 
 [sub_resource type="BoxShape" id=5]
@@ -19,10 +21,6 @@ extents = Vector3( 0.5, 0.5, 0.5 )
 
 [sub_resource type="CubeMesh" id=6]
 size = Vector3( 1, 1, 1 )
-
-[sub_resource type="DynamicFont" id=7]
-size = 34
-font_data = ExtResource( 15 )
 
 [sub_resource type="DynamicFont" id=8]
 size = 25
@@ -145,8 +143,8 @@ margin_left = 12.718
 margin_top = -22.501
 margin_right = 43.718
 margin_bottom = 22.499
+theme = ExtResource( 11 )
 custom_colors/default_color = Color( 0.898039, 0.490196, 0.490196, 1 )
-custom_fonts/normal_font = SubResource( 7 )
 text = "5"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -159,8 +157,8 @@ margin_left = 13.668
 margin_top = -22.678
 margin_right = 44.668
 margin_bottom = 22.322
+theme = ExtResource( 11 )
 custom_colors/default_color = Color( 0.898039, 0.490196, 0.490196, 1 )
-custom_fonts/normal_font = SubResource( 7 )
 text = "5"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -173,8 +171,8 @@ margin_left = 12.0
 margin_top = -22.6
 margin_right = 43.0
 margin_bottom = 22.4
+theme = ExtResource( 11 )
 custom_colors/default_color = Color( 0.894118, 0.898039, 0.490196, 1 )
-custom_fonts/normal_font = SubResource( 7 )
 text = "5"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -185,11 +183,11 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -176.0
-margin_top = -39.0
+margin_left = -261.0
+margin_top = -41.0
 margin_right = -2.0
 margin_bottom = -4.0
-custom_fonts/normal_font = SubResource( 8 )
+theme = ExtResource( 6 )
 text = "Attack"
 scroll_active = false
 __meta__ = {
@@ -220,8 +218,8 @@ margin_left = 39.0
 margin_top = -37.8
 margin_right = 70.0
 margin_bottom = 5.19995
+theme = ExtResource( 11 )
 custom_colors/default_color = Color( 1, 1, 1, 1 )
-custom_fonts/normal_font = SubResource( 7 )
 text = "2"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -236,8 +234,8 @@ margin_left = -32.0
 margin_top = -21.0
 margin_right = -1.0
 margin_bottom = 22.0
+theme = ExtResource( 11 )
 custom_colors/default_color = Color( 1, 1, 1, 1 )
-custom_fonts/normal_font = SubResource( 7 )
 text = "1"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -250,8 +248,8 @@ margin_left = 80.0
 margin_top = -22.4
 margin_right = 111.0
 margin_bottom = 22.6
+theme = ExtResource( 11 )
 custom_colors/default_color = Color( 0.592157, 0.592157, 0.560784, 1 )
-custom_fonts/normal_font = SubResource( 7 )
 text = "0"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -261,9 +259,10 @@ __meta__ = {
 anchor_top = 0.387
 anchor_bottom = 0.387
 margin_left = 4.0
-margin_top = -8.20001
-margin_right = 50.0
-margin_bottom = 7.79999
+margin_top = -8.2
+margin_right = 63.0
+margin_bottom = 8.8
+theme = ExtResource( 13 )
 text = "HP bot"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -274,17 +273,19 @@ anchor_top = 0.528
 anchor_bottom = 0.528
 margin_left = 3.0
 margin_top = -7.79999
-margin_right = 68.0
-margin_bottom = 8.20001
+margin_right = 84.0
+margin_bottom = 9.20001
+theme = ExtResource( 13 )
 text = "HP player"
 
 [node name="RichTextLabel3" type="RichTextLabel" parent="Control"]
 anchor_top = 0.82
 anchor_bottom = 0.82
 margin_left = 3.0
-margin_top = -8.00003
-margin_right = 49.0
-margin_bottom = 7.99997
+margin_top = -8.0
+margin_right = 68.0
+margin_bottom = 12.0
+theme = ExtResource( 13 )
 text = "Energy"
 
 [node name="RichTextLabel4" type="RichTextLabel" parent="Control"]
@@ -292,8 +293,9 @@ anchor_top = 0.822
 anchor_bottom = 0.822
 margin_left = 66.0
 margin_top = -8.20001
-margin_right = 112.0
-margin_bottom = 7.79999
+margin_right = 124.0
+margin_bottom = 13.8
+theme = ExtResource( 13 )
 text = "Bones"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -304,8 +306,9 @@ anchor_top = 0.917
 anchor_bottom = 0.917
 margin_left = 5.0
 margin_top = -8.20001
-margin_right = 94.0
-margin_bottom = 7.79999
+margin_right = 114.0
+margin_bottom = 10.8
+theme = ExtResource( 13 )
 text = "card available"
 __meta__ = {
 "_edit_use_anchors_": false
