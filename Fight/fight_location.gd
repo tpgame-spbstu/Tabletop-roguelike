@@ -9,6 +9,7 @@ onready var bell := $bell
 onready var fight_state := $fight_state
 onready var fight_loger := $fight_loger
 onready var fight_global_signals := $fight_global_signals
+onready var fight_location_ui := $fight_ui
 
 
 var TurnState := preload("res://Fight/fight_state.gd").TurnState
@@ -19,6 +20,7 @@ func initialize(deck_config , inventory_config , params : Dictionary):
 	board.initialize(fight_global_signals)
 	player_1.initialize(fight_state, fight_global_signals, board, bell, self.deck_config, 1, self.params)
 	player_2.initialize(fight_state, fight_global_signals, board, 2, self.params)
+	fight_location_ui.initialize(board, player_1)
 	start()
 
 func start():
