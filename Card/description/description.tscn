@@ -5,10 +5,8 @@
 [ext_resource path="res://Symbols/Textures/energy.tres" type="Texture" id=3]
 [ext_resource path="res://Symbols/Textures/health.tres" type="Texture" id=4]
 [ext_resource path="res://Card/description/one_symbol.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Card/description/description.gd" type="Script" id=7]
-
-[sub_resource type="CubeMesh" id=16]
-size = Vector3( 300, 270, 2 )
+[ext_resource path="res://fonts/Ubuntu-B.ttf" type="DynamicFontData" id=6]
+[ext_resource path="res://Card/Textures/Insects Roach.png" type="Texture" id=7]
 
 [sub_resource type="SpatialMaterial" id=17]
 albedo_color = Color( 0.619608, 0.352941, 0.352941, 1 )
@@ -21,7 +19,7 @@ shader = SubResource( 18 )
 
 [sub_resource type="DynamicFont" id=20]
 size = 40
-font_data = ExtResource( 1 )
+font_data = ExtResource( 6 )
 
 [sub_resource type="Theme" id=21]
 default_font = SubResource( 20 )
@@ -43,7 +41,6 @@ default_font = SubResource( 1 )
 [node name="description" type="Control"]
 margin_right = 40.0
 margin_bottom = 40.0
-script = ExtResource( 7 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -55,9 +52,10 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Image" type="MeshInstance2D" parent="."]
-position = Vector2( 201, 221 )
-mesh = SubResource( 16 )
+[node name="Image" type="Sprite" parent="."]
+position = Vector2( 200, 230 )
+scale = Vector2( 1.7, 2.3 )
+texture = ExtResource( 7 )
 
 [node name="card_name" type="Label" parent="."]
 material = SubResource( 19 )
