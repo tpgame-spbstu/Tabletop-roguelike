@@ -15,6 +15,7 @@ var is_place_pressed = false
 var card_on_from = null
 var card_on_to = null
 var cur_card
+var is_sacrifice = false
 
 func initialize(deck_config, inventory_config, params : Dictionary):
 	.initialize(deck_config, inventory_config, params)
@@ -48,10 +49,13 @@ func fill_deck():
 func _on_card_input_event(cell, event):
 	if event is InputEventMouseButton:
 		var mouse_button_event := event as InputEventMouseButton
-		if mouse_button_event.pressed and mouse_button_event.button_index == BUTTON_LEFT :
+		if mouse_button_event.pressed and mouse_button_event.button_index == BUTTON_LEFT:
 			cur_card = cell.get_node("card_visuals")
 			cur_board_cell = cell.get_node("cell")
 			is_card_pressed = true
+			pass
+		elif mouse_button_event.pressed and mouse_button_event.button_index == BUTTON_RIGHT:
+			# добавить подробное описание
 			pass
 
 func _on_Area_1_input_event(camera, event, position, normal, shape_idx):
@@ -105,11 +109,35 @@ func move_symbols(config_from, config_to):
 	pass
 
 func _on_Button_pressed():
+	if card_on_from == null or card_on_to == null:
+		return
 	var config_on_from = card_on_from.card_config
 	var config_on_to = card_on_to.card_config
 			
 	move_symbols(config_on_from, config_on_to)
+	end_of_sacrifice()
+	$Sacrifice.hide()
+	is_sacrifice = true
 	pass
 
 func _on_Return_to_map_pressed():
 	emit_signal("return_to_map")
+
+
+func end_of_sacrifice():
+	for card in $deck.get_children():
+		card.hide()
+
+	card_on_to.get_parent().show()
+	var spatial = card_on_to
+	spatial.scale = card_on_to.scale * 2.8
+	spatial.translate(Vector3(0.3, 0.6, -0.4))
+	# spatial.rotate_x(-PI/6)
+	pass
+	
+	
+func _process(delta):
+	if is_sacrifice:
+		# добавить анимацию там, поворот мб
+		# card_on_to.rotate_z(PI/100)
+		pass
