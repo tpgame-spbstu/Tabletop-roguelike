@@ -24,7 +24,7 @@ func get_symbol_copy(symbol_name):
 	
 func _ready():
 	var fast_symbol = Symbol.new("fast", "res://Symbols/Textures/speed.tres", "Передвижение дешевле на 1 энергию.", true, true)
-	var slow_symbol = Symbol.new("slow", "res://Symbols/Textures/Icon46.png", "Передвижение  дороже на 1 энергию.", true, true)
+	var slow_symbol = Symbol.new("slow", "res://Symbols/Textures/Icon46.png", "Передвижение дороже на 1 энергию.", true, true)
 	var range_symbol = Symbol.new("range", "res://Symbols/Textures/Icon42.png", "Атака на одну клетку дальше.", true, true)
 	var counterattack_symbol = Symbol.new("counterattack", "res://Symbols/Textures/Icon14.png", "Если карта выживает после получения урона, то проводит контратаку.", true, true)
 	var weakening_symbol = Weakening.new("weakening", "res://Symbols/Textures/Icon48.png", "Атака юнита напротив ослаблена на 1.", true, true)

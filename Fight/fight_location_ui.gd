@@ -13,12 +13,16 @@ func initialize(board, player):
 
 
 func _on_board_right_click(board, card):
+	if card == null:
+		return
 	description_card.set_desription(card.card_config)
 	description_card.show()
 	pass
 	
 
 func _on_hand_right_click(hand_cell, card):
+	if card == null:
+		return
 	description_card.set_desription(card.card_config)
 	description_card.show()
 	pass
