@@ -200,7 +200,6 @@ func draw_card(deck, card):
 
 
 func _on_bell_click(bell):
-	print("bell")
 	selector.set_state("hide")
 	if fight_state.active_player_number != player_number:
 		# if other player's turn
