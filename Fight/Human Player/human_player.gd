@@ -7,6 +7,8 @@ onready var hand := $hand
 onready var main_deck := $main_deck
 onready var dummy_deck := $dummy_deck
 onready var human_player_state := $human_player_state
+onready var turn_end_pause_timer := $turn_end_pause_timer
+const TURN_END_PAUSE_TIME = 1.2
 
 var board
 var fight_state
@@ -57,6 +59,10 @@ func _on_place_and_move_enter():
 func _on_attack_enter():
 	# Give all cards a chance to attack
 	board.process_player_attack(player_number)
+	turn_end_pause_timer.start(TURN_END_PAUSE_TIME)
+	input_allowed = false
+	yield(turn_end_pause_timer, "timeout")
+	input_allowed = true
 	fight_state.next_state()
 
 
@@ -200,11 +206,16 @@ func draw_card(deck, card):
 
 
 func _on_bell_click(bell):
-	selector.set_state("hide")
+	if !input_allowed:
+		return
 	if fight_state.active_player_number != player_number:
 		# if other player's turn
 		return
 	if fight_state.turn_state == TurnState.PLACE_AND_MOVE:
 		# Go to attack when PLACE_AND_MOVE finished
+		selector.set_state("hide")
+		input_allowed = false
+		yield(bell.play_hit_animation(), "completed")
+		input_allowed = true
 		fight_state.next_state()
 
