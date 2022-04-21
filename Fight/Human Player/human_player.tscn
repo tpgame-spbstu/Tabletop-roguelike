@@ -58,5 +58,8 @@ shape = SubResource( 4 )
 [node name="deck_list" type="Spatial" parent="dummy_deck"]
 transform = Transform( -1, -8.74228e-08, 0, 8.74228e-08, -1, 0, 0, 0, 1, 0, 0, 0 )
 
+[node name="turn_end_pause_timer" type="Timer" parent="."]
+one_shot = true
+
 [connection signal="input_event" from="main_deck/Area" to="main_deck" method="_on_Area_input_event"]
 [connection signal="input_event" from="dummy_deck/Area" to="dummy_deck" method="_on_Area_input_event"]

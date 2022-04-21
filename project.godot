@@ -47,6 +47,10 @@ _global_script_class_icons={
 config/name="Tabletop-roguelike"
 run/main_scene="res://main_menu.tscn"
 
+[audio]
+
+default_bus_layout=""
+
 [autoload]
 
 GameSettings="*res://game_settings.gd"
