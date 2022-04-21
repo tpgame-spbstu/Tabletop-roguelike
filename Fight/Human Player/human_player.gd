@@ -8,6 +8,8 @@ onready var main_deck := $main_deck
 onready var dummy_deck := $dummy_deck
 onready var human_player_state := $human_player_state
 
+signal card_to_play_selected(card)
+
 var board
 var fight_state
 var fight_global_signals
@@ -151,6 +153,7 @@ func _on_hand_left_click(hand_cell, card):
 			# Can't pay for card
 			return
 		# Select card to play
+		emit_signal("card_to_play_selected", card)
 		human_player_state.card_to_play = card
 		selector.move_to(hand_cell)
 		selector.set_state("card_to_play")
