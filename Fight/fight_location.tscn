@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Fight/fight_location.gd" type="Script" id=1]
 [ext_resource path="res://Fight/AI Player/ai_player.tscn" type="PackedScene" id=2]
@@ -14,17 +14,12 @@
 [ext_resource path="res://Fight/fight_loger.gd" type="Script" id=12]
 [ext_resource path="res://fonts/ubuntu_b_13.tres" type="Theme" id=13]
 [ext_resource path="res://Fight/fight_location_ui.gd" type="Script" id=14]
-[ext_resource path="res://fonts/IdealGothic Bold.otf" type="DynamicFontData" id=16]
 
 [sub_resource type="BoxShape" id=5]
 extents = Vector3( 0.5, 0.5, 0.5 )
 
 [sub_resource type="CubeMesh" id=6]
 size = Vector3( 1, 1, 1 )
-
-[sub_resource type="DynamicFont" id=8]
-size = 25
-font_data = ExtResource( 16 )
 
 [node name="fight_location" type="Spatial"]
 script = ExtResource( 1 )
@@ -128,65 +123,13 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="button_exit_to_map" type="Button" parent="fight_ui"]
-margin_right = 143.0
-margin_bottom = 51.0
-text = "To Map"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="HP2" type="RichTextLabel" parent="fight_ui"]
-anchor_top = 0.433
-anchor_bottom = 0.433
-margin_left = 12.718
-margin_top = -22.501
-margin_right = 43.718
-margin_bottom = 22.499
-theme = ExtResource( 11 )
-custom_colors/default_color = Color( 0.898039, 0.490196, 0.490196, 1 )
-text = "5"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="HP1" type="RichTextLabel" parent="fight_ui"]
-anchor_top = 0.574
-anchor_bottom = 0.574
-margin_left = 13.668
-margin_top = -22.678
-margin_right = 44.668
-margin_bottom = 22.322
-theme = ExtResource( 11 )
-custom_colors/default_color = Color( 0.898039, 0.490196, 0.490196, 1 )
-text = "5"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Energy" type="RichTextLabel" parent="fight_ui"]
-anchor_top = 0.871
-anchor_bottom = 0.871
-margin_left = 12.0
-margin_top = -22.6
-margin_right = 43.0
-margin_bottom = 22.4
-theme = ExtResource( 11 )
-custom_colors/default_color = Color( 0.894118, 0.898039, 0.490196, 1 )
-text = "5"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="Status1" type="RichTextLabel" parent="fight_ui"]
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -261.0
-margin_top = -41.0
-margin_right = -2.0
-margin_bottom = -4.0
+margin_left = -74.0
+margin_top = -28.0
 theme = ExtResource( 6 )
 text = "Attack"
 scroll_active = false
@@ -200,40 +143,25 @@ anchor_left = 0.998
 anchor_top = -0.007
 anchor_right = 0.998
 anchor_bottom = -0.007
-margin_left = -112.95
-margin_top = 11.207
-margin_right = 0.0499878
-margin_bottom = 46.207
-custom_fonts/normal_font = SubResource( 8 )
+margin_left = -84.952
+margin_top = 4.2
+margin_right = 2.04797
+margin_bottom = 30.2
+theme = ExtResource( 6 )
 text = "Bot turn"
 __meta__ = {
 "_edit_use_anchors_": false,
 "_editor_description_": ""
 }
 
-[node name="card" type="RichTextLabel" parent="fight_ui"]
-anchor_top = 0.993
-anchor_bottom = 0.993
-margin_left = 39.0
-margin_top = -37.8
-margin_right = 70.0
-margin_bottom = 5.19995
-theme = ExtResource( 11 )
-custom_colors/default_color = Color( 1, 1, 1, 1 )
-text = "2"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="loop" type="RichTextLabel" parent="fight_ui"]
 anchor_left = 1.0
-anchor_top = 0.5
+anchor_top = 0.501
 anchor_right = 1.0
-anchor_bottom = 0.5
-margin_left = -32.0
-margin_top = -21.0
-margin_right = -1.0
-margin_bottom = 22.0
+anchor_bottom = 0.501
+margin_left = -31.0
+margin_top = -21.6
+margin_bottom = 21.4
 theme = ExtResource( 11 )
 custom_colors/default_color = Color( 1, 1, 1, 1 )
 text = "1"
@@ -241,12 +169,78 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Bones" type="RichTextLabel" parent="fight_ui"]
-anchor_top = 0.869
-anchor_bottom = 0.869
-margin_left = 80.0
+[node name="loop_label" type="RichTextLabel" parent="fight_ui"]
+visible = false
+anchor_left = 1.0
+anchor_top = 0.497
+anchor_right = 1.0
+anchor_bottom = 0.497
+margin_left = -74.0
+margin_top = -9.20001
+margin_right = -43.0
+margin_bottom = 7.79999
+theme = ExtResource( 13 )
+text = "loop"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="fight_ui"]
+anchor_bottom = 1.0
+margin_right = 46.988
+color = Color( 0.152941, 0.160784, 0.2, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HP2" type="RichTextLabel" parent="fight_ui/ColorRect"]
+anchor_top = 0.433
+anchor_bottom = 0.433
+margin_left = 14.0
+margin_top = -22.8
+margin_right = 45.0
+margin_bottom = 22.2
+theme = ExtResource( 11 )
+custom_colors/default_color = Color( 0.898039, 0.490196, 0.490196, 1 )
+text = "5"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Energy" type="RichTextLabel" parent="fight_ui/ColorRect"]
+anchor_top = 0.764
+anchor_bottom = 0.764
+margin_left = 15.0
 margin_top = -22.4
-margin_right = 111.0
+margin_right = 46.0
+margin_bottom = 22.6
+theme = ExtResource( 11 )
+custom_colors/default_color = Color( 0.894118, 0.898039, 0.490196, 1 )
+text = "5"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HP1" type="RichTextLabel" parent="fight_ui/ColorRect"]
+anchor_top = 0.574
+anchor_bottom = 0.574
+margin_left = 15.0
+margin_top = -22.4
+margin_right = 46.0
+margin_bottom = 22.6
+theme = ExtResource( 11 )
+custom_colors/default_color = Color( 0.898039, 0.490196, 0.490196, 1 )
+text = "5"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Bones" type="RichTextLabel" parent="fight_ui/ColorRect"]
+anchor_top = 0.849
+anchor_bottom = 0.849
+margin_left = 15.0
+margin_top = -22.4
+margin_right = 46.0
 margin_bottom = 22.6
 theme = ExtResource( 11 )
 custom_colors/default_color = Color( 0.592157, 0.592157, 0.560784, 1 )
@@ -255,61 +249,91 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="RichTextLabel" type="RichTextLabel" parent="fight_ui"]
-anchor_top = 0.387
-anchor_bottom = 0.387
-margin_left = 4.0
-margin_top = -8.2
-margin_right = 63.0
-margin_bottom = 8.8
+[node name="card" type="RichTextLabel" parent="fight_ui/ColorRect"]
+anchor_top = 0.964
+anchor_bottom = 0.964
+margin_left = 15.0
+margin_top = -21.4
+margin_right = 46.0
+margin_bottom = 21.5999
+theme = ExtResource( 11 )
+custom_colors/default_color = Color( 1, 1, 1, 1 )
+text = "2"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HP_bot_label" type="RichTextLabel" parent="fight_ui/ColorRect"]
+visible = false
+anchor_top = 0.427
+anchor_bottom = 0.427
+margin_left = 52.0
+margin_top = -9.20001
+margin_right = 111.0
+margin_bottom = 7.79999
 theme = ExtResource( 13 )
 text = "HP bot"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="RichTextLabel2" type="RichTextLabel" parent="fight_ui"]
-anchor_top = 0.528
-anchor_bottom = 0.528
-margin_left = 3.0
-margin_top = -7.79999
-margin_right = 84.0
-margin_bottom = 9.20001
+[node name="HP_player_label" type="RichTextLabel" parent="fight_ui/ColorRect"]
+visible = false
+anchor_top = 0.564
+anchor_bottom = 0.564
+margin_left = 53.0
+margin_top = -8.39999
+margin_right = 134.0
+margin_bottom = 8.60001
 theme = ExtResource( 13 )
 text = "HP player"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="RichTextLabel3" type="RichTextLabel" parent="fight_ui"]
-anchor_top = 0.82
-anchor_bottom = 0.82
-margin_left = 3.0
-margin_top = -8.0
-margin_right = 68.0
-margin_bottom = 12.0
+[node name="Energy_label" type="RichTextLabel" parent="fight_ui/ColorRect"]
+visible = false
+anchor_top = 0.76
+anchor_bottom = 0.76
+margin_left = 53.0
+margin_top = -10.0
+margin_right = 118.0
+margin_bottom = 9.99997
 theme = ExtResource( 13 )
 text = "Energy"
 
-[node name="RichTextLabel4" type="RichTextLabel" parent="fight_ui"]
-anchor_top = 0.822
-anchor_bottom = 0.822
-margin_left = 66.0
-margin_top = -8.20001
-margin_right = 124.0
-margin_bottom = 13.8
+[node name="Bones_label" type="RichTextLabel" parent="fight_ui/ColorRect"]
+visible = false
+anchor_top = 0.845
+anchor_bottom = 0.845
+margin_left = 54.0
+margin_top = -11.0
+margin_right = 112.0
+margin_bottom = 11.0
 theme = ExtResource( 13 )
 text = "Bones"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="RichTextLabel5" type="RichTextLabel" parent="fight_ui"]
-anchor_top = 0.917
-anchor_bottom = 0.917
-margin_left = 5.0
-margin_top = -8.20001
-margin_right = 114.0
-margin_bottom = 10.8
+[node name="Card_label" type="RichTextLabel" parent="fight_ui/ColorRect"]
+visible = false
+anchor_top = 0.959
+anchor_bottom = 0.959
+margin_left = 53.0
+margin_top = -9.40002
+margin_right = 162.0
+margin_bottom = 9.59998
 theme = ExtResource( 13 )
 text = "card available"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="button_exit_to_map" type="Button" parent="fight_ui/ColorRect"]
+margin_right = 47.0
+margin_bottom = 43.0
+text = "Map"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -346,6 +370,18 @@ script = ExtResource( 9 )
 [connection signal="extra_draws_count_changed" from="human_player_1/human_player_state" to="fight_loger" method="_on_human_player_state_extra_draws_count_changed"]
 [connection signal="extra_draws_count_changed" from="human_player_1/human_player_state" to="fight_ui" method="_on_human_player_state_extra_draws_count_changed"]
 [connection signal="input_event" from="bell/Area" to="bell" method="_on_Area_input_event"]
-[connection signal="pressed" from="fight_ui/button_exit_to_map" to="." method="_on_button_exit_to_map_pressed"]
+[connection signal="mouse_entered" from="fight_ui/loop" to="fight_ui" method="_on_loop_mouse_entered"]
+[connection signal="mouse_exited" from="fight_ui/loop" to="fight_ui" method="_on_loop_mouse_exited"]
+[connection signal="mouse_entered" from="fight_ui/ColorRect/HP2" to="fight_ui" method="_on_HP2_mouse_entered"]
+[connection signal="mouse_exited" from="fight_ui/ColorRect/HP2" to="fight_ui" method="_on_HP2_mouse_exited"]
+[connection signal="mouse_entered" from="fight_ui/ColorRect/Energy" to="fight_ui" method="_on_Energy_mouse_entered"]
+[connection signal="mouse_exited" from="fight_ui/ColorRect/Energy" to="fight_ui" method="_on_Energy_mouse_exited"]
+[connection signal="mouse_entered" from="fight_ui/ColorRect/HP1" to="fight_ui" method="_on_HP1_mouse_entered"]
+[connection signal="mouse_exited" from="fight_ui/ColorRect/HP1" to="fight_ui" method="_on_HP1_mouse_exited"]
+[connection signal="mouse_entered" from="fight_ui/ColorRect/Bones" to="fight_ui" method="_on_Bones_mouse_entered"]
+[connection signal="mouse_exited" from="fight_ui/ColorRect/Bones" to="fight_ui" method="_on_Bones_mouse_exited"]
+[connection signal="mouse_entered" from="fight_ui/ColorRect/card" to="fight_ui" method="_on_card_mouse_entered"]
+[connection signal="mouse_exited" from="fight_ui/ColorRect/card" to="fight_ui" method="_on_card_mouse_exited"]
+[connection signal="pressed" from="fight_ui/ColorRect/button_exit_to_map" to="." method="_on_button_exit_to_map_pressed"]
 
 [editable path="human_player_1"]
