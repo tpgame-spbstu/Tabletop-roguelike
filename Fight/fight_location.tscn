@@ -314,8 +314,26 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Camera" type="Camera" parent="."]
+[node name="camera_positions" type="Spatial" parent="."]
+transform = Transform( -1, -8.64016e-08, 1.33232e-08, 0, 0.152399, 0.988319, -8.74228e-08, 0.988319, -0.152399, 0, 3, 1 )
+
+[node name="camera_deck_position" type="Spatial" parent="camera_positions"]
+transform = Transform( -0.990239, -8.69961e-08, -0.139381, -0.139381, -6.09252e-09, 0.990239, -8.69961e-08, 1, -6.09252e-09, 1, 3, 0 )
+
+[node name="camera_board_position" type="Spatial" parent="camera_positions"]
 transform = Transform( -1, 8.74228e-08, 3.82137e-15, 0, -4.37114e-08, 1, 8.74228e-08, 1, 4.37114e-08, 0, 3, 0 )
+
+[node name="camera_hand_position" type="Spatial" parent="camera_positions"]
+transform = Transform( -1, 8.74228e-08, 3.82137e-15, 0, -4.37114e-08, 1, 8.74228e-08, 1, 4.37114e-08, 0, 1.693, -2.31 )
+
+[node name="camera_bell_position" type="Spatial" parent="camera_positions"]
+transform = Transform( -0.990234, 8.69959e-08, 0.139415, 0.139415, -6.09403e-09, 0.990234, 8.69959e-08, 1, -6.09403e-09, -1, 3, 0 )
+
+[node name="camera_enemy_position" type="Spatial" parent="camera_positions"]
+transform = Transform( -1, -8.64016e-08, 1.33232e-08, 0, 0.152399, 0.988319, -8.74228e-08, 0.988319, -0.152399, 0, 3, 1 )
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( -1, -8.64016e-08, 1.33232e-08, 0, 0.152399, 0.988319, -8.74228e-08, 0.988319, -0.152399, 0, 3, 1 )
 current = true
 script = ExtResource( 9 )
 
@@ -339,6 +357,7 @@ script = ExtResource( 9 )
 [connection signal="player_2_place_and_move_enter" from="fight_state" to="fight_loger" method="_on_fight_state_player_2_place_and_move_enter"]
 [connection signal="player_2_win" from="fight_state" to="." method="_on_fight_state_player_2_win"]
 [connection signal="player_2_win" from="fight_state" to="fight_loger" method="_on_fight_state_player_2_win"]
+[connection signal="hand_card_left_click" from="human_player_1" to="Camera" method="_on_human_player_1_hand_card_left_click"]
 [connection signal="bones_changed" from="human_player_1/human_player_state" to="fight_loger" method="_on_human_player_state_bones_changed"]
 [connection signal="bones_changed" from="human_player_1/human_player_state" to="fight_ui" method="_on_human_player_state_bones_changed"]
 [connection signal="energy_changed" from="human_player_1/human_player_state" to="fight_loger" method="_on_human_player_state_energy_changed"]
