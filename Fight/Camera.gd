@@ -57,6 +57,7 @@ func _input(event):
 		
 
 
-func _on_human_player_1_hand_card_left_click(card):
+
+func _on_human_player_1_card_to_play_selected(card):
 	set_camera_position(board_position)
 	current_position = BOARD_POSITION

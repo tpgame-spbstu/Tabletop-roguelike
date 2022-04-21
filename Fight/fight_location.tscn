@@ -357,7 +357,7 @@ script = ExtResource( 9 )
 [connection signal="player_2_place_and_move_enter" from="fight_state" to="fight_loger" method="_on_fight_state_player_2_place_and_move_enter"]
 [connection signal="player_2_win" from="fight_state" to="." method="_on_fight_state_player_2_win"]
 [connection signal="player_2_win" from="fight_state" to="fight_loger" method="_on_fight_state_player_2_win"]
-[connection signal="hand_card_left_click" from="human_player_1" to="Camera" method="_on_human_player_1_hand_card_left_click"]
+[connection signal="card_to_play_selected" from="human_player_1" to="Camera" method="_on_human_player_1_card_to_play_selected"]
 [connection signal="bones_changed" from="human_player_1/human_player_state" to="fight_loger" method="_on_human_player_state_bones_changed"]
 [connection signal="bones_changed" from="human_player_1/human_player_state" to="fight_ui" method="_on_human_player_state_bones_changed"]
 [connection signal="energy_changed" from="human_player_1/human_player_state" to="fight_loger" method="_on_human_player_state_energy_changed"]
