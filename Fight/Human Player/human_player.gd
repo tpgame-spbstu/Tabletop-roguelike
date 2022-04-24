@@ -107,9 +107,11 @@ func _on_board_left_click(board_cell, card):
 			return
 		var move_cost = human_player_state.card_to_move.get_move_cost_or_null(board_cell)
 		if move_cost == null:
+			cancel_selection()
 			# Can't move card
 			return
 		if !move_cost.is_obtainable(human_player_state):
+			cancel_selection()
 			# Can't pay cost
 			return
 		# Pay cost to move
