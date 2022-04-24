@@ -55,4 +55,6 @@ __meta__ = {
 
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 4, 0 )
+projection = 1
 fov = 65.7
+size = 5.0
