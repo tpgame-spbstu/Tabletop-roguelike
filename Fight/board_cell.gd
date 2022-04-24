@@ -1,10 +1,12 @@
 extends Spatial
 
 var Card := load("res://Card/card.gd") as Script
+var base_board_cell_material = preload("res://Fight/Assets/base_board_cell_material.tres")
+var selected_board_cell_material = preload("res://Fight/Assets/selected_board_cell_material.tres")
 
 var row_index = NAN
 var column_index = NAN
-
+var is_highlighted = false
 var board
 
 
@@ -73,3 +75,14 @@ func add_card(card):
 func remove_card(card):
 	remove_child(card)
 	card.transform = Transform()
+
+
+func highlight():
+	if !is_highlighted:
+		$MeshInstance.set_surface_material(0, selected_board_cell_material)
+	is_highlighted = true
+	
+func cancel_highlight():
+	if is_highlighted:
+		$MeshInstance.set_surface_material(0, base_board_cell_material)
+	is_highlighted = false

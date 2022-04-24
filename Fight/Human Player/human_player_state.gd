@@ -35,4 +35,6 @@ func restore_energy(loop_number):
 	else:
 		set_energy(max_energy_for_loop.back())
 
-
+func cancel_selection():
+	card_to_play = null
+	card_to_move = null

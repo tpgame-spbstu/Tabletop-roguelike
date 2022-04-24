@@ -4,13 +4,13 @@ var rows_count
 var column_count
 
 var fight_global_signals
-
 signal board_left_click(board_cell, card)
 signal board_right_click(board_cell, card)
 
 
 # Set up exturnal nodes, initialize and connect cells
 func initialize(fight_global_signals):
+	
 	self.fight_global_signals = fight_global_signals
 	rows_count = get_child_count()
 	column_count = get_child(0).get_child_count()
@@ -114,3 +114,10 @@ func play_card(start_point, board_cell, card_to_play):
 	card_to_play.get_parent().remove_child(card_to_play)
 	board_cell.add_card(card_to_play)
 	fight_global_signals.emit_signal("card_played", board_cell, card_to_play)
+	
+	
+func cancel_highlight():
+	for row_index in range(rows_count):
+		for column_index in range(column_count):
+			var cell = get_board_cell(row_index, column_index)
+			cell.cancel_highlight()
