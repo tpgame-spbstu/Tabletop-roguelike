@@ -3,6 +3,7 @@ extends Spatial
 onready var card_inst = load("res://Modification/card_3d.tscn")
 onready var hand = load("res://Modification/hand.tscn")
 
+
 func _ready():
 	var c = card_inst.instance()
 	c.translate(Vector3(-7, 0, -5))

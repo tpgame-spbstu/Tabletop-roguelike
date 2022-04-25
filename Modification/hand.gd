@@ -15,10 +15,6 @@ onready var card_inst = load("res://Modification/card_3d.tscn")
 onready var utils = load("res://Modification/utils.gd").new()
 # TODO: substitute, change it with the actual value
 const OFFSET := Vector3(0, 0.5, -2.5)
-# -15 degrees
-const PHI := -6.2830 / 24
-# coeff to put the cards on the edges lower, than the cards in the middle
-const FUNC_COEFF := 7.5
 
 
 func _ready():
@@ -172,7 +168,7 @@ func add_card(card) -> Array:
 	_add_card(card)
 	draw_cards()
 	# _remove_card(card)
-	return _get_placement_coeffs(true)
+	return utils.get_placement_coeffs(_cards, true)
 
 
 func add_cards(cards: Array):
@@ -194,41 +190,9 @@ func _remove_card(card):
 	card.translate(Vector3(-7, 2, -7))
 
 
-func __f(x, coeff=60.0):
-	return pow(x, 2) / coeff
-
-
-func _get_placement_coeffs(get_last=false) -> Array:
-	var coeffs: Array = []
-	if _cards:
-		var size = _cards[0].get_size() / 2  # get the size of the card (its mesh, actually)
-		var n = _cards.size() - 1
-		var coeff = FUNC_COEFF  # empirical coefficient to make the cards on the sides lower, then the cards in the middle
-		var a = -(n + 1) * size.x / 2  # a in [a, b]
-		var b = -a  # b in [a, b]
-		var dh = size.y * 2  # delta height
-		var phi = PHI  # -15 degrees
-		var psi = -phi  # +15 degrees
-
-		var start_ind = n if get_last else 0
-
-		var cur_point: float  # current offset from a
-		var cur_rad: float  # current angle in rads
-		var trans: Transform
-		# when there is only one card
-		if not n:
-			coeffs.push_back([Vector3(a, 0, __f(a, 1)), phi])
-		else:
-			for i in range(start_ind, _cards.size()):
-				cur_point = a + i * 2 * b / n
-				cur_rad = phi + i * 2 * psi / n
-				coeffs.push_back([Vector3(cur_point, i * dh, __f(cur_point, n * coeff)), cur_rad])
-	return coeffs[0] if get_last else coeffs
-
-
 func draw_cards():
 	var trans: Transform
-	var coeffs = _get_placement_coeffs()
+	var coeffs = utils.get_placement_coeffs(_cards)
 	for i in coeffs.size():
 		# place the center of the cards on the line
 		trans = _cards[i].get_transform()
