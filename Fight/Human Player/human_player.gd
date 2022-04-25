@@ -285,6 +285,11 @@ func cancel_selection():
 
 func highlight_possible_moves():
 	#hand
+	if human_player_state.card_to_move != null or human_player_state.card_to_play != null:
+		hand.cancel_highlight()
+		dummy_deck.cancel_highlight()
+		main_deck.cancel_highlight()
+		return
 	
 	var is_obtainable = hand.has_obtainable_cards(human_player_state)
 	var is_free_space = board.has_free_base_cells(player_number)
@@ -316,8 +321,7 @@ func highlight_possible_moves():
 	#board
 	var is_movable = false
 	
-	if (fight_state.turn_state == TurnState.PLACE_AND_MOVE and human_player_state.card_to_move == null
-	and human_player_state.card_to_play == null):
+	if (fight_state.turn_state == TurnState.PLACE_AND_MOVE):
 		board.cancel_highlight()
 		for i in range(board.rows_count):
 			for j in range(board.column_count):

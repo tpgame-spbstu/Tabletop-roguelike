@@ -5,7 +5,7 @@
 [ext_resource path="res://Fight/Human Player/human_player_state.gd" type="Script" id=3]
 [ext_resource path="res://Fight/Human Player/selector.gd" type="Script" id=4]
 [ext_resource path="res://Fight/Human Player/human_player.gd" type="Script" id=5]
-[ext_resource path="res://Fight/Assets/possible_move_highlight_material.tres" type="Material" id=6]
+[ext_resource path="res://Fight/Assets/selected_board_cell_material.tres" type="Material" id=6]
 [ext_resource path="res://Fight/deck_highlight.gd" type="Script" id=7]
 
 [sub_resource type="CubeMesh" id=1]

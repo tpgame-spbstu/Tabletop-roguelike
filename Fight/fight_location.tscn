@@ -16,11 +16,11 @@
 [ext_resource path="res://Fight/fight_location_ui.gd" type="Script" id=14]
 [ext_resource path="res://Fight/gong.tscn" type="PackedScene" id=15]
 [ext_resource path="res://fonts/IdealGothic Bold.otf" type="DynamicFontData" id=16]
+[ext_resource path="res://Fight/Assets/selected_board_cell_material.tres" type="Material" id=17]
 [ext_resource path="res://Fight/hand_hightlight.gd" type="Script" id=18]
-[ext_resource path="res://Fight/Assets/possible_move_highlight_material.tres" type="Material" id=19]
 
 [sub_resource type="QuadMesh" id=10]
-material = ExtResource( 19 )
+material = ExtResource( 17 )
 size = Vector2( 4.2, 1.1 )
 
 [sub_resource type="BoxShape" id=5]
@@ -337,8 +337,8 @@ transform = Transform( -1, -8.64016e-08, 1.33232e-08, 0, 0.152399, 0.988319, -8.
 [node name="camera_deck_position" type="Spatial" parent="camera_positions"]
 transform = Transform( -0.990239, -8.69961e-08, -0.139381, -0.139381, -6.09252e-09, 0.990239, -8.69961e-08, 1, -6.09252e-09, 1, 3, 0 )
 
-[node name="camera_board_position" type="Spatial" parent="camera_positions"]
-transform = Transform( -1, 8.74228e-08, 3.82137e-15, 0, -4.37114e-08, 1, 8.74228e-08, 1, 4.37114e-08, 0, 3, 0 )
+[node name="camera_enemy_position" type="Spatial" parent="camera_positions"]
+transform = Transform( -1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 3, 0 )
 
 [node name="camera_hand_position" type="Spatial" parent="camera_positions"]
 transform = Transform( -1, 8.74228e-08, 3.82137e-15, 0, -4.37114e-08, 1, 8.74228e-08, 1, 4.37114e-08, 0, 1.693, -2.31 )
@@ -346,11 +346,17 @@ transform = Transform( -1, 8.74228e-08, 3.82137e-15, 0, -4.37114e-08, 1, 8.74228
 [node name="camera_bell_position" type="Spatial" parent="camera_positions"]
 transform = Transform( -0.990234, 8.69959e-08, 0.139415, 0.139415, -6.09403e-09, 0.990234, 8.69959e-08, 1, -6.09403e-09, -1, 3, 0 )
 
-[node name="camera_enemy_position" type="Spatial" parent="camera_positions"]
-transform = Transform( -1, -8.64016e-08, 1.33232e-08, 0, 0.152399, 0.988319, -8.74228e-08, 0.988319, -0.152399, 0, 3, 1 )
+[node name="camera_board_position" type="Spatial" parent="camera_positions"]
+transform = Transform( -1, -8.63376e-08, 1.37317e-08, 0, 0.157072, 0.987587, -8.74228e-08, 0.987587, -0.157072, 0, 3.544, -1.371 )
+
+[node name="camera_board_position_old" type="Spatial" parent="camera_positions"]
+transform = Transform( -1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 3, 0 )
+
+[node name="camera_enemy_position_old" type="Spatial" parent="camera_positions"]
+transform = Transform( -1, -8.64016e-08, 1.33232e-08, 0, 0.152399, 0.988319, -8.74228e-08, 0.988319, -0.152399, 2.84217e-14, 3, 1 )
 
 [node name="Camera" type="Camera" parent="."]
-transform = Transform( -1, -8.64016e-08, 1.33231e-08, 0, 0.152399, 0.988319, -8.74228e-08, 0.988319, -0.152399, 0, 3, 1 )
+transform = Transform( -1, -8.63376e-08, 1.37317e-08, 0, 0.157072, 0.987587, -8.74228e-08, 0.987587, -0.157072, 0, 3.544, -1.371 )
 current = true
 script = ExtResource( 9 )
 
