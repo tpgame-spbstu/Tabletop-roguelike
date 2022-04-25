@@ -145,14 +145,44 @@ func _input(event):
 
 
 func initialize(cards: Array):
-	_cards = cards.duplicate()
-	# add all the cards as children to the root
-	for card in _cards:
-		add_child(card)
+	add_cards(cards)
 	# the card is passed, so connect only oneself
 	connect("mouse_entered", self, "_on_mouse_entered")
 	connect("mouse_exited", self, "_on_mouse_exited")
+
+
+func _get_collision_layer():
+	return 1 << _collision_layer_bit
+
+
+func _add_card(card):
+	print("here")
+	add_child(card)
+	card.set_collision_layer_bit(_collision_layer_bit, true)
+	_cards.push_back(card)
+
+
+func add_card(card) -> Array:
+	_add_card(card)
 	draw_cards()
+	# _remove_card(card)
+	return _get_placement_coeffs(true)
+
+
+func add_cards(cards: Array):
+	var last_placement = []
+	for card in cards:
+		last_placement = _add_card(card)
+	draw_cards()
+	return last_placement
+
+
+func _remove_card(card):
+	remove_child(card)
+	card.set_collision_layer_bit(_collision_layer_bit, false)
+	_cards.erase(card)
+	draw_cards()
+	card.translate(Vector3(-7, 2, -7))
 
 
 func __f(x, coeff=60.0):
@@ -211,9 +241,3 @@ func _on_mouse_exited(card):
 	_hovered = null
 	var tween = card.get_hower_tween()
 	tween.on_exit()
-
-
-func _get_collision_layer():
-	return 1 << _collision_layer_bit
-
-

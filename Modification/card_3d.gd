@@ -1,5 +1,7 @@
 extends StaticBody
 
+signal doubleclick(card)
+
 # original position regarding the animations (= position before the animation)
 var _orig_trans: Transform setget set_orig_trans, get_orig_trans
 # tween that is started on hovering
@@ -12,6 +14,14 @@ func _ready():
 	# will use to set the internal state of the tween to NONE
 	_hover_tween.connect("tween_all_completed", self, "_on_hover_tween_complete")
 	_hover_tween.set_state(_hover_tween.NONE)
+
+	connect("input_event", self, "_on_input_event")
+
+
+func _on_input_event(camera, event, pos, normal, shape_idx):
+	if event is InputEventMouseButton:
+		if event.doubleclick:
+			emit_signal("doubleclick", self)
 
 
 func _on_hover_tween_complete():
