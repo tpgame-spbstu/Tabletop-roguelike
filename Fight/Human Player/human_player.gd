@@ -49,6 +49,7 @@ func initialize(fight_state, fight_global_signals, board, bell, deck_config, pla
 
 func _on_draw_cards_enter():
 	human_player_state.restore_energy(fight_state.loop_number)
+	highlight_possible_moves()
 
 
 func _on_place_and_move_enter():
@@ -56,6 +57,7 @@ func _on_place_and_move_enter():
 	human_player_state.set_extra_draws_count(1)
 	human_player_state.card_to_play = null
 	human_player_state.card_to_move = null
+	highlight_possible_moves()
 
 
 func _on_attack_enter():
@@ -98,21 +100,25 @@ func _on_board_left_click(board_cell, card):
 		hand.remove_hand_cell(hand_cell)
 		# Reset selected card
 		cancel_selection()
+		highlight_possible_moves()
 	elif human_player_state.card_to_move != null:
 		# Selected card to move
 		if card == human_player_state.card_to_move:
 			# clicked on selected card, reset selection
 			human_player_state.card_to_move = null
 			selector.set_state("hide")
+			highlight_possible_moves()
 			return
 		var move_cost = human_player_state.card_to_move.get_move_cost_or_null(board_cell)
 		if move_cost == null:
 			cancel_selection()
 			# Can't move card
+			highlight_possible_moves()
 			return
 		if !move_cost.is_obtainable(human_player_state):
 			cancel_selection()
 			# Can't pay cost
+			highlight_possible_moves()
 			return
 		# Pay cost to move
 		move_cost.pay(human_player_state)
@@ -122,6 +128,7 @@ func _on_board_left_click(board_cell, card):
 		input_allowed = true
 		# Reset selected card
 		cancel_selection()
+		highlight_possible_moves()
 	else:
 		# No selected cards
 		if card == null:
@@ -132,6 +139,7 @@ func _on_board_left_click(board_cell, card):
 			return
 		# Select card to move
 		human_player_state.card_to_move = card
+		cancel_highlight()
 		highlight_possible_card_moves(board_cell)
 		selector.move_to(board_cell)
 		selector.set_state("move")
@@ -168,6 +176,7 @@ func _on_hand_left_click(hand_cell, card):
 		human_player_state.card_to_play = card
 		selector.move_to(hand_cell)
 		selector.set_state("card_to_play")
+		cancel_highlight()
 		highlight_empty_base_fields()
 
 
@@ -189,6 +198,7 @@ func _on_deck_click(deck, card):
 				# Draw card from deck
 				yield(draw_card(deck, card), "completed")
 			fight_state.next_state()
+			highlight_possible_moves()
 		TurnState.PLACE_AND_MOVE:
 			cancel_highlight()
 			# State PLACE_AND_MOVE
@@ -202,6 +212,7 @@ func _on_deck_click(deck, card):
 				human_player_state.extra_draws_count -= 1
 				# Draw card from deck
 				yield(draw_card(deck, card), "completed")
+				highlight_possible_moves()
 
 
 # Draw card from deck
@@ -262,8 +273,68 @@ func highlight_possible_card_moves(board_cell):
 
 func cancel_highlight():
 	board.cancel_highlight()
+	highlight_possible_moves()
+
 
 func cancel_selection():
+	#removes selection and cancels highlight
 	selector.set_state("hide")
 	human_player_state.cancel_selection()
 	cancel_highlight()
+
+
+func highlight_possible_moves():
+	#hand
+	if human_player_state.card_to_move != null or human_player_state.card_to_play != null:
+		hand.cancel_highlight()
+		dummy_deck.cancel_highlight()
+		main_deck.cancel_highlight()
+		return
+	
+	var is_obtainable = hand.has_obtainable_cards(human_player_state)
+	var is_free_space = board.has_free_base_cells(player_number)
+	var has_playable_cards = false
+	if(is_obtainable and is_free_space and fight_state.turn_state == TurnState.PLACE_AND_MOVE 
+	and fight_state.active_player_number == player_number):
+		hand.highlight()
+		has_playable_cards = true
+	else:
+		hand.cancel_highlight()
+	
+	#deck
+	var is_drawable = false
+	if fight_state.turn_state == TurnState.DRAW_CARDS or human_player_state.extra_draw_cost.is_obtainable(human_player_state) and human_player_state.extra_draws_count > 0:
+		if dummy_deck.get_card_count() > 0:
+			dummy_deck.highlight()
+		else:
+			dummy_deck.cancel_highlight()
+			
+		if main_deck.get_card_count() > 0:
+			main_deck.highlight()
+		else:
+			main_deck.cancel_highlight()
+		is_drawable = true
+	else:
+		dummy_deck.cancel_highlight()
+		main_deck.cancel_highlight()
+	
+	#board
+	var is_movable = false
+	
+	if (fight_state.turn_state == TurnState.PLACE_AND_MOVE):
+		board.cancel_highlight()
+		for i in range(board.rows_count):
+			for j in range(board.column_count):
+				var cell = board.get_board_cell(i, j)
+				var card = cell.get_card_or_null()
+				if card == null or card.owner_number != player_number:
+					continue
+				var neighbours = board.get_cell_neighbours(cell)
+				if neighbours != null:
+					for n in neighbours:
+						if n!=null and n.get_card_or_null() == null:
+							var move_cost = card.get_move_cost_or_null(n)
+							if move_cost == null:
+								continue
+							if move_cost.is_obtainable(human_player_state):
+								cell.highlight()

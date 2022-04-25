@@ -121,3 +121,46 @@ func cancel_highlight():
 		for column_index in range(column_count):
 			var cell = get_board_cell(row_index, column_index)
 			cell.cancel_highlight()
+
+
+func has_free_base_cells(player_number):
+	var base_row = get_friendly_base_row_index(player_number)
+	for i in range(column_count):
+		var cell = get_board_cell(base_row, i)
+		if cell != null and typeof(cell) != TYPE_INT and cell.get_card_or_null() == null:
+			return true
+	return false
+
+
+func get_cell_neighbours(board_cell):
+	var neighbours = []
+	if board_cell == null:
+		return null
+	var row = board_cell.row_index
+	var column  = board_cell.column_index
+	var cell = get_board_cell(row + 1, column)
+	
+	if typeof(cell) != TYPE_INT:
+		neighbours.append(cell)
+	else:
+		neighbours.append(null)
+	
+	cell = get_board_cell(row, column + 1)
+	if typeof(cell) != TYPE_INT:
+		neighbours.append(cell)
+	else:
+		neighbours.append(null)
+	
+	cell = get_board_cell(row - 1, column)
+	if typeof(cell) != TYPE_INT:
+		neighbours.append(cell)
+	else:
+		neighbours.append(null)
+		
+	cell = get_board_cell(row, column - 1)
+	if typeof(cell) != TYPE_INT:
+		neighbours.append(cell)
+	else:
+		neighbours.append(null)
+	
+	return neighbours

@@ -4,7 +4,10 @@ extends Spatial
 
 signal deck_click(deck, card)
 
+onready var highlighter := $deck_highlight
+
 onready var deck_list := $deck_list
+
 var CardScene := preload("res://Card/card.tscn") as PackedScene
 var fight_global_signals
 var fight_state
@@ -41,3 +44,17 @@ func _on_Area_input_event(camera: Node, event: InputEvent, position: Vector3, no
 			if deck_list.get_child_count() != 0:
 				card = deck_list.get_child(0)
 			emit_signal("deck_click", self, card)
+
+
+func get_card_count():
+	return deck_list.get_child_count()
+
+
+
+func highlight():
+	highlighter.highlight()
+
+
+func cancel_highlight():
+	highlighter.cancel_highlight()
+
