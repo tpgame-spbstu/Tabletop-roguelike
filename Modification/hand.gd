@@ -8,6 +8,9 @@ signal mouse_exited(card)
 var _cards: Array
 # stores currently hovered card
 var _hovered
+# set for every card, ray is also checking only this layer
+# done to avoid ray picking cards, that are not in the hand
+var _collision_layer_bit: int = 2
 onready var card_inst = load("res://Modification/card_3d.tscn")
 onready var utils = load("res://Modification/utils.gd").new()
 # TODO: substitute, change it with the actual value
@@ -95,7 +98,7 @@ func _mouse_hovering(event):
 	var space_state = get_world().direct_space_state
 
 	# get the closest (highest on Y-axis) card under the mouse
-	var first_card = space_state.intersect_ray(ray_from, ray_to)
+	var first_card = space_state.intersect_ray(ray_from, ray_to, [], _get_collision_layer())
 	if first_card:
 		first_card = first_card["collider"]
 		# case (2)
@@ -111,7 +114,7 @@ func _mouse_hovering(event):
 				return
 			# get the card under the first card, if any
 			# [_hovered] means to ignore the hovered card during raycasting
-			var second_card = space_state.intersect_ray(ray_from, ray_to, [_hovered])
+			var second_card = space_state.intersect_ray(ray_from, ray_to, [_hovered], _get_collision_layer())
 			if second_card:
 				second_card = second_card["collider"]
 				# get the polygons of the cards (array of their vertexes)
@@ -190,3 +193,9 @@ func _on_mouse_exited(card):
 	_hovered = null
 	var tween = card.get_hower_tween()
 	tween.on_exit()
+
+
+func _get_collision_layer():
+	return 1 << _collision_layer_bit
+
+
