@@ -159,7 +159,8 @@ func __f(x, coeff=60.0):
 	return pow(x, 2) / coeff
 
 
-func draw_cards():
+func _get_placement_coeffs(get_last=false) -> Array:
+	var coeffs: Array = []
 	if _cards:
 		var size = _cards[0].get_size() / 2  # get the size of the card (its mesh, actually)
 		var n = _cards.size() - 1
@@ -170,17 +171,34 @@ func draw_cards():
 		var phi = PHI  # -15 degrees
 		var psi = -phi  # +15 degrees
 
+		var start_ind = n if get_last else 0
+
 		var cur_point: float  # current offset from a
 		var cur_rad: float  # current angle in rads
-		for i in _cards.size():
-			cur_point = a + i * 2 * b / n
-			cur_rad = phi + i * 2 * psi / n
-			# place the center of the cards on the line
-			_cards[i].translate(Vector3(cur_point, i * dh, __f(cur_point, n * coeff)))
-			# rotate the card
-			_cards[i].rotate(Vector3.UP, -cur_rad)
-			# set the original transform (position + rotation)
-			_cards[i].set_orig_trans(_cards[i].get_transform())
+		var trans: Transform
+		# when there is only one card
+		if not n:
+			coeffs.push_back([Vector3(a, 0, __f(a, 1)), phi])
+		else:
+			for i in range(start_ind, _cards.size()):
+				cur_point = a + i * 2 * b / n
+				cur_rad = phi + i * 2 * psi / n
+				coeffs.push_back([Vector3(cur_point, i * dh, __f(cur_point, n * coeff)), cur_rad])
+	return coeffs[0] if get_last else coeffs
+
+
+func draw_cards():
+	var trans: Transform
+	var coeffs = _get_placement_coeffs()
+	for i in coeffs.size():
+		# place the center of the cards on the line
+		trans = _cards[i].get_transform()
+		trans.origin = coeffs[i][0]
+		# rotate the card
+		trans.basis = Basis.IDENTITY.rotated(Vector3.UP, -coeffs[i][1])
+		_cards[i].set_transform(trans)
+		# set the original transform (position + rotation)
+		_cards[i].set_orig_trans(trans)
 
 
 func _on_mouse_entered(card):
