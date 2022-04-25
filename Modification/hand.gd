@@ -11,7 +11,12 @@ var _hovered
 onready var card_inst = load("res://Modification/card_3d.tscn")
 onready var utils = load("res://Modification/utils.gd").new()
 # TODO: substitute, change it with the actual value
-const OFFSET := Vector3(0, 0.5, 0)
+const OFFSET := Vector3(0, 0.5, -2.5)
+# -15 degrees
+const PHI := -6.2830 / 24
+# coeff to put the cards on the edges lower, than the cards in the middle
+const FUNC_COEFF := 7.5
+
 
 func _ready():
 	var cards = [
@@ -23,9 +28,19 @@ func _ready():
 		card_inst.instance(),
 		card_inst.instance(),
 		card_inst.instance(),
-		card_inst.instance()
+		card_inst.instance(),
 	]
 	initialize(cards)
+
+
+func _notification(what):
+	match what:
+		# if the card was hovered, it remains in hovered state
+		# when the window is minimized, mouse position is not updated
+		# so clean up the hovered
+		MainLoop.NOTIFICATION_WM_FOCUS_OUT:
+			if _hovered:
+				emit_signal("mouse_exited", _hovered)
 
 
 ## checks whether the hovered card and the current mouse position are on the different
@@ -84,8 +99,10 @@ func _mouse_hovering(event):
 	if first_card:
 		first_card = first_card["collider"]
 		# case (2)
+		# if not taking into account the tween, recursion between cases 2 and 3
 		if not _hovered:
-			emit_signal("mouse_entered", first_card)
+			if not first_card.get_hower_tween().is_active() or Geometry.is_point_in_polygon(Vector2(ray_to.x, ray_to.z), first_card._get_2dpoints()):
+				emit_signal("mouse_entered", first_card)
 		else:
 			# case (6)
 			if first_card != _hovered:
@@ -135,20 +152,32 @@ func initialize(cards: Array):
 	draw_cards()
 
 
-func draw_cards():
-	var rad_from := -PI + TAU / 12
-	var rad_to := -TAU / 12
-	var r = 10
-	var pos := Vector3(0, 0, 7)
-	var dh = 0.01
+func __f(x, coeff=60.0):
+	return pow(x, 2) / coeff
 
-	var cur_rad: float
-	for i in _cards.size():
-		cur_rad = rad_from + i * (rad_to - rad_from) / (_cards.size() - 1)
-		_cards[i].translate(pos + Vector3(cos(cur_rad), i * dh, sin(cur_rad)) * r)
-		# the position to return to after animation
-		_cards[i].set_orig_pos(_cards[i].get_translation())
-		_cards[i].rotate(Vector3.UP, -cur_rad - PI / 2)
+
+func draw_cards():
+	if _cards:
+		var size = _cards[0].get_size() / 2  # get the size of the card (its mesh, actually)
+		var n = _cards.size() - 1
+		var coeff = FUNC_COEFF  # empirical coefficient to make the cards on the sides lower, then the cards in the middle
+		var a = -(n + 1) * size.x / 2  # a in [a, b]
+		var b = -a  # b in [a, b]
+		var dh = size.y * 2  # delta height
+		var phi = PHI  # -15 degrees
+		var psi = -phi  # +15 degrees
+
+		var cur_point: float  # current offset from a
+		var cur_rad: float  # current angle in rads
+		for i in _cards.size():
+			cur_point = a + i * 2 * b / n
+			cur_rad = phi + i * 2 * psi / n
+			# place the center of the cards on the line
+			_cards[i].translate(Vector3(cur_point, i * dh, __f(cur_point, n * coeff)))
+			# rotate the card
+			_cards[i].rotate(Vector3.UP, -cur_rad)
+			# set the original transform (position + rotation)
+			_cards[i].set_orig_trans(_cards[i].get_transform())
 
 
 func _on_mouse_entered(card):

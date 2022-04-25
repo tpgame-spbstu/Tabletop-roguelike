@@ -1,14 +1,6 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=2 format=2]
 
 [ext_resource path="res://Modification/hand.gd" type="Script" id=2]
-
-[sub_resource type="SpatialMaterial" id=1]
-
-[sub_resource type="SphereMesh" id=2]
-resource_local_to_scene = true
-material = SubResource( 1 )
-radius = 0.3
-height = 0.6
 
 [node name="hand" type="Spatial"]
 script = ExtResource( 2 )
@@ -22,13 +14,3 @@ projection = 1
 current = true
 fov = 116.147
 size = 15.0
-
-[node name="draw" type="ImmediateGeometry" parent="."]
-
-[node name="point" type="MeshInstance" parent="."]
-mesh = SubResource( 2 )
-material/0 = null
-
-[node name="line" type="ImmediateGeometry" parent="."]
-
-[node name="ig" type="ImmediateGeometry" parent="."]
