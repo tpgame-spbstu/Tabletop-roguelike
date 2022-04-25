@@ -3,6 +3,7 @@ extends Control
 onready var description_card_scene := preload("res://Card/description/description_main.tscn")
 var description_card
 
+
 func initialize(board, player):
 	board.connect("board_right_click", self, "_on_board_right_click")
 	player.hand.connect("hand_right_click", self, "_on_hand_right_click")
@@ -131,7 +132,11 @@ func _on_loop_mouse_exited():
 
 
 func _on_fight_state_player_1_win():
-	pass # Replace with function body.
+	$Final_status.show()
+	$Final_status/RichTextLabel.text = "Victory"
+	$Final_status/return_to_map_lose.hide()
+	$Final_status/return_to_map_win.show()
+	
 
 
 func _on_fight_state_player_2_attack_enter():
@@ -143,4 +148,8 @@ func _on_fight_state_player_2_place_and_move_enter():
 
 
 func _on_fight_state_player_2_win():
-	pass # Replace with function body.
+	$Final_status.show()
+	$Final_status/RichTextLabel.text = "Defeat"
+	$Final_status/return_to_map_lose.show()
+	$Final_status/return_to_map_win.hide()
+
