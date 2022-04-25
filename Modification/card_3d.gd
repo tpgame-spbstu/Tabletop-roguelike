@@ -1,7 +1,7 @@
 extends StaticBody
 
 # original position regarding the animations (= position before the animation)
-var _orig_pos: Vector3 setget set_orig_pos, get_orig_pos
+var _orig_trans: Transform setget set_orig_trans, get_orig_trans
 # tween that is started on hovering
 onready var _hover_tween: HoverTween setget , get_hower_tween
 
@@ -22,19 +22,32 @@ func get_hower_tween():
 	return _hover_tween
 
 
-func set_orig_pos(pos):
-	_orig_pos = pos
+func get_size():
+	# mesh should be of CubeMesh type
+	return get_node("MeshInstance").mesh.get_size()
+
+
+func set_orig_trans(trans):
+	_orig_trans = trans
+
+
+func get_orig_trans():
+	return _orig_trans
+
+
+func get_orig_rot_y():
+	return get_orig_trans().basis.get_euler().y
 
 
 func _get_points() -> PoolVector3Array:
-	var pos := get_translation()
+	var pos = get_orig_trans().origin
 	var _size: Vector3 = $CollisionShape.shape.get_extents()
-	var phi = _size.angle_to(Vector3.RIGHT)
+	var phi := _size.angle_to(Vector3.RIGHT)
 	# no need to call `.angle_to` since it is the angle itself
 	# `.y` is the rotation on the Y-axis
-	var ext_rot = get_rotation().y
+	var ext_rot = get_orig_rot_y()
 	var length := _size.length()
-	var points: PoolVector3Array
+	var points: PoolVector3Array = []
 
 	# get the 4 points of the card's rectangle
 	# counter clockwise / \ / \ (up, up, down, down)
@@ -44,11 +57,7 @@ func _get_points() -> PoolVector3Array:
 
 
 func _get_2dpoints() -> PoolVector2Array:
-	var points: PoolVector2Array
+	var points: PoolVector2Array = []
 	for point in _get_points():
 		points.push_back(Vector2(point.x, point.z))
 	return points
-
-
-func get_orig_pos():
-	return _orig_pos
