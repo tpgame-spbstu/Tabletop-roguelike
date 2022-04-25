@@ -1,16 +1,11 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Map/map.gd" type="Script" id=1]
 [ext_resource path="res://Models/Trees/Trees.tscn" type="PackedScene" id=2]
-
-[sub_resource type="ProceduralSky" id=1]
-
-[sub_resource type="Environment" id=2]
-background_mode = 2
-background_sky = SubResource( 1 )
+[ext_resource path="res://Map/map_environment.tres" type="Environment" id=3]
 
 [sub_resource type="PlaneMesh" id=3]
-size = Vector2( 100, 100 )
+size = Vector2( 500, 500 )
 
 [sub_resource type="SpatialMaterial" id=4]
 albedo_color = Color( 0.105882, 0.454902, 0, 1 )
@@ -18,15 +13,11 @@ albedo_color = Color( 0.105882, 0.454902, 0, 1 )
 [sub_resource type="CapsuleMesh" id=5]
 
 [node name="map" type="Spatial"]
-transform = Transform( 5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0 )
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true,
 "_edit_lock_": true
 }
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource( 2 )
 
 [node name="Destinations" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00546875, 0.0607056, 0.047464 )
@@ -47,9 +38,15 @@ material/0 = null
 
 [node name="Camera" type="Camera" parent="character"]
 transform = Transform( -1, 4.37114e-08, -7.57103e-08, 0, 0.866025, 0.5, 8.74228e-08, 0.5, -0.866025, 1.90735e-06, 18.6789, -15.8874 )
+environment = ExtResource( 3 )
 fov = 79.5
 far = 406.3
 
 [node name="Paths" type="Spatial" parent="."]
 
 [node name="Trees" parent="." instance=ExtResource( 2 )]
+
+[node name="DirectionalLight" type="DirectionalLight" parent="."]
+transform = Transform( -0.804469, 0.489579, -0.336365, 0, 0.566277, 0.824215, 0.593995, 0.663055, -0.455552, 0, 0, 0 )
+light_energy = 1.348
+shadow_enabled = true
