@@ -41,3 +41,11 @@ func _on_fight_state_player_1_win():
 
 func _on_fight_state_player_2_win():
 	emit_signal("return_to_map", "lose")
+
+
+func _on_return_to_map_win_pressed():
+	emit_signal("return_to_map", "win")
+
+
+func _on_return_to_map_lose_pressed():
+	emit_signal("return_to_map", "lose")
