@@ -157,7 +157,13 @@ func _get_collision_layer():
 
 func _add_card(card):
 	print("here")
+	# cannot add child if it already has a parent
+	if card.get_parent():
+		# remove this child from its parent
+		card.get_parent().remove_child(card)
+	# make self the parent of the child
 	add_child(card)
+
 	card.set_collision_layer_bit(_collision_layer_bit, true)
 	_cards.push_back(card)
 
@@ -179,6 +185,9 @@ func add_cards(cards: Array):
 
 func _remove_card(card):
 	remove_child(card)
+	# child shouldn't be removed from the scene tree, add it to the tree
+	get_parent().add_child(card)
+
 	card.set_collision_layer_bit(_collision_layer_bit, false)
 	_cards.erase(card)
 	draw_cards()
