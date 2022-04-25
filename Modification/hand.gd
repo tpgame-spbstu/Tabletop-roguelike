@@ -88,7 +88,7 @@ func _is_hovering_new_card(line_coeffs: Vector2, card_pos: Vector2, mouse_pos: V
 ## :return: void
 func _mouse_hovering(event):
 	# set-up for intersecting cards under the mouse
-	var cam = $Camera
+	var cam = get_viewport().get_camera()
 	var mouse_pos = get_viewport().get_mouse_position()
 	var ray_from = cam.project_ray_origin(mouse_pos)
 	# value is big enough to get any intersection
