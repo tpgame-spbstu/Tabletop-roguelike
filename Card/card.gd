@@ -163,3 +163,6 @@ func remove_effect_symbol(symbol):
 	card_config.effect_symbols.erase(symbol)
 	card_visuals.update()
 	unit_visuals.update()
+
+
+
