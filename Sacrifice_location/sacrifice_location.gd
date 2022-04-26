@@ -32,13 +32,14 @@ func move_card(board_cell, card_to_move, prev_board_cell):
 	is_place_pressed = false
 
 func fill_deck():
+	var scal = 0.5
 	var step = 0
 	for card_config in self.deck_config.cards:
 		# Area -> Card / CollisionShape(box shape)
 		var card = card_visuals_scene.instance()
 		var cell = cell_scene.instance()
 		var point0 = zero.translation
-		cell.translate(point0 + Vector3(-step, 0, 0))
+		cell.translate(point0 + Vector3(-step * scal, 0, 0))
 		cell.add_child(card)
 		
 		deck.add_child(cell)

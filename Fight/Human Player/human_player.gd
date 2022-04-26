@@ -159,13 +159,11 @@ func _on_hand_left_click(hand_cell, card):
 	if human_player_state.card_to_play != null:
 		# Selected card to play
 		# Reset selected card
-		human_player_state.card_to_play = null
-		selector.set_state("hide")
+		cancel_selection()
 	elif human_player_state.card_to_move != null:
 		# Selected card to move
 		# Reset selected card
-		human_player_state.card_to_move = null
-		selector.set_state("hide")
+		cancel_selection()
 	else:
 		# No selected cards
 		if !card.card_config.play_cost.is_obtainable(human_player_state):

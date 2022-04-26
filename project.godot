@@ -56,6 +56,7 @@ default_bus_layout=""
 GameSettings="*res://game_settings.gd"
 SymbolManager="*res://Symbols/symbol_manager.gd"
 AnimationManager="*res://animation_manager.gd"
+BaseCardsManager="*res://Card/base_cards_manager.gd"
 
 [global]
 
