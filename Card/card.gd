@@ -72,6 +72,8 @@ func die():
 
 func process_attack():
 	var board_cell = get_board_cell_or_null()
+	var anim_name = "attack_" + str(owner_number)
+	print(anim_name)
 	assert(board_cell != null)
 	if card_config.power <= 0:
 		# can't attack if power 0 or less
@@ -87,18 +89,24 @@ func process_attack():
 	if typeof(target_board_cell) == TYPE_INT:
 		# If target cell is out of bounds, but base
 		if target_board_cell != owner_number:
+			$AnimationPlayer.play(anim_name)
 			# Attack enemy base
 			fight_state.reduse_enemy_health(owner_number, card_config.power)
 		return
 	var target_card = target_board_cell.get_card_or_null()
 	if target_card == null:
 		if target_board_cell.is_enemy_base(owner_number):
+			$AnimationPlayer.play(anim_name)
 			# Attack if target cell is enemy base and empty
 			fight_state.reduse_enemy_health(owner_number, card_config.power)
 		return
 	if target_card.owner_number == owner_number:
 		# can't attack friendly card
 		return
+	$AnimationPlayer.play(anim_name)
+	var anim = target_card.get_node("AnimationPlayer")
+	anim.play("being_beaten")
+	yield(anim, "animation_finished")
 	# Attack enemy card
 	target_card.reduce_health(card_config.power)
 		
