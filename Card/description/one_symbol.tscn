@@ -1,14 +1,20 @@
 [gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://fonts/IdealGothic Bold.otf" type="DynamicFontData" id=1]
+[ext_resource path="res://fonts/Ubuntu-B.ttf" type="DynamicFontData" id=1]
 
 [sub_resource type="DynamicFont" id=24]
+size = 24
+use_mipmaps = true
+use_filter = true
 font_data = ExtResource( 1 )
 
 [sub_resource type="Theme" id=25]
 default_font = SubResource( 24 )
 
 [sub_resource type="DynamicFont" id=26]
+size = 18
+use_mipmaps = true
+use_filter = true
 font_data = ExtResource( 1 )
 
 [sub_resource type="Theme" id=27]
@@ -20,10 +26,9 @@ default_font = SubResource( 26 )
 margin_left = 90.0
 margin_top = 3.0
 margin_right = 550.0
-margin_bottom = 25.0
+margin_bottom = 31.0
 theme = SubResource( 25 )
-text = "NAME"
-align = 1
+text = "Имя"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -34,7 +39,8 @@ margin_top = 33.0
 margin_right = 550.0
 margin_bottom = 76.0
 theme = SubResource( 27 )
-text = "DESCRIPTION"
+text = "DESCRIPTION "
+autowrap = true
 __meta__ = {
 "_edit_use_anchors_": false
 }

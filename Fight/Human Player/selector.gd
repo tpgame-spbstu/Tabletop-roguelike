@@ -1,5 +1,7 @@
 extends Spatial
 
+# Selector node - transparent box to show selected objects
+
 const color_move := Color(1, 0, 0, 0.5)
 const color_remove := Color(0, 0, 1, 0.5)
 const color_change := Color(0.5, 0.5, 0, 0.5)

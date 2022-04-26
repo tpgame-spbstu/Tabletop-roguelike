@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Models/Textures/Colorsheet Tree Normal.png" type="Texture" id=1]
+[ext_resource path="res://Models/Models/Tree Type1 03.dae" type="PackedScene" id=2]
+
+[sub_resource type="SpatialMaterial" id=1]
+albedo_texture = ExtResource( 1 )
+metallic_specular = 0.38
+
+[node name="Tree Type1 03" instance=ExtResource( 2 )]
+
+[node name="Tree_Type1_03_mesh" parent="." index="0"]
+material/0 = SubResource( 1 )

@@ -1,5 +1,6 @@
 extends Node
 
+# FightState class - node to manage fight state data and transitions
 
 signal player_1_win()
 signal player_2_win()
@@ -101,3 +102,7 @@ func next_state():
 					set_loop_number(loop_number + 1)
 				set_state(TurnState.DRAW_CARDS, next_player)
 		deferred_next_state_calls -= 1
+
+
+func _on_fight_ui_final_text():
+	pass # Replace with function body.

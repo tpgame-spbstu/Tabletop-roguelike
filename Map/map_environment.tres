@@ -1,0 +1,11 @@
+[gd_resource type="Environment" load_steps=2 format=2]
+
+[sub_resource type="ProceduralSky" id=1]
+sun_longitude = -135.0
+sun_angle_max = 32.5
+sun_curve = 0.025
+sun_energy = 1.5
+
+[resource]
+background_mode = 2
+background_sky = SubResource( 1 )

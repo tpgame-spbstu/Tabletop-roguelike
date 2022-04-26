@@ -1,6 +1,8 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Card/description/description.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Card/description/description.gd" type="Script" id=2]
+[ext_resource path="res://fonts/Ubuntu-B.ttf" type="DynamicFontData" id=3]
 
 [sub_resource type="ViewportTexture" id=1]
 viewport_path = NodePath("Viewport")
@@ -10,13 +12,37 @@ albedo_color = Color( 0.423529, 0.411765, 0.392157, 1 )
 
 [sub_resource type="CubeMesh" id=3]
 material = SubResource( 2 )
-size = Vector3( 5.1, 0, 2.5 )
+size = Vector3( 5, 0.01, 2.5 )
+
+[sub_resource type="DynamicFont" id=6]
+size = 28
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 3 )
+
+[sub_resource type="Theme" id=7]
+default_font = SubResource( 6 )
+
+[sub_resource type="ViewportTexture" id=8]
+flags = 4
+viewport_path = NodePath("MeshInstance/Button_tmp/Viewport")
+
+[sub_resource type="BoxShape" id=4]
+extents = Vector3( 0.2, 0.001, 0.2 )
+
+[sub_resource type="CubeMesh" id=5]
+size = Vector3( 0.6, 0, 0.4 )
+
+[sub_resource type="SpatialMaterial" id=9]
+albedo_color = Color( 0.105882, 0.054902, 0.054902, 1 )
 
 [node name="description_card" type="Spatial"]
+script = ExtResource( 2 )
 
 [node name="Viewport" type="Viewport" parent="."]
 size = Vector2( 1000, 500 )
 transparent_bg = true
+handle_input_locally = false
 render_target_update_mode = 3
 
 [node name="description" parent="Viewport" instance=ExtResource( 1 )]
@@ -27,5 +53,39 @@ pixel_size = 0.005
 texture = SubResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00605237, 0.000760317, 0.00587821 )
 mesh = SubResource( 3 )
 material/0 = null
+
+[node name="Button_tmp" type="Area" parent="MeshInstance"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 0.765502, 2.2, 0.007, 1.09253 )
+
+[node name="Viewport" type="Viewport" parent="MeshInstance/Button_tmp"]
+size = Vector2( 100, 40 )
+transparent_bg = true
+
+[node name="Label" type="Label" parent="MeshInstance/Button_tmp/Viewport"]
+margin_right = 44.0
+margin_bottom = 19.0
+theme = SubResource( 7 )
+text = "BACK"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite3D" type="Sprite3D" parent="MeshInstance/Button_tmp"]
+transform = Transform( 0.5, 0, 0, 0, -3.93403e-08, -1, 0, 0.9, -4.37114e-08, -0.0508699, 0.000284209, -0.0175716 )
+flip_h = true
+flip_v = true
+texture = SubResource( 8 )
+
+[node name="CollisionShape" type="CollisionShape" parent="MeshInstance/Button_tmp"]
+transform = Transform( 1.5, 0, 0, 0, 0.1, 0, 0, 0, 1, 0, 0, 0 )
+shape = SubResource( 4 )
+
+[node name="MeshInstance" type="MeshInstance" parent="MeshInstance/Button_tmp"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+mesh = SubResource( 5 )
+material/0 = SubResource( 9 )
+
+[connection signal="input_event" from="MeshInstance/Button_tmp" to="." method="_on_Button_tmp_input_event"]
