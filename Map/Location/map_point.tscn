@@ -1,35 +1,18 @@
 [gd_scene load_steps=5 format=2]
 
-[sub_resource type="GDScript" id=39]
-script/source = "extends Area
-
-var map_location = null
-
-signal map_point_click(map_point)
-
-func initialize(map, map_location):
-	self.map_location = map_location
-	connect(\"map_point_click\", map, \"_on_map_point_click\")
-
-
-
-func _on_Point_input_event(camera, event, position, normal, shape_idx):
-	if event is InputEventMouseButton:
-		if event.get_button_mask() == BUTTON_LEFT:
-			emit_signal(\"map_point_click\", self)
-"
+[ext_resource path="res://Map/Location/map_point.gd" type="Script" id=1]
 
 [sub_resource type="BoxShape" id=36]
 extents = Vector3( 3, 0.15, 3 )
 
 [sub_resource type="SpatialMaterial" id=38]
-albedo_color = Color( 0.172549, 0, 0.184314, 1 )
+albedo_color = Color( 0.478431, 0.0901961, 0.0901961, 1 )
 
 [sub_resource type="CubeMesh" id=37]
 material = SubResource( 38 )
 
 [node name="Point" type="Area"]
-script = SubResource( 39 )
+script = ExtResource( 1 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, 0.999999, 0, 0, 0, 1, 0, 0, 0 )

@@ -1,5 +1,6 @@
 extends Node
 
+# FightState class - node to manage fight state data and transitions
 
 signal player_1_win()
 signal player_2_win()
@@ -83,14 +84,25 @@ func set_state(new_turn_state, new_active_player_number):
 			emit_signal("player_%d_attack_enter" % active_player_number)
 
 
+var deferred_next_state_calls = 0
+
 func next_state():
-	match turn_state:
-		TurnState.DRAW_CARDS:
-			set_state(TurnState.PLACE_AND_MOVE, active_player_number)
-		TurnState.PLACE_AND_MOVE:
-			set_state(TurnState.ATTACK, active_player_number)
-		TurnState.ATTACK:
-			var next_player = 2 if active_player_number == 1 else 1
-			if next_player == 1:
-				set_loop_number(loop_number + 1)
-			set_state(TurnState.DRAW_CARDS, next_player)
+	deferred_next_state_calls += 1
+	if deferred_next_state_calls != 1:
+		return
+	while deferred_next_state_calls > 0:
+		match turn_state:
+			TurnState.DRAW_CARDS:
+				set_state(TurnState.PLACE_AND_MOVE, active_player_number)
+			TurnState.PLACE_AND_MOVE:
+				set_state(TurnState.ATTACK, active_player_number)
+			TurnState.ATTACK:
+				var next_player = 2 if active_player_number == 1 else 1
+				if next_player == 1:
+					set_loop_number(loop_number + 1)
+				set_state(TurnState.DRAW_CARDS, next_player)
+		deferred_next_state_calls -= 1
+
+
+func _on_fight_ui_final_text():
+	pass # Replace with function body.

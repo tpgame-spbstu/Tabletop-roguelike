@@ -1,5 +1,6 @@
 extends Reference
-# class_name MapConfig
 
-var current_map_location
-var map_location_graph: Dictionary
+# MapConfig class - class for storing map configuration
+
+var current_map_point_config
+var map_point_graph: Dictionary

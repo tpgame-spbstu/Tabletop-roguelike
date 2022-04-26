@@ -1,5 +1,6 @@
 extends Node
 
+# HumanPlayerState node - human player resources manager
 
 var energy setget set_energy
 signal energy_changed(energy)
@@ -12,7 +13,6 @@ signal bones_changed(bones)
 func set_bones(new_value):
 	bones = new_value
 	emit_signal("bones_changed", bones)
-
 
 var extra_draws_count setget set_extra_draws_count
 signal extra_draws_count_changed(extra_draws_count)
@@ -28,11 +28,13 @@ var card_to_move
 
 var max_energy_for_loop = [ 0, 2, 3, 4, 5, 6, 7 ]
 
-
+# Set energy to max emount for current loop
 func restore_energy(loop_number):
 	if loop_number < max_energy_for_loop.size():
 		set_energy(max_energy_for_loop[loop_number])
 	else:
 		set_energy(max_energy_for_loop.back())
 
-
+func cancel_selection():
+	card_to_play = null
+	card_to_move = null

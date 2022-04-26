@@ -1,6 +1,9 @@
 extends Spatial
 
+# Hand node - container for cards on hand
+
 var Card = preload("res://Card/card.gd")
+onready var highlighter:= get_parent().get_node("hand_hightlight")
 
 signal hand_left_click(hand_cell, card)
 signal hand_right_click(hand_cell, card)
@@ -23,6 +26,12 @@ func add_card(card):
 	rearange()
 	card.transform = Transform()
 	hand_cell.add_child(card)
+
+
+func remove_hand_cell(hand_cell):
+	remove_child(hand_cell)
+	hand_cell.queue_free()
+	rearange()
 
 
 func remove_card(hand_cell, card):
@@ -52,3 +61,31 @@ func _on_hand_cell_input_event(hand_cell, event):
 					break
 			emit_signal("hand_right_click", hand_cell, card)
 		
+
+
+func get_card_list():
+	var cards = []
+	for i in range(get_child_count()):
+		var hand_cell = get_child(i)
+		for child in hand_cell.get_children():
+				if child is Card:
+					cards.append(child)
+					break
+	return cards
+
+
+func has_obtainable_cards(human_player_state):
+	var cards = get_card_list()
+	if cards.size() > 0:
+		for i in cards:
+			if i.card_config.play_cost.is_obtainable(human_player_state):
+				return true
+	return false
+
+
+func highlight():
+	highlighter.highlight()
+	
+	
+func cancel_highlight():
+	highlighter.cancel_highlight()
