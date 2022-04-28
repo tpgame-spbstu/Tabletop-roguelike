@@ -44,10 +44,10 @@ func on_enter(offset: Vector3):
 	var card = get_parent()
 	match get_state():
 		EXIT:
-			# stop the current exiting animatnion as we will start the entering one
+			# stop the current exiting animation as we will start the entering one
 			_reset()
-			continue # fallthrough
-		# aparently, in order to fallthrough one needs to have the original match in the branch
+			continue # fall-through
+		# apparently, in order to fall-through one needs to have the original match in the branch
 		NONE, EXIT:
 			set_state(ENTER)
 			card.set_scale(Vector3.ONE * SCALE_CARD_DRAW)
@@ -61,10 +61,10 @@ func on_exit():
 	var card = get_parent()
 	match get_state():
 		ENTER:
-			# stop the current entering animatnion as we will start the exiting one
+			# stop the current entering animation as we will start the exiting one
 			_reset()
-			continue # fallthrough
-		# aparently, in order to fallthrough one needs to have the original match in the branch
+			continue # fall-through
+		# apparently, in order to fall-through one needs to have the original match in the branch
 		NONE, ENTER:
 			set_state(EXIT)
 			card.set_scale(Vector3.ONE)
