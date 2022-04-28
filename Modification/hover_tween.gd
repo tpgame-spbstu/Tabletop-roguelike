@@ -52,7 +52,15 @@ func on_enter(offset: Vector3):
 			set_state(ENTER)
 			card.set_scale(Vector3.ONE * SCALE_CARD_DRAW)
 			card.rotate(Vector3.UP, -card.get_rotation().y)
+
+			var port = get_viewport()
+			var end = port.get_visible_rect().end
+			var d3_end = port.get_camera().project_position(end, 0)
+			var card_pos = card.get_orig_trans().origin
+			var anim_end = Vector3(card_pos.x, 0.5, d3_end.z - (card.get_size()*card.get_scale()).z / 2)
+
 			interpolate_property(card, "translation", card.get_orig_trans().origin, card.get_orig_trans().origin + offset,
+			# interpolate_property(card, "translation", card.get_orig_trans().origin, anim_end,
 				DUR_CARD_DRAW, Tween.TRANS_CIRC, Tween.EASE_OUT)
 			start()
 
