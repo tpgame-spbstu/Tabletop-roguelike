@@ -16,7 +16,7 @@ var _proxies: Array = []
 onready var card_inst = preload("res://cart_test.tscn")
 onready var utils = preload("res://Modification/utils.gd").new()
 # TODO: substitute, change it with the actual value
-const OFFSET := Vector3(0, 0.5, -2.5)
+const OFFSET := Vector3(0, 0.1, -2.5)
 
 
 # for running as a standalone scene
@@ -34,6 +34,13 @@ func _ready():
 		card_inst.instance(),
 	]
 	initialize(cards)
+
+
+func initialize(cards: Array=[]):
+	add_cards(cards)
+	# the card is passed, so connect only oneself
+	connect("mouse_entered", self, "_on_mouse_entered")
+	connect("mouse_exited", self, "_on_mouse_exited")
 
 
 func _notification(what):
@@ -86,7 +93,10 @@ func _is_hovering_new_proxy(line_coeffs: Vector2, proxy_pos: Vector2, mouse_pos:
 ##
 ## :event: event, not used
 ## :return: void
-func _mouse_hovering(event):
+
+# TODO make the tween change the collision shape so that there are no holes
+# union
+func _mouse_hovering(_event):
 	# set-up for intersecting cards under the mouse
 	var cam = get_viewport().get_camera()
 	var mouse_pos = get_viewport().get_mouse_position()
@@ -176,43 +186,69 @@ func _get_collision_layer():
 	return 1 << _collision_layer_bit
 
 
-func _add_card(card):
-	print("here")
+func _add_card(card, animation):
+	if card in _cards:
+		return
 	# cannot add child if it already has a parent
 	if card.get_parent():
 		# remove this child from its parent
 		card.get_parent().remove_child(card)
-	# make self the parent of the child
-	add_child(card)
+	var proxy = _proxy.instance()
+	add_child(proxy)
+
+	#TODO moving animation before attaching
+
+	proxy.attach_obj_to(card)
 
 	proxy.set_collision_layer_bit(_collision_layer_bit, true)
 	_cards.push_back(card)
 	_proxies.push_back(proxy)
 
 
-func add_card(card) -> Array:
-	_add_card(card)
+# TODO: when the card is hovered and another is added, 
+# the returning animation sets obj to the wrong (previous) position
+# @warn: animation is currently not supported, but 
+# both AnimationPlayer and Tween will likely be
+func add_card(card, animation=null) -> Array:
+	if card in _cards:
+		return []
+	_add_card(card, animation)
 	draw_cards()
 	return utils.get_placement_coeffs(_proxies, true)
 
 
-func add_cards(cards: Array):
+# @warn: animation is currently not supported, but 
+# both AnimationPlayer and Tween will likely be
+func add_cards(cards: Array, animation=null) -> Array:
 	var last_placement = []
 	for card in cards:
-		last_placement = _add_card(card)
+		if not card in _cards:
+			last_placement = _add_card(card, animation)
 	draw_cards()
 	return last_placement
 
 
-func _remove_card(card):
-	remove_child(card)
-	# child shouldn't be removed from the scene tree, add it to the tree
-	get_parent().add_child(card)
-
-	card.set_collision_layer_bit(_collision_layer_bit, false)
+# @warn: animation is currently not supported, but 
+# both AnimationPlayer and Tween will likely be
+func remove_card(card, move_to: Vector3=Vector3(-7, 2, -7), animation=null):
+	if not card in _cards:
+		return
+	var proxy = card.get_parent()
+	# remove all connections between proxy and hand
+	proxy.set_collision_layer_bit(_collision_layer_bit, false)
+	_hovered = null
+	_proxies.erase(proxy)
+	# remove the connection between proxy and its obj
+	proxy.remove_from(card, get_parent())
+	# say goodbye to proxy
+	proxy.queue_free()
+	
 	_cards.erase(card)
+	# update visual
 	draw_cards()
-	card.translate(Vector3(-7, 2, -7))
+	# TODO animation to move the card as free obj to its destination
+	card.set_transform(Transform.IDENTITY)
+	card.translate(move_to)
 
 
 func draw_cards():
