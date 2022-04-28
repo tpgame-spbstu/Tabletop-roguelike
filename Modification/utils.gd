@@ -30,7 +30,7 @@ func least_squares_regression(poly: PoolVector2Array) -> Vector2:
 		_x2 += pow(p.x, 2)
 		_y2 += pow(p.y, 2)
 		n += 1
-	var line_coeffs: Vector2
+	var line_coeffs = Vector2()
 	line_coeffs.x = (n * _xy - _x * _y) / (n * _y2 - pow(_y, 2))
 	line_coeffs.y = (_x - line_coeffs.x * _y) / n
 	return line_coeffs
