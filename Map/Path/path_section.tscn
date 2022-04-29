@@ -1,9 +1,15 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Map/Path/path_section.gd" type="Script" id=1]
+
+[sub_resource type="SpatialMaterial" id=7]
 
 [sub_resource type="CubeMesh" id=6]
+material = SubResource( 7 )
 size = Vector3( 1, 0.2, 1 )
 
 [node name="path_section" type="Spatial"]
+script = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true,
 "_edit_lock_": true
