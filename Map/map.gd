@@ -7,10 +7,13 @@ var game_config
 var map_config
 var current_map_point
 var PathSection = load("res://Map/Path/path_section.tscn")
-# stores the number of paths, that enters the current vertex
+var utils = preload("res://Map/utils.gd").new()
+# stores the number of paths, that enters the vertex
 var _semi_enters = Dictionary()
 # stores paths between points
+# [[start_vertex, end_vertex]]: path
 var _paths = Dictionary()
+var _unreachable_edge_color = Color(0.2, 0.2, 0.2, 0.2)
 onready var character = $character
 
 const PATH_WIDTH = 2
@@ -96,12 +99,6 @@ func __remove_paths(graph, curr, next):
 		var edge = to_remove.pop_back()
 		var f = edge[0]
 		var s = edge[1]
-		# # duplicate to avoid messing the array during iteration
-		# for edge in to_remove.duplicate():
-		# 	f = edge[0]
-		# 	s = edge[1]
-		# 	to_remove.erase([f, s])
-
 		# about to remove the entering edge
 		_semi_enters[s] -= 1
 		# if there is no way to enter this vertex
@@ -109,10 +106,13 @@ func __remove_paths(graph, curr, next):
 			# push all the vertexes, available from this one: they're unreachable
 			for _s in graph[s]:
 				to_remove.push_back([s, _s])
-		graph[f].erase(s)
-		# remove from the scene
-		remove_child(_paths[[f, s]])
-		_paths.erase([f, s])
+		# change the color of unreachable edges
+		var path = _paths[edge]
+		utils.change_mat_color(path.get_mesh(), _unreachable_edge_color)
+	# set the path from the current point to the clicked one
+	# as unreachable
+	var mesh = _paths[[curr, next]].get_mesh()
+	utils.change_mat_color(mesh, _unreachable_edge_color)
 
 
 var waiting_animation := false
