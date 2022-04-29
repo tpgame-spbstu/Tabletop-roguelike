@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Map/Location/map_point.gd" type="Script" id=1]
 
@@ -10,6 +10,14 @@ albedo_color = Color( 0.478431, 0.0901961, 0.0901961, 1 )
 
 [sub_resource type="CubeMesh" id=37]
 material = SubResource( 38 )
+
+[sub_resource type="SpatialMaterial" id=39]
+flags_unshaded = true
+params_cull_mode = 2
+
+[sub_resource type="CubeMesh" id=40]
+material = SubResource( 39 )
+size = Vector3( 2.3, 1.9, 2.3 )
 
 [node name="Point" type="Area"]
 script = ExtResource( 1 )
@@ -23,4 +31,12 @@ transform = Transform( 3, 0, 0, 0, 0.15, 0, 0, 0, 3, 0, 0, 0 )
 mesh = SubResource( 37 )
 material/0 = null
 
+[node name="on_hover_mesh" type="MeshInstance" parent="."]
+transform = Transform( 3, 0, 0, 0, 0.15, 0, 0, 0, 3, 0, 0, 0 )
+visible = false
+mesh = SubResource( 40 )
+skeleton = NodePath("../MeshInstance")
+material/0 = null
+
 [connection signal="input_event" from="." to="." method="_on_Point_input_event"]
+[connection signal="mouse_entered" from="." to="." method="_on_Point_mouse_entered"]
