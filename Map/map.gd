@@ -13,12 +13,11 @@ var _semi_enters = Dictionary()
 # stores paths between points
 # [[start_vertex, end_vertex]]: path
 var _paths = Dictionary()
-var _unreachable_edge_color = Color(0.2, 0.2, 0.2, 0.2)
 onready var character = $character
 
-const PATH_WIDTH = 2
-const SPACE = 15.0
-
+export(Color) var unreachable_edge_color = Color(0.2, 0.2, 0.2, 0.2)
+export(float, 0.1, 5.0, 2.0) var PATH_WIDTH = 2
+export(float, 1.0, 30.0, 15.0) var SPACE = 15.0
 
 
 func initialize(game_config):
@@ -80,7 +79,12 @@ func _add_paths(p_conf):
 		_paths[[p_conf, dest]] = path_sec
 		add_child(path_sec)
 
-func __remove_paths(graph, curr, next):
+
+## removes paths from available ones
+##
+## @desc: paints the unavailable paths with different color
+##        no side effects (doesn't mess the map_config.map_config_graph up)
+func _remove_paths(graph, curr, next):
 	var to_remove = Array()
 	# fill the array with all the vertexes, available from this one
 	# except the next one (clicked)
@@ -103,11 +107,12 @@ func __remove_paths(graph, curr, next):
 				to_remove.push_back([s, _s])
 		# change the color of unreachable edges
 		var path = _paths[edge]
-		utils.change_mat_color(path.get_mesh(), _unreachable_edge_color)
 	# set the path from the current point to the clicked one
+		utils.change_mat_color(path.get_mesh(), unreachable_edge_color)
 	# as unreachable
 	var mesh = _paths[[curr, next]].get_mesh()
-	utils.change_mat_color(mesh, _unreachable_edge_color)
+
+	utils.change_mat_color(mesh, unreachable_edge_color)
 
 
 var waiting_animation := false
@@ -119,7 +124,7 @@ func _on_map_point_click(map_point):
 
 	# if the path from the current location to the clicked one exists
 	if map_point.map_point_config in map_config.map_point_graph[current_map_point.map_point_config]:
-		__remove_paths(map_config.map_point_graph, current_map_point.map_point_config, map_point.map_point_config)
+		_remove_paths(map_config.map_point_graph, current_map_point.map_point_config, map_point.map_point_config)
 		# Wait for character move animation
 		var animation = LinMoveAnimation.new(current_map_point.global_transform, 
 			map_point.global_transform, 1.0, character)
