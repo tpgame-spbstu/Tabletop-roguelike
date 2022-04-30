@@ -33,7 +33,6 @@ material/0 = null
 
 [node name="on_hover_mesh" type="MeshInstance" parent="."]
 transform = Transform( 3, 0, 0, 0, 0.15, 0, 0, 0, 3, 0, 0, 0 )
-visible = false
 mesh = SubResource( 40 )
 skeleton = NodePath("../MeshInstance")
 material/0 = null

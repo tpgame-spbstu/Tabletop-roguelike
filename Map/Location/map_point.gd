@@ -5,6 +5,9 @@ signal map_point_click(map_point)
 
 var utils = preload("res://Map/utils.gd").new()
 var map_point_config = null
+export(Color) var hover_color = Color(0, 1, 0, 1)
+export(Color) var highlight_color = Color(1, 1, 1, 1)
+
 
 func initialize(map, map_point_config):
 	self.map_point_config = map_point_config
@@ -30,8 +33,8 @@ func _on_Point_input_event(camera, event, position, normal, shape_idx):
 
 
 func _on_mouse_entered():
-	$on_hover_mesh.show()
+	utils.change_mat_color($on_hover_mesh, hover_color)
 
 
 func _on_mouse_exited():
-	$on_hover_mesh.hide()
+	utils.change_mat_color($on_hover_mesh, highlight_color)
