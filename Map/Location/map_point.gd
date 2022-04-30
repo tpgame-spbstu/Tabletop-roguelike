@@ -6,10 +6,16 @@ signal map_point_click(map_point)
 var utils = preload("res://Map/utils.gd").new()
 var map_point_config = null
 
+
 func initialize(map, map_point_config):
 	self.map_point_config = map_point_config
-	connect("map_point_click", map, "_on_map_point_click")
 	_set_textures(map_point_config.get_textures())
+
+	connect("map_point_click", map, "_on_map_point_click")
+
+
+func get_size():
+	return (get_node("CollisionShape").shape as BoxShape).get_extents() * 2
 
 
 func get_mesh() -> MeshInstance:

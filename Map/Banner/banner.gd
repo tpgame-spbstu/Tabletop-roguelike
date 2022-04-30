@@ -38,7 +38,7 @@ func _get_flag_size():
 
 
 ## shows the flag and plays its animation (movement from the bottom of the pole to its top)
-func _on_set_sail():
+func set_sail():
 	var pole_size = _get_pole_size()
 	var fl_size = _get_flag_size()
 	# set the scale so that the `hfl_to_hstk` ratio is true
