@@ -23,39 +23,49 @@ func _ready():
 	_tween.connect("tween_all_completed", self, "_on_tween_completed")
 
 
-func _get_pole_size():
+func get_pole_size():
 	var cyl_mesh = _pole.mesh as CylinderMesh
-	return {
-		top: cyl_mesh.get_top_radius(),
-		bottom: cyl_mesh.get_bottom_radius(),
-		height: cyl_mesh.get_height()
-	}
+	return Vector3(
+		cyl_mesh.get_top_radius(),
+		cyl_mesh.get_height(),
+		cyl_mesh.get_bottom_radius()
+	)
+	# return {
+	# 	top: cyl_mesh.get_top_radius(),
+	# 	bottom: cyl_mesh.get_bottom_radius(),
+	# 	height: cyl_mesh.get_height()
+	# }
 
 
-func _get_flag_size():
+# func get_centered_trans():
+# 	var pole_size = _get_pole_size()
+# 	return Vector3(pole_size[top] / 2, pole_size[height] / 2, pole_size[top] / 2)
+
+
+func get_flag_size():
 	var plane_mesh = _flag.mesh as PlaneMesh
 	return plane_mesh.get_size()
 
 
 ## shows the flag and plays its animation (movement from the bottom of the pole to its top)
 func set_sail():
-	var pole_size = _get_pole_size()
-	var fl_size = _get_flag_size()
+	var pole_size = get_pole_size()
+	var fl_size = get_flag_size()
 	# set the scale so that the `hfl_to_hstk` ratio is true
-	var scale_coeff = pole_size[height] / fl_size.y * hfl_to_hpole
+	var scale_coeff = pole_size.y / fl_size.y * hfl_to_hpole
 	_flag.set_scale(Vector3.ONE * scale_coeff)
 	# update the size (it was scaled)
 	fl_size *= scale_coeff
 
 	# get the coeffs for the flag's translations
 	var pole_trans = _pole.get_translation()
-	var trans_x = pole_trans.x + pole_size[top] / 2 + fl_size.x / 2
+	var trans_x = pole_trans.x + pole_size.x / 2 + fl_size.x / 2
 	var trans_z = pole_trans.z
 	# set `y` to any number, it will be changed during tween animation
 	_flag.set_translation(Vector3(trans_x, 0, trans_z))
 	# from the bottom of the pole, to the top of it
-	var init_y = pole_trans.y - pole_size[height] * (1 - margin_from_bottom) / 2 + fl_size.y / 2
-	var final_y = pole_trans.y + pole_size[height] * (1 - margin_from_top) / 2 - fl_size.y / 2
+	var init_y = pole_trans.y - pole_size.y * (1 - margin_from_bottom) / 2 + fl_size.y / 2
+	var final_y = pole_trans.y + pole_size.y * (1 - margin_from_top) / 2 - fl_size.y / 2
 
 	_flag.show()
 	# just for chuckles :) for normal use any of the commented below is recommended

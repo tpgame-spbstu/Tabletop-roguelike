@@ -19,6 +19,12 @@ var _paths = Dictionary()
 var _unreachable_edge_color = Color(0.2, 0.2, 0.2, 0.2)
 onready var character = $character
 
+# percentage of halfed size of the point
+# means how much to move from the borders
+export(float, 0.01, 0.99, 0.05) var point_x_margin = 0.05
+export(float, 0.01, 0.5, 0.1) var point_y_margin = 0.1
+export(float, 0.01, 1.0, 1.0) var point_z_margin = 1.0
+
 const PATH_WIDTH = 2
 const SPACE = 15.0
 
@@ -52,11 +58,12 @@ func _add_banner(point):
 	banner.rotate_y(-PI)
 	var trans = point.get_translation()
 	var size = point.get_size()
+	var pole_size = banner.get_pole_size()
 	# set the banner on the point
 	banner.set_translation(Vector3(
-		trans.x - size.x * (1 - 0.1) / 2 + banner._get_pole_size()["top"],
-		trans.y + size.y * (1 - 0.05) / 2 + banner._get_pole_size()["height"] / 2,
-		trans.z
+		trans.x - size.x * (1 - point_x_margin) / 2 + pole_size.x,
+		trans.y + size.y * (1 - point_y_margin) / 2 + pole_size.y / 2,
+		trans.z - size.z * (1 - point_z_margin) / 2
 	))
 	# if the current point is the starting one, the player won't
 	# exit any scene on it -> no flag raising, so raise it
