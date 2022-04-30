@@ -19,9 +19,6 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Destinations" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00546875, 0.0607056, 0.047464 )
-
 [node name="grass" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.121388, 0 )
 

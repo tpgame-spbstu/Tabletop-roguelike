@@ -34,17 +34,10 @@ func initialize(game_config):
 	character.transform = current_map_point.transform
 
 
-func _ready():
-	pass
-
-
 """
 	Generates tiles on the map
 """
 func generate_points() -> void:
-	# Destinations are the nodes on the map, that represent the location,
-	# they're added dynamically
-	var destinations = $Destinations
 	# load the scene, representing the location tile on the map
 	var map_point_scene = load("res://Map/Location/map_point.tscn")
 
@@ -53,7 +46,6 @@ func generate_points() -> void:
 		# if this tile is the starting point
 		if point_config == map_config.current_map_point_config:
 			current_map_point = point
-		destinations.add_child(point)
 		# put the tile on the map
 		point.translate(Vector3(point_config.pos.x, 0, point_config.pos.y) * SPACE)
 		# initialize the map_point
