@@ -30,14 +30,14 @@ func initialize(game_config):
 
 	self.game_config = game_config
 	map_config = game_config.map_config
-	generate_points()
+	_generate_points()
 	character.transform = current_map_point.transform
 
 
 """
 	Generates tiles on the map
 """
-func generate_points() -> void:
+func _generate_points() -> void:
 	# load the scene, representing the location tile on the map
 	var map_point_scene = load("res://Map/Location/map_point.tscn")
 
@@ -46,36 +46,39 @@ func generate_points() -> void:
 		# if this tile is the starting point
 		if point_config == map_config.current_map_point_config:
 			current_map_point = point
+		add_child(point)
 		# put the tile on the map
 		point.translate(Vector3(point_config.pos.x, 0, point_config.pos.y) * SPACE)
 		# initialize the map_point
 		point.initialize(self, point_config)
 
-		# draw the paths
-		for dest in map_config.map_point_graph[point_config]:
-			_semi_enters[dest] = _semi_enters.get(dest, 0) + 1
+		_add_paths(point_config)
 
-			var path_sec = PathSection.instance()
-			var dx = (dest.pos.x - point_config.pos.x) * SPACE
-			var dy = (dest.pos.y - point_config.pos.y) * SPACE
-			# rotate the section
-			# ATTENTION the rotation is done clockwise, not anticlockwise
-			var angle = -PI / 2
-			if dx != 0:
-				var alpha = abs(dy / dx)
-				angle = atan(-alpha if dx * dy > 0 else alpha)
-			path_sec.rotate_y(angle)
+func _add_paths(p_conf):
+	# draw the paths
+	for dest in map_config.map_point_graph[p_conf]:
+		_semi_enters[dest] = _semi_enters.get(dest, 0) + 1
 
-			# put the section's center to the medium point of the line between two locations' points
-			path_sec.set_translation(Vector3((point_config.pos.x + dest.pos.x)/ 2, 0, (point_config.pos.y + dest.pos.y) / 2) * SPACE)
+		var path_sec = PathSection.instance()
+		var dx = (dest.pos.x - p_conf.pos.x) * SPACE
+		var dy = (dest.pos.y - p_conf.pos.y) * SPACE
+		# rotate the section
+		# ATTENTION the rotation is done clockwise, not anticlockwise
+		var angle = -PI / 2
+		if dx != 0:
+			var alpha = abs(dy / dx)
+			angle = atan(-alpha if dx * dy > 0 else alpha)
+		path_sec.rotate_y(angle)
 
-			var scale: Vector3 = path_sec.get_scale()
-			# | | -> |     |, | is PATH_WIDTH, z^->x
-			path_sec.set_scale(Vector3(sqrt(pow(dx, 2) + pow(dy, 2) - pow(PATH_WIDTH, 2)), scale.y, PATH_WIDTH))
+		# put the section's center to the medium point of the line between two locations' points
+		path_sec.set_translation(Vector3((p_conf.pos.x + dest.pos.x)/ 2, 0, (p_conf.pos.y + dest.pos.y) / 2) * SPACE)
 
-			_paths[[point_config, dest]] = path_sec
-			add_child(path_sec)
+		var scale: Vector3 = path_sec.get_scale()
+		# | | -> |     |, | is PATH_WIDTH, z^->x
+		path_sec.set_scale(Vector3(sqrt(pow(dx, 2) + pow(dy, 2) - pow(PATH_WIDTH, 2)), scale.y, PATH_WIDTH))
 
+		_paths[[p_conf, dest]] = path_sec
+		add_child(path_sec)
 
 func __remove_paths(graph, curr, next):
 	var to_remove = Array()
