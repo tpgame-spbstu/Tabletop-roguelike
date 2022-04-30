@@ -13,6 +13,8 @@ var _semi_enters = Dictionary()
 # stores paths between points
 # [[start_vertex, end_vertex]]: path
 var _paths = Dictionary()
+# [point_config]: point
+var _points = Dictionary()
 onready var character = $character
 
 export(Color) var unreachable_edge_color = Color(0.2, 0.2, 0.2, 0.2)
@@ -30,6 +32,8 @@ func initialize(game_config):
 	self.game_config = game_config
 	map_config = game_config.map_config
 	_generate_points()
+	# highlight all the points, the current node has paths to
+	_highlight_points(current_map_point.map_point_config)
 	character.transform = current_map_point.transform
 
 
@@ -45,13 +49,21 @@ func _generate_points() -> void:
 		# if this tile is the starting point
 		if point_config == map_config.current_map_point_config:
 			current_map_point = point
+			# special case: there is no path to the starting vertex, 
+			# hence no 'graph traversal'
+			current_map_point.lowlight()
 		add_child(point)
 		# put the tile on the map
 		point.translate(Vector3(point_config.pos.x, 0, point_config.pos.y) * SPACE)
 		# initialize the map_point
 		point.initialize(self, point_config)
 
+		# crutch as I need to highlight points, not point_configs
+		_points[point_config] = point
+
 		_add_paths(point_config)
+		_lowlight_points(point_config)
+
 
 func _add_paths(p_conf):
 	# draw the paths
@@ -115,6 +127,18 @@ func _remove_paths(graph, curr, next):
 	utils.change_mat_color(mesh, unreachable_edge_color)
 
 
+## highlight all the points, that have paths from the `p_conf`
+func _highlight_points(p_conf):
+	for p in map_config.map_point_graph[p_conf]:
+		_points[p].highlight()
+
+
+## lowlight all the points, that have paths from the `p_conf`
+func _lowlight_points(p_conf):
+	for p in map_config.map_point_graph[p_conf]:
+		_points[p].lowlight()
+
+
 var waiting_animation := false
 
 
@@ -125,6 +149,8 @@ func _on_map_point_click(map_point):
 	# if the path from the current location to the clicked one exists
 	if map_point.map_point_config in map_config.map_point_graph[current_map_point.map_point_config]:
 		_remove_paths(map_config.map_point_graph, current_map_point.map_point_config, map_point.map_point_config)
+		# lowlight all the vertexes, that has paths from the current (not the one pressed) vertex
+		_lowlight_points(current_map_point.map_point_config)
 		# Wait for character move animation
 		var animation = LinMoveAnimation.new(current_map_point.global_transform, 
 			map_point.global_transform, 1.0, character)
@@ -146,6 +172,10 @@ func _on_map_point_click(map_point):
 		# Delete location and show map
 		cur_location_scene.queue_free()
 		self.show()
+
+		# highlight all the vertexes from the current (the one pressed) vertex
+		_highlight_points(current_map_point.map_point_config)
+
 		get_node("character/Camera").make_current()
 		# Process location interaction result
 		match result:
