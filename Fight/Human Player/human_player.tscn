@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Fight/Human Player/hand.gd" type="Script" id=1]
 [ext_resource path="res://Fight/Human Player/deck.gd" type="Script" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://Fight/Assets/selected_board_cell_material.tres" type="Material" id=6]
 [ext_resource path="res://Fight/deck_highlight.gd" type="Script" id=7]
 [ext_resource path="res://Fight/Human Player/spike.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Fight/gong.tscn" type="PackedScene" id=9]
 
 [sub_resource type="CubeMesh" id=1]
 
@@ -90,6 +91,9 @@ transform = Transform( 0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, -0.15, 0 )
 
 [node name="turn_end_pause_timer" type="Timer" parent="."]
 one_shot = true
+
+[node name="gong" parent="." instance=ExtResource( 9 )]
+transform = Transform( -1.31134e-08, -0.0372207, 0.297682, 0, 0.297682, 0.0372207, -0.3, 1.62697e-09, -1.30121e-08, -2.54715, -0.272972, 1.49471 )
 
 [connection signal="input_event" from="main_deck/Area" to="main_deck" method="_on_Area_input_event"]
 [connection signal="input_event" from="dummy_deck/Area" to="dummy_deck" method="_on_Area_input_event"]

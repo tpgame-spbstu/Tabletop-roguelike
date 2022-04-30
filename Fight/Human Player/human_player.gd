@@ -4,11 +4,12 @@ extends Spatial
 
 onready var selector := $selector
 onready var hand := $hand
+onready var bell := $gong
 onready var main_deck := $main_deck
 onready var dummy_deck := $dummy_deck
 onready var human_player_state := $human_player_state
 onready var turn_end_pause_timer := $turn_end_pause_timer
-const TURN_END_PAUSE_TIME = 1.2
+const TURN_END_PAUSE_TIME = 0.5
 
 signal card_to_play_selected(card)
 
@@ -21,7 +22,7 @@ var input_allowed := true
 
 var TurnState := preload("res://Fight/fight_state.gd").TurnState
 
-func initialize(fight_state, fight_global_signals, board, bell, deck_config, player_number, params):
+func initialize(fight_state, fight_global_signals, board, deck_config, player_number, params):
 	self.fight_state = fight_state
 	self.fight_global_signals = fight_global_signals
 	self.board = board
@@ -62,12 +63,38 @@ func _on_place_and_move_enter():
 
 func _on_attack_enter():
 	# Give all cards a chance to attack
-	board.process_player_attack(player_number)
-	turn_end_pause_timer.start(TURN_END_PAUSE_TIME)
 	input_allowed = false
+	var tmp_state = board.process_player_attack(player_number)
+	if tmp_state != null:
+		yield(tmp_state, "completed")
+	turn_end_pause_timer.start(TURN_END_PAUSE_TIME)
 	yield(turn_end_pause_timer, "timeout")
 	input_allowed = true
 	fight_state.next_state()
+
+
+# Play card to board cell, with lin animation from hand to board_cell
+func play_card(board_cell, card_to_play):
+	
+	# Temporary remove card from hand_cell and add to player root
+	var hand_cell = hand.remove_card(card_to_play)
+	self.add_child(card_to_play)
+	
+	# Play animation
+	var animation = LinMoveAnimation.new(hand_cell.global_transform, 
+		board_cell.global_transform, 0.2, card_to_play)
+	AnimationManager.add_animation(animation)
+	yield(animation, "animation_ended")
+	
+	# Remove empty hand cell
+	hand.remove_hand_cell(hand_cell)
+	
+	# Add to target cell
+	self.remove_child(card_to_play)
+	board_cell.add_card(card_to_play)
+	
+	# Emit global signal
+	fight_global_signals.emit_signal("card_played", board_cell, card_to_play)
 
 
 func _on_board_left_click(board_cell, card):
@@ -93,11 +120,9 @@ func _on_board_left_click(board_cell, card):
 		# Pay cost for card
 		card_to_play.card_config.play_cost.pay(human_player_state)
 		# Play selected card
-		var hand_cell = card_to_play.get_hand_cell_or_null()
 		input_allowed = false
-		yield(board.play_card(hand_cell, board_cell, card_to_play), "completed")
+		yield(play_card(board_cell, card_to_play), "completed")
 		input_allowed = true
-		hand.remove_hand_cell(hand_cell)
 		# Reset selected card
 		cancel_selection()
 		highlight_possible_moves()
