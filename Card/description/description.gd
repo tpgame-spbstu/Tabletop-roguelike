@@ -58,6 +58,9 @@ func set_desription(card_config):
 		self.draw_symbols(symbol, cur_symb_id)
 		cur_symb_id += 1
 	
+	for symbol in card_config.effect_symbols:
+		self.draw_symbols(symbol, cur_symb_id)
+		cur_symb_id += 1
 	pass
 
 
