@@ -42,8 +42,6 @@ environment = ExtResource( 3 )
 fov = 79.5
 far = 406.3
 
-[node name="Paths" type="Spatial" parent="."]
-
 [node name="Trees" parent="." instance=ExtResource( 2 )]
 
 [node name="DirectionalLight" type="DirectionalLight" parent="."]

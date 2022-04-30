@@ -7,7 +7,13 @@ var game_config
 var map_config
 var current_map_point
 var PathSection = load("res://Map/Path/path_section.tscn")
-onready var Paths = $Paths
+var utils = preload("res://Map/utils.gd").new()
+# stores the number of paths, that enters the vertex
+var _semi_enters = Dictionary()
+# stores paths between points
+# [[start_vertex, end_vertex]]: path
+var _paths = Dictionary()
+var _unreachable_edge_color = Color(0.2, 0.2, 0.2, 0.2)
 onready var character = $character
 
 const PATH_WIDTH = 2
@@ -55,6 +61,8 @@ func generate_points() -> void:
 
 		# draw the paths
 		for dest in map_config.map_point_graph[point_config]:
+			_semi_enters[dest] = _semi_enters.get(dest, 0) + 1
+
 			var path_sec = PathSection.instance()
 			var dx = (dest.pos.x - point_config.pos.x) * SPACE
 			var dy = (dest.pos.y - point_config.pos.y) * SPACE
@@ -73,11 +81,42 @@ func generate_points() -> void:
 			# | | -> |     |, | is PATH_WIDTH, z^->x
 			path_sec.set_scale(Vector3(sqrt(pow(dx, 2) + pow(dy, 2) - pow(PATH_WIDTH, 2)), scale.y, PATH_WIDTH))
 
-			Paths.add_child(path_sec)
+			_paths[[point_config, dest]] = path_sec
+			add_child(path_sec)
 
+
+func __remove_paths(graph, curr, next):
+	var to_remove = Array()
+	# fill the array with all the vertexes, available from this one
+	# except the next one (clicked)
+	for p in graph[curr]:
+		if p != next:
+			to_remove.push_back([curr, p])
+
+	# remove all unreachable paths: if there was only one edge to the vertex,
+	# edges from it should also be removed
+	while to_remove:
+		var edge = to_remove.pop_back()
+		var f = edge[0]
+		var s = edge[1]
+		# about to remove the entering edge
+		_semi_enters[s] -= 1
+		# if there is no way to enter this vertex
+		if not _semi_enters[s]:
+			# push all the vertexes, available from this one: they're unreachable
+			for _s in graph[s]:
+				to_remove.push_back([s, _s])
+		# change the color of unreachable edges
+		var path = _paths[edge]
+		utils.change_mat_color(path.get_mesh(), _unreachable_edge_color)
+	# set the path from the current point to the clicked one
+	# as unreachable
+	var mesh = _paths[[curr, next]].get_mesh()
+	utils.change_mat_color(mesh, _unreachable_edge_color)
 
 
 var waiting_animation := false
+
 
 func _on_map_point_click(map_point):
 	if waiting_animation:
@@ -85,6 +124,7 @@ func _on_map_point_click(map_point):
 
 	# if the path from the current location to the clicked one exists
 	if map_point.map_point_config in map_config.map_point_graph[current_map_point.map_point_config]:
+		__remove_paths(map_config.map_point_graph, current_map_point.map_point_config, map_point.map_point_config)
 		# Wait for character move animation
 		var animation = LinMoveAnimation.new(current_map_point.global_transform, 
 			map_point.global_transform, 1.0, character)

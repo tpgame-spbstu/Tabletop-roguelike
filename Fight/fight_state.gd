@@ -2,8 +2,6 @@ extends Node
 
 # FightState class - node to manage fight state data and transitions
 
-signal player_1_win()
-signal player_2_win()
 
 
 var player_1_health setget set_player_1_health
@@ -11,8 +9,6 @@ signal player_1_health_changed(player_1_health)
 func set_player_1_health(new_value):
 	player_1_health = new_value
 	emit_signal("player_1_health_changed", player_1_health)
-	if player_1_health <= 0:
-		emit_signal("player_2_win")
 
 
 var player_2_health setget set_player_2_health
@@ -20,8 +16,6 @@ signal player_2_health_changed(player_2_health)
 func set_player_2_health(new_value):
 	player_2_health = new_value
 	emit_signal("player_2_health_changed", player_2_health)
-	if player_2_health <= 0:
-		emit_signal("player_1_win")
 
 
 func reduse_enemy_health(attacker_number, delta):
@@ -49,6 +43,7 @@ enum TurnState {
 	DRAW_CARDS,
 	PLACE_AND_MOVE,
 	ATTACK,
+	WIN,
 }
 var turn_state
 var active_player_number
@@ -56,9 +51,11 @@ var active_player_number
 signal player_1_draw_cards_enter()
 signal player_1_place_and_move_enter()
 signal player_1_attack_enter()
+signal player_1_win_enter()
 signal player_2_draw_cards_enter()
 signal player_2_place_and_move_enter()
 signal player_2_attack_enter()
+signal player_2_win_enter()
 
 func get_turn_state_signal(_turn_state, player_number):
 	match _turn_state:
@@ -68,6 +65,8 @@ func get_turn_state_signal(_turn_state, player_number):
 			return "player_%d_place_and_move_enter" % player_number
 		TurnState.ATTACK:
 			return "player_%d_attack_enter" % player_number
+		TurnState.WIN:
+			return "player_%d_win_enter" % player_number
 
 
 func set_state(new_turn_state, new_active_player_number):
@@ -82,9 +81,12 @@ func set_state(new_turn_state, new_active_player_number):
 			emit_signal("player_%d_place_and_move_enter" % active_player_number)
 		TurnState.ATTACK:
 			emit_signal("player_%d_attack_enter" % active_player_number)
+		TurnState.WIN:
+			emit_signal("player_%d_win_enter" % active_player_number)
 
 
 var deferred_next_state_calls = 0
+
 
 func next_state():
 	deferred_next_state_calls += 1
@@ -97,12 +99,13 @@ func next_state():
 			TurnState.PLACE_AND_MOVE:
 				set_state(TurnState.ATTACK, active_player_number)
 			TurnState.ATTACK:
-				var next_player = 2 if active_player_number == 1 else 1
-				if next_player == 1:
-					set_loop_number(loop_number + 1)
-				set_state(TurnState.DRAW_CARDS, next_player)
+				if player_1_health <= 0:
+					set_state(TurnState.WIN, 2)
+				elif player_2_health <= 0:
+					set_state(TurnState.WIN, 1)
+				else:
+					var next_player = 2 if active_player_number == 1 else 1
+					if next_player == 1:
+						set_loop_number(loop_number + 1)
+					set_state(TurnState.DRAW_CARDS, next_player)
 		deferred_next_state_calls -= 1
-
-
-func _on_fight_ui_final_text():
-	pass # Replace with function body.
