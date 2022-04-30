@@ -32,6 +32,25 @@ func _on_Point_input_event(camera, event, position, normal, shape_idx):
 			emit_signal("map_point_click", self)
 
 
+## make the 'bounding' mesh visible
+##
+## @warn: truth be told, not sure what `use_shadow_to_opacity`
+##        exactly does, but in allows to completely hide or
+##        show the mesh, hence is used here
+func highlight():
+	var mat = utils.get_mat($on_hover_mesh)
+	mat.flags_use_shadow_to_opacity = false
+	utils.set_mat($on_hover_mesh, mat)
+
+
+# legit antonym for highlight
+# https://www.synonyms.com/antonyms/highlight
+func lowlight():
+	var mat = utils.get_mat($on_hover_mesh)
+	mat.flags_use_shadow_to_opacity = true
+	utils.set_mat($on_hover_mesh, mat)
+
+
 func _on_mouse_entered():
 	utils.change_mat_color($on_hover_mesh, hover_color)
 
