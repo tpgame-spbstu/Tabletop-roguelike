@@ -16,7 +16,8 @@ script = ExtResource( 3 )
 size_flags_horizontal = 0
 size_flags_vertical = 0
 script = ExtResource( 2 )
+font_size = 28
 outline_size = 5
 
 [node name="Camera" type="Camera" parent="."]
-transform = Transform( 0.733754, 0, 0.679416, 0, 1, 0, -0.679416, 0, 0.733754, 1.52938, 0, 1 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1 )
