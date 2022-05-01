@@ -5,14 +5,18 @@
 [ext_resource path="res://Fight/damage_anim/viewport.gd" type="Script" id=3]
 
 [node name="damage_float" type="Sprite3D"]
+billboard = 1
 script = ExtResource( 1 )
 
 [node name="Viewport" type="Viewport" parent="."]
+gui_disable_input = true
 script = ExtResource( 3 )
 
 [node name="dmg" type="Label" parent="Viewport"]
-margin_bottom = 14.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
 script = ExtResource( 2 )
+outline_size = 5
 
 [node name="Camera" type="Camera" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.5095 )
+transform = Transform( 0.733754, 0, 0.679416, 0, 1, 0, -0.679416, 0, 0.733754, 1.52938, 0, 1 )
