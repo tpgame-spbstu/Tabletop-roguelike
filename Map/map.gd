@@ -13,6 +13,8 @@ var _semi_enters = Dictionary()
 # stores paths between points
 # [[start_vertex, end_vertex]]: path
 var _paths = Dictionary()
+# [point]: [other points, this one connects to]
+var _graph = Dictionary()
 # [point_config]: point
 var _points = Dictionary()
 onready var character = $character
@@ -62,7 +64,10 @@ func _generate_points() -> void:
 		_points[point_config] = point
 
 		_add_paths(point_config)
-		_lowlight_points(point_config)
+	# graph is built only after all the map_points are iterated over
+	# lowlight every vertex
+	for p_conf in _points:
+		_lowlight_points(p_conf)
 
 
 func _add_paths(p_conf):
