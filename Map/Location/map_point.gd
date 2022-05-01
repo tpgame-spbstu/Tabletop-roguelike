@@ -37,6 +37,6 @@ func _on_Point_input_event(camera, event, position, normal, shape_idx):
 ## raises the flag
 ##
 ## :animate: whether to animate the flag raising or just to make them shown
-func mark_visited(animate):
+func mark_visited(animate: bool=true):
 	map_point_config.set_visited(true)
 	_banner.set_sail(animate)

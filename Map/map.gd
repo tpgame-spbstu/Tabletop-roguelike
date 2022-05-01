@@ -30,7 +30,7 @@ func initialize(game_config):
 	self.game_config = game_config
 	map_config = game_config.map_config
 	generate_points()
-	map_config.add_visited(current_map_point, false)
+	current_map_point.mark_visited(false)
 	character.transform = current_map_point.transform
 
 
@@ -147,7 +147,7 @@ func _on_map_point_click(map_point):
 		cur_location_scene.queue_free()
 		self.show()
 
-		map_config.add_visited(current_map_point)
+		current_map_point.mark_visited()
 
 		get_node("character/Camera").make_current()
 		# Process location interaction result
