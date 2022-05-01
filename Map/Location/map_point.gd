@@ -33,6 +33,10 @@ func _on_Point_input_event(camera, event, position, normal, shape_idx):
 			emit_signal("map_point_click", self)
 
 
-func mark_visited():
+## writes to map_point_config the `_is_visited` flag
+## raises the flag
+##
+## :animate: whether to animate the flag raising or just to make them shown
+func mark_visited(animate):
 	map_point_config.set_visited(true)
-	_banner.set_sail()
+	_banner.set_sail(animate)

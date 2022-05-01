@@ -90,10 +90,9 @@ func _show_stick():
 
 
 ## shows the flag and plays its animation (movement from the bottom of the pole to its top)
-func set_sail():
-	# no flag without a stick, huh?
-	yield(_show_stick(), "completed")
-
+##
+## :animate: whether to animate the flag and stuff or just to make it shown
+func set_sail(animate: bool):
 	var pole_size = get_pole_size()
 	var fl_size = get_flag_size()
 	# set the scale so that the `hfl_to_hstk` ratio is true
@@ -102,25 +101,39 @@ func set_sail():
 	# update the size (it was scaled)
 	fl_size *= scale_coeff
 
-	# get the coeffs for the flag's translations
-	var pole_trans = _pole.get_translation()
-	var trans_x = pole_trans.x + pole_size.x / 2 + fl_size.x / 2
-	var trans_z = pole_trans.z
-	# set `y` to any number, it will be changed during tween animation
-	_flag.set_translation(Vector3(trans_x, 0, trans_z))
-	# from the bottom of the pole, to the top of it
-	var init_y = pole_trans.y - pole_size.y * (1 - margin_from_bottom) / 2 + fl_size.y / 2
-	var final_y = pole_trans.y + pole_size.y * (1 - margin_from_top) / 2 - fl_size.y / 2
+	if not animate:
+		_pole.translation.y = pole_size.y / 2
+		_pole.show()
 
-	_flag.show()
-	var tween = Tween.new()
-	add_child(tween)
-	# just for chuckles :) for normal use any of the commented below is recommended
-	tween.interpolate_property(_flag, "translation:y", init_y, final_y, flag_raising_dur, Tween.TRANS_BOUNCE, Tween.EASE_OUT)
-	# _tween.interpolate_property(_flag, "translation:y", init_y, final_y, anim_dur, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
-	# _tween.interpolate_property(_flag, "translation:y", init_y, final_y, anim_dur, Tween.TRANS_CIRC, Tween.EASE_OUT)
-	tween.start()
-	tween.connect("tween_all_completed", self, "_on_tween_completed", [tween])
+		var fl_trans = _pole.get_translation()
+		fl_trans.x += pole_size.x / 2 + fl_size.x / 2
+		fl_trans.y += pole_size.y * (1 - margin_from_top) / 2 - fl_size.y / 2
+		_flag.set_translation(fl_trans)
+		_flag.show()
+	else:
+		# no flag without a stick, huh?
+		yield(_show_stick(), "completed")
+
+		# get the coeffs for the flag's translations
+		var pole_trans = _pole.get_translation()
+		var trans_x = pole_trans.x + pole_size.x / 2 + fl_size.x / 2
+		var trans_z = pole_trans.z
+
+		# set `y` to any number, it will be changed during tween animation
+		_flag.set_translation(Vector3(trans_x, 0, trans_z))
+		# from the bottom of the pole, to the top of it
+		var init_y = pole_trans.y - pole_size.y * (1 - margin_from_bottom) / 2 + fl_size.y / 2
+		var final_y = pole_trans.y + pole_size.y * (1 - margin_from_top) / 2 - fl_size.y / 2
+
+		_flag.show()
+		var tween = Tween.new()
+		add_child(tween)
+		# just for chuckles :) for normal use any of the commented below is recommended
+		tween.interpolate_property(_flag, "translation:y", init_y, final_y, flag_raising_dur, Tween.TRANS_BOUNCE, Tween.EASE_OUT)
+		# _tween.interpolate_property(_flag, "translation:y", init_y, final_y, anim_dur, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
+		# _tween.interpolate_property(_flag, "translation:y", init_y, final_y, anim_dur, Tween.TRANS_CIRC, Tween.EASE_OUT)
+		tween.start()
+		tween.connect("tween_all_completed", self, "_on_tween_completed", [tween])
 
 
 func _on_tween_completed(tween):

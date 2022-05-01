@@ -30,6 +30,7 @@ func initialize(game_config):
 	self.game_config = game_config
 	map_config = game_config.map_config
 	generate_points()
+	map_config.add_visited(current_map_point, false)
 	character.transform = current_map_point.transform
 
 

@@ -8,9 +8,9 @@ var map_point_graph: Dictionary
 var _visited = Array() setget add_visited, get_visited
 
 
-func add_visited(map_point):
+func add_visited(map_point, animate: bool=true):
 	_visited.push_back(map_point)
-	map_point.mark_visited()
+	map_point.mark_visited(animate)
 
 
 func get_visited() -> Array:
