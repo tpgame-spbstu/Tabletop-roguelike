@@ -146,7 +146,7 @@ func _on_map_point_click(map_point):
 		cur_location_scene.queue_free()
 		self.show()
 
-		current_map_point.mark_visited()
+		map_config.add_visited(current_map_point)
 
 		get_node("character/Camera").make_current()
 		# Process location interaction result

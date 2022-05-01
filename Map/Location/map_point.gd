@@ -34,4 +34,5 @@ func _on_Point_input_event(camera, event, position, normal, shape_idx):
 
 
 func mark_visited():
+	map_point_config.set_visited(true)
 	_banner.set_sail()
