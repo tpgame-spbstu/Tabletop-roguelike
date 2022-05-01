@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://Fight/fight_location.gd" type="Script" id=1]
 [ext_resource path="res://Fight/AI Player/ai_player.tscn" type="PackedScene" id=2]
@@ -11,7 +11,6 @@
 [ext_resource path="res://Fight/Human Player/human_player.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Map/map_environment.tres" type="Environment" id=11]
 [ext_resource path="res://Fight/fight_loger.gd" type="Script" id=12]
-[ext_resource path="res://Fight/gong.tscn" type="PackedScene" id=15]
 [ext_resource path="res://Fight/Assets/selected_board_cell_material.tres" type="Material" id=17]
 [ext_resource path="res://Fight/hand_hightlight.gd" type="Script" id=18]
 
@@ -62,64 +61,66 @@ material/0 = null
 [node name="board" type="Spatial" parent="."]
 script = ExtResource( 3 )
 
-[node name="row_0" type="Spatial" parent="board"]
+[node name="rows" type="Spatial" parent="board"]
+
+[node name="row_0" type="Spatial" parent="board/rows"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.5 )
 
-[node name="cell_0" parent="board/row_0" instance=ExtResource( 4 )]
+[node name="cell_0" parent="board/rows/row_0" instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, 0 )
 
-[node name="cell_1" parent="board/row_0" instance=ExtResource( 4 )]
+[node name="cell_1" parent="board/rows/row_0" instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0 )
 
-[node name="cell_2" parent="board/row_0" instance=ExtResource( 4 )]
+[node name="cell_2" parent="board/rows/row_0" instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 0 )
 
-[node name="cell_3" parent="board/row_0" instance=ExtResource( 4 )]
+[node name="cell_3" parent="board/rows/row_0" instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 0, 0 )
 
-[node name="row_1" type="Spatial" parent="board"]
+[node name="row_1" type="Spatial" parent="board/rows"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5 )
 
-[node name="cell_0" parent="board/row_1" instance=ExtResource( 4 )]
+[node name="cell_0" parent="board/rows/row_1" instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, 0 )
 
-[node name="cell_1" parent="board/row_1" instance=ExtResource( 4 )]
+[node name="cell_1" parent="board/rows/row_1" instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0 )
 
-[node name="cell_2" parent="board/row_1" instance=ExtResource( 4 )]
+[node name="cell_2" parent="board/rows/row_1" instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 0 )
 
-[node name="cell_3" parent="board/row_1" instance=ExtResource( 4 )]
+[node name="cell_3" parent="board/rows/row_1" instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 0, 0 )
 
-[node name="row_2" type="Spatial" parent="board"]
+[node name="row_2" type="Spatial" parent="board/rows"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5 )
 
-[node name="cell_0" parent="board/row_2" instance=ExtResource( 4 )]
+[node name="cell_0" parent="board/rows/row_2" instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, 0 )
 
-[node name="cell_1" parent="board/row_2" instance=ExtResource( 4 )]
+[node name="cell_1" parent="board/rows/row_2" instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0 )
 
-[node name="cell_2" parent="board/row_2" instance=ExtResource( 4 )]
+[node name="cell_2" parent="board/rows/row_2" instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 0 )
 
-[node name="cell_3" parent="board/row_2" instance=ExtResource( 4 )]
+[node name="cell_3" parent="board/rows/row_2" instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 0, 0 )
 
-[node name="row_3" type="Spatial" parent="board"]
+[node name="row_3" type="Spatial" parent="board/rows"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.5 )
 
-[node name="cell_0" parent="board/row_3" instance=ExtResource( 4 )]
+[node name="cell_0" parent="board/rows/row_3" instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, 0 )
 
-[node name="cell_1" parent="board/row_3" instance=ExtResource( 4 )]
+[node name="cell_1" parent="board/rows/row_3" instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0 )
 
-[node name="cell_2" parent="board/row_3" instance=ExtResource( 4 )]
+[node name="cell_2" parent="board/rows/row_3" instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 0 )
 
-[node name="cell_3" parent="board/row_3" instance=ExtResource( 4 )]
+[node name="cell_3" parent="board/rows/row_3" instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 0, 0 )
 
 [node name="camera_positions" type="Spatial" parent="."]
@@ -151,9 +152,6 @@ transform = Transform( -1, -8.63376e-08, 1.37317e-08, 0, 0.157072, 0.987587, -8.
 environment = ExtResource( 11 )
 current = true
 script = ExtResource( 9 )
-
-[node name="gong" parent="." instance=ExtResource( 15 )]
-transform = Transform( -1.31134e-08, -0.0372207, 0.297682, 0, 0.297682, 0.0372207, -0.3, 1.62697e-09, -1.30121e-08, -2.54715, -0.272972, 1.49471 )
 
 [node name="fight_ui" parent="." instance=ExtResource( 6 )]
 

@@ -18,14 +18,14 @@ func set_player_2_health(new_value):
 	emit_signal("player_2_health_changed", player_2_health)
 
 
-func reduse_enemy_health(attacker_number, delta):
+func reduce_enemy_health(attacker_number, delta):
 	if attacker_number == 1:
 		set_player_2_health(player_2_health - delta)
 	else:
 		set_player_1_health(player_1_health - delta)
 
 
-func reduse_player_health(player_number, delta):
+func reduce_player_health(player_number, delta):
 	if player_number == 1:
 		set_player_1_health(player_1_health - delta)
 	else:
