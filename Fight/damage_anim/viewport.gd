@@ -1,7 +1,7 @@
 extends Viewport
 
 
-onready var _dmg: Label = $dmg
+onready var _dmg = $dmg
 
 export(bool) var v_flip = true
 export(bool) var is_transparent = true

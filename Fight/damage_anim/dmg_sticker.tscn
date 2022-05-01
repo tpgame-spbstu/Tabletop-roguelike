@@ -1,10 +1,10 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://Fight/damage_anim/damage_float_main.gd" type="Script" id=1]
+[ext_resource path="res://Fight/damage_anim/dmg_sticker.gd" type="Script" id=1]
 [ext_resource path="res://Fight/damage_anim/dmg.gd" type="Script" id=2]
 [ext_resource path="res://Fight/damage_anim/viewport.gd" type="Script" id=3]
 
-[node name="damage_float" type="Sprite3D"]
+[node name="dmg_sticker" type="Sprite3D"]
 billboard = 1
 script = ExtResource( 1 )
 
