@@ -7,9 +7,6 @@ var game_config
 var map_config
 var current_map_point
 var PathSection = load("res://Map/Path/path_section.tscn")
-var _banner = preload("res://Map/Banner/banner.tscn")
-# [point]: banner
-var _banners = Dictionary()
 var utils = preload("res://Map/utils.gd").new()
 # stores the number of paths, that enters the vertex
 var _semi_enters = Dictionary()
@@ -19,15 +16,8 @@ var _paths = Dictionary()
 var _unreachable_edge_color = Color(0.2, 0.2, 0.2, 0.2)
 onready var character = $character
 
-# percentage of halfed size of the point
-# means how much to move from the borders
-export(float, 0.01, 0.99, 0.05) var point_x_margin = 0.05
-export(float, 0.01, 0.5, 0.1) var point_y_margin = 0.1
-export(float, 0.01, 1.0, 1.0) var point_z_margin = 1.0
-
 const PATH_WIDTH = 2
 const SPACE = 15.0
-
 
 
 func initialize(game_config):
@@ -45,33 +35,6 @@ func initialize(game_config):
 
 func _ready():
 	pass
-
-
-## adds a banner to the point's position
-## doesn't add banner as the point's child
-func _add_banner(point):
-	var banner = _banner.instance()
-	# add banner to the map scene
-	add_child(banner)
-	# the flag is a plane - it's seen only from one side
-	# need to rotate due to difference in Z-axis dir
-	banner.rotate_y(-PI)
-	var trans = point.get_translation()
-	var size = point.get_size()
-	var pole_size = banner.get_pole_size()
-	# set the banner on the point
-	banner.set_translation(Vector3(
-		trans.x - size.x * (1 - point_x_margin) / 2 + pole_size.x,
-		trans.y + size.y * (1 - point_y_margin) / 2 + pole_size.y / 2,
-		trans.z - size.z * (1 - point_z_margin) / 2
-	))
-	# if the current point is the starting one, the player won't
-	# exit any scene on it -> no flag raising, so raise it
-	# at the begginning
-	if point == current_map_point:
-		banner.set_sail()
-	else:
-		_banners[point] = banner
 
 
 """
@@ -94,8 +57,6 @@ func generate_points() -> void:
 		point.translate(Vector3(point_config.pos.x, 0, point_config.pos.y) * SPACE)
 		# initialize the map_point
 		point.initialize(self, point_config)
-
-		_add_banner(point)
 
 		# draw the paths
 		for dest in map_config.map_point_graph[point_config]:
@@ -185,7 +146,7 @@ func _on_map_point_click(map_point):
 		cur_location_scene.queue_free()
 		self.show()
 
-		_banners[current_map_point].set_sail()
+		current_map_point.mark_visited()
 
 		get_node("character/Camera").make_current()
 		# Process location interaction result

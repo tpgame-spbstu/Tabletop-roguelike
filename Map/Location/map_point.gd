@@ -4,6 +4,7 @@ extends Area
 signal map_point_click(map_point)
 
 var utils = preload("res://Map/utils.gd").new()
+onready var _banner = $banner
 var map_point_config = null
 
 
@@ -30,3 +31,7 @@ func _on_Point_input_event(camera, event, position, normal, shape_idx):
 	if event is InputEventMouseButton:
 		if event.get_button_mask() == BUTTON_LEFT:
 			emit_signal("map_point_click", self)
+
+
+func mark_visited():
+	_banner.set_sail()
