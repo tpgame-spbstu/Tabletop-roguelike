@@ -90,7 +90,7 @@ func process_attack():
 			$AnimationPlayer.play(anim_name)
 			yield($AnimationPlayer, "animation_finished")
 			# Attack enemy base
-			fight_state.reduse_enemy_health(owner_number, card_config.power)
+			fight_state.reduce_enemy_health(owner_number, card_config.power)
 		return
 	var target_card = target_board_cell.get_card_or_null()
 	if target_card == null:
@@ -98,7 +98,7 @@ func process_attack():
 			$AnimationPlayer.play(anim_name)
 			yield($AnimationPlayer, "animation_finished")
 			# Attack if target cell is enemy base and empty
-			fight_state.reduse_enemy_health(owner_number, card_config.power)
+			fight_state.reduce_enemy_health(owner_number, card_config.power)
 		return
 	if target_card.owner_number == owner_number:
 		# can't attack friendly card

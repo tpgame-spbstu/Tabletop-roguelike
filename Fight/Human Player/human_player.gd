@@ -216,7 +216,7 @@ func _on_deck_click(deck, card):
 			if card == null:
 				# Clicked on empty deck
 				# Get damage
-				fight_state.reduse_player_health(player_number, 1)
+				fight_state.reduce_player_health(player_number, 1)
 			else:
 				# Draw card from deck
 				yield(draw_card(deck, card), "completed")
