@@ -1,9 +1,10 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Map/Banner/flag_waving.gdshader" type="Shader" id=1]
 [ext_resource path="res://Map/Banner/flagstock_textures/texture_wood.png" type="Texture" id=2]
 [ext_resource path="res://Map/Banner/banner.gd" type="Script" id=3]
 [ext_resource path="res://Map/Banner/flag_textures/ussr.png" type="Texture" id=4]
+[ext_resource path="res://Map/Banner/incantation_textures/incantation_circle_7.png" type="Texture" id=5]
 
 [sub_resource type="SpatialMaterial" id=1]
 albedo_texture = ExtResource( 2 )
@@ -45,6 +46,11 @@ material/0 = null
 transform = Transform( 0.8, 0, 0, 0, -3.49691e-08, -0.8, 0, 0.8, -3.49691e-08, 1.142, 3.204, 0 )
 mesh = SubResource( 8 )
 material/0 = null
+
+[node name="incantation_circle" type="Sprite3D" parent="."]
+transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -0.2, 0, -0.2 )
+axis = 1
+texture = ExtResource( 5 )
 
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( 1, 0, 0, 0, 0.927465, 0.373911, 0, -0.373911, 0.927465, 0, 3.25115, 8.31677 )
