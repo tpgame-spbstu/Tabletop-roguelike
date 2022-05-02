@@ -77,17 +77,15 @@ func _on_attack_enter():
 func play_card(board_cell, card_to_play):
 	
 	# Temporary remove card from hand_cell and add to player root
-	var hand_cell = hand.remove_card(card_to_play)
-	self.add_child(card_to_play)
+	# the method automatically adds the removed card
+	# to the parent of the hand, to `self` in this case
+	hand.remove_card(card_to_play)
 	
 	# Play animation
-	var animation = LinMoveAnimation.new(hand_cell.global_transform, 
+	var animation = LinMoveAnimation.new(card_to_play.global_transform, 
 		board_cell.global_transform, 0.2, card_to_play)
 	AnimationManager.add_animation(animation)
 	yield(animation, "animation_ended")
-	
-	# Remove empty hand cell
-	hand.remove_hand_cell(hand_cell)
 	
 	# Add to target cell
 	self.remove_child(card_to_play)

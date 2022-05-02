@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Fight/Human Player/hand.gd" type="Script" id=1]
 [ext_resource path="res://Fight/Human Player/deck.gd" type="Script" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://Fight/deck_highlight.gd" type="Script" id=7]
 [ext_resource path="res://Fight/Human Player/spike.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Fight/gong.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Hand/hand.tscn" type="PackedScene" id=10]
 
 [sub_resource type="CubeMesh" id=1]
 
@@ -38,7 +39,10 @@ transform = Transform( 0.4, 0, 0, 0, 0.1, 0, 0, 0, 0.4, 0, 0, 0 )
 mesh = SubResource( 1 )
 material/0 = SubResource( 2 )
 
-[node name="hand" type="Spatial" parent="."]
+[node name="hand" parent="." instance=ExtResource( 10 )]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, -2.5 )
+
+[node name="_hand" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.5 )
 script = ExtResource( 1 )
 
