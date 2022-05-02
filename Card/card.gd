@@ -20,6 +20,10 @@ onready var card_visuals = $card_visuals
 onready var unit_visuals = $unit_visuals
 
 
+func get_size():
+	return Vector3(0.8, 0.02, 1)
+
+
 func initialize(card_config, owner_number, fight_global_signals, fight_state):
 	self.fight_global_signals = fight_global_signals
 	self.fight_state = fight_state
