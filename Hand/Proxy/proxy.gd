@@ -29,6 +29,7 @@ func _ready():
 
 	connect("input_event", self, "_on_input_event")
 
+signal _input_event(proxy, event)
 
 func _on_input_event(_camera, event, _pos, _normal, _shape_idx):
 	if event is InputEventMouseButton:
@@ -37,7 +38,7 @@ func _on_input_event(_camera, event, _pos, _normal, _shape_idx):
 			emit_signal("doubleclick", self)
 		else:  # propogate the event
 			if _occupant:
-				_occupant.emit_signal("input_event", _camera, event, _pos, _normal, _shape_idx)
+				emit_signal("_input_event", self, event)
 
 
 func _on_hover_tween_complete():
@@ -180,3 +181,7 @@ func get_intersection_with(other) -> Array:
 func get_union_with(other) -> Array:
 	assert(other.has_method("_get_2dpoints"))
 	return Geometry.merge_polygons_2d(_get_2dpoints(), other._get_2dpoints())
+
+
+func get_occupant():
+	return _occupant

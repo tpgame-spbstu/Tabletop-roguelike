@@ -3,6 +3,8 @@ extends Spatial
 
 signal mouse_entered(card)
 signal mouse_exited(card)
+signal hand_left_click(proxy, card)
+signal hand_right_click(proxy, card)
 
 # stores the cards
 var _cards: Array
@@ -16,24 +18,15 @@ var _proxies: Array = []
 onready var card_inst = preload("res://Hand/cart_test.tscn")
 onready var utils = preload("res://Hand/utils.gd").new()
 # TODO: substitute, change it with the actual value
-const OFFSET := Vector3(0, 0.1, -2.5)
+const OFFSET := Vector3(0, 0.1, 0.1)
+
+onready var highlighter:= get_parent().get_node("hand_hightlight")
 
 
 # for running as a standalone scene
 # one can safely remove the whole method
 func _ready():
-	var cards = [
-		card_inst.instance(),
-		card_inst.instance(),
-		card_inst.instance(),
-		card_inst.instance(),
-		card_inst.instance(),
-		card_inst.instance(),
-		card_inst.instance(),
-		card_inst.instance(),
-		card_inst.instance(),
-	]
-	initialize(cards)
+	initialize()
 
 
 func initialize(cards: Array=[]):
@@ -199,6 +192,7 @@ func _add_card(card, animation):
 	#TODO moving animation before attaching
 
 	proxy.attach_obj_to(card)
+	proxy.connect("_input_event", self, "_on_hand_cell_input_event")
 
 	proxy.set_collision_layer_bit(_collision_layer_bit, true)
 	_cards.push_back(card)
@@ -246,9 +240,9 @@ func remove_card(card, move_to: Vector3=Vector3(-7, 2, -7), animation=null):
 	_cards.erase(card)
 	# update visual
 	draw_cards()
-	# TODO animation to move the card as free obj to its destination
-	card.set_transform(Transform.IDENTITY)
-	card.translate(move_to)
+	# # TODO animation to move the card as free obj to its destination
+	# card.set_transform(Transform.IDENTITY)
+	# card.translate(move_to)
 
 
 func draw_cards():
@@ -263,3 +257,30 @@ func draw_cards():
 		_proxies[i].set_transform(trans)
 		# set the original transform (position + rotation)
 		_proxies[i].set_orig_trans(trans)
+
+
+func highlight():
+	highlighter.highlight()
+
+
+func cancel_highlight():
+	highlighter.cancel_highlight()
+
+
+func get_card_list():
+	return _cards
+
+
+func has_obtainable_cards(hp_state):
+	for card in _cards:
+		if card.card_config.play_cost.is_obtainable(hp_state):
+			return true
+	return false
+
+
+func _on_hand_cell_input_event(proxy, event):
+	if event is InputEventMouseButton and event.is_pressed():
+		if event.get_button_index() == BUTTON_LEFT:
+			emit_signal("hand_left_click", proxy, proxy.get_occupant())
+		elif event.get_button_index() == BUTTON_RIGHT:
+			emit_signal("hand_right_click", proxy, proxy.get_occupant())
