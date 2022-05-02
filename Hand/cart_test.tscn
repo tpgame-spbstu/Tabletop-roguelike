@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://cart_test.gd" type="Script" id=1]
+[ext_resource path="res://Hand/cart_test.gd" type="Script" id=1]
 
 [sub_resource type="CubeMesh" id=1]
 size = Vector3( 4, 0.04, 5 )

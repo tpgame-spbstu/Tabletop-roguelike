@@ -11,10 +11,10 @@ var _hovered
 # set for every proxy, ray is also checking only this layer
 # done to avoid ray picking proxy, that are not in the hand
 var _collision_layer_bit: int = 2
-onready var _proxy = preload("res://Modification/proxy.tscn")
+onready var _proxy = preload("res://Hand/Proxy/proxy.tscn")
 var _proxies: Array = []
-onready var card_inst = preload("res://cart_test.tscn")
-onready var utils = preload("res://Modification/utils.gd").new()
+onready var card_inst = preload("res://Hand/cart_test.tscn")
+onready var utils = preload("res://Hand/utils.gd").new()
 # TODO: substitute, change it with the actual value
 const OFFSET := Vector3(0, 0.1, -2.5)
 
