@@ -48,9 +48,9 @@ func _on_human_player_state_extra_draws_count_changed(extra_draws_count):
 	print("extra_draws_count changed to %d" % extra_draws_count)
 
 
-func _on_fight_state_player_1_win():
+func _on_fight_state_player_1_win_enter():
 	print("player_1_win")
 
 
-func _on_fight_state_player_2_win():
+func _on_fight_state_player_2_win_enter():
 	print("player_2_win")

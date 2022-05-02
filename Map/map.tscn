@@ -19,9 +19,6 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Destinations" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00546875, 0.0607056, 0.047464 )
-
 [node name="grass" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.121388, 0 )
 
@@ -41,8 +38,6 @@ transform = Transform( -1, 4.37114e-08, -7.57103e-08, 0, 0.866025, 0.5, 8.74228e
 environment = ExtResource( 3 )
 fov = 79.5
 far = 406.3
-
-[node name="Paths" type="Spatial" parent="."]
 
 [node name="Trees" parent="." instance=ExtResource( 2 )]
 

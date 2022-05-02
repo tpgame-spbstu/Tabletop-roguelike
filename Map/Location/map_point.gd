@@ -1,32 +1,59 @@
 extends Area
 
-var map_point_config = null
 
 signal map_point_click(map_point)
+
+var utils = preload("res://Map/utils.gd").new()
+var map_point_config = null
+export(Color) var hover_color = Color(0, 1, 0, 1)
+export(Color) var highlight_color = Color(1, 1, 1, 1)
+
 
 func initialize(map, map_point_config):
 	self.map_point_config = map_point_config
 	connect("map_point_click", map, "_on_map_point_click")
+	# connecting the hovering signals
+	connect("mouse_entered", self, "_on_mouse_entered")
+	connect("mouse_exited", self, "_on_mouse_exited")
 	_set_textures(map_point_config.get_textures())
 
 
+func get_mesh() -> MeshInstance:
+	return get_node("MeshInstance") as MeshInstance
+
+
 func _set_textures(textures: Array):
-	var mesh = get_node("MeshInstance")
-	# number of textures should be the >= than the number of surfaces
-	# if more, the excess ones will be ignored
-	if textures.size() >= mesh.get_surface_material_count():
-		for i in mesh.get_surface_material_count():
-			# if not duplicated, all other instances will share the same material
-			var mat = mesh.get_active_material(i).duplicate()
-			# iirc, texture is mixed with the color
-			# the white color shouldn't mess the texture img up
-			mat.set_albedo(Color(1, 1, 1, 1))
-			mat.set_texture(SpatialMaterial.TEXTURE_ALBEDO, load(textures[i]))
-			# it seems, get_active_material returns a copy, hence the need in reassignment
-			mesh.set_surface_material(i, mat)
+	utils.change_textures(get_mesh(), textures)
 
 
 func _on_Point_input_event(camera, event, position, normal, shape_idx):
 	if event is InputEventMouseButton:
 		if event.get_button_mask() == BUTTON_LEFT:
 			emit_signal("map_point_click", self)
+
+
+## make the 'bounding' mesh visible
+##
+## @warn: truth be told, not sure what `use_shadow_to_opacity`
+##        exactly does, but in allows to completely hide or
+##        show the mesh, hence is used here
+func highlight():
+	var mat = utils.get_mat($on_hover_mesh)
+	mat.flags_use_shadow_to_opacity = false
+	utils.set_mat($on_hover_mesh, mat)
+
+
+# legit antonym for highlight
+# https://www.synonyms.com/antonyms/highlight
+func lowlight():
+	var mat = utils.get_mat($on_hover_mesh)
+	mat.flags_use_shadow_to_opacity = true
+	utils.set_mat($on_hover_mesh, mat)
+
+
+func _on_mouse_entered():
+	utils.change_mat_color($on_hover_mesh, hover_color)
+
+
+func _on_mouse_exited():
+	utils.change_mat_color($on_hover_mesh, highlight_color)
