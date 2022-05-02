@@ -5,10 +5,16 @@ signal map_point_click(map_point)
 
 var utils = preload("res://Map/utils.gd").new()
 var map_point_config = null
+export(Color) var hover_color = Color(0, 1, 0, 1)
+export(Color) var highlight_color = Color(1, 1, 1, 1)
+
 
 func initialize(map, map_point_config):
 	self.map_point_config = map_point_config
 	connect("map_point_click", map, "_on_map_point_click")
+	# connecting the hovering signals
+	connect("mouse_entered", self, "_on_mouse_entered")
+	connect("mouse_exited", self, "_on_mouse_exited")
 	_set_textures(map_point_config.get_textures())
 
 
@@ -24,3 +30,30 @@ func _on_Point_input_event(camera, event, position, normal, shape_idx):
 	if event is InputEventMouseButton:
 		if event.get_button_mask() == BUTTON_LEFT:
 			emit_signal("map_point_click", self)
+
+
+## make the 'bounding' mesh visible
+##
+## @warn: truth be told, not sure what `use_shadow_to_opacity`
+##        exactly does, but in allows to completely hide or
+##        show the mesh, hence is used here
+func highlight():
+	var mat = utils.get_mat($on_hover_mesh)
+	mat.flags_use_shadow_to_opacity = false
+	utils.set_mat($on_hover_mesh, mat)
+
+
+# legit antonym for highlight
+# https://www.synonyms.com/antonyms/highlight
+func lowlight():
+	var mat = utils.get_mat($on_hover_mesh)
+	mat.flags_use_shadow_to_opacity = true
+	utils.set_mat($on_hover_mesh, mat)
+
+
+func _on_mouse_entered():
+	utils.change_mat_color($on_hover_mesh, hover_color)
+
+
+func _on_mouse_exited():
+	utils.change_mat_color($on_hover_mesh, highlight_color)
