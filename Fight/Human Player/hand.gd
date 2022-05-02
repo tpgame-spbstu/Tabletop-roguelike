@@ -34,13 +34,11 @@ func remove_hand_cell(hand_cell):
 	rearange()
 
 
-func remove_card(hand_cell, card):
-	assert(is_a_parent_of(hand_cell))
-	assert(hand_cell.is_a_parent_of(card))
-	hand_cell.remove_child(card)
-	remove_child(hand_cell)
-	hand_cell.queue_free()
-	rearange()
+func remove_card(card):
+	for hand_cell in get_children():
+		if hand_cell.is_a_parent_of(card):
+			hand_cell.remove_child(card)
+			return hand_cell
 
 
 func _on_hand_cell_input_event(hand_cell, event):

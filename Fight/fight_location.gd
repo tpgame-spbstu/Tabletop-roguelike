@@ -9,7 +9,6 @@ onready var fight_state := $fight_state
 onready var fight_loger := $fight_loger
 onready var fight_global_signals := $fight_global_signals
 onready var fight_location_ui := $fight_ui
-onready var gong = $gong
 
 
 var TurnState := preload("res://Fight/fight_state.gd").TurnState
@@ -18,8 +17,8 @@ func initialize(deck_config , inventory_config , params : Dictionary):
 	.initialize(deck_config , inventory_config , params)
 	$Camera.make_current()
 	board.initialize(fight_global_signals)
-	player_1.initialize(fight_state, fight_global_signals, board, gong, self.deck_config, 1, self.params)
-	player_2.initialize(fight_state, fight_global_signals, board, 2, self.params)
+	player_1.initialize(fight_state, fight_global_signals, board, self.deck_config, 1, self.params)
+	player_2.initialize(fight_state, fight_global_signals, board, null, 2, self.params)
 	fight_location_ui.initialize(board, player_1)
 	fight_state.connect(fight_state.get_turn_state_signal(TurnState.WIN, 1), 
 		self, "_on_fight_state_player_1_win")
