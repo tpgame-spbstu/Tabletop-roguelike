@@ -23,6 +23,7 @@ export(Color) var unreachable_edge_color = Color(0.2, 0.2, 0.2, 0.2)
 export(float, 0.1, 5.0, 2.0) var PATH_WIDTH = 2
 export(float, 1.0, 30.0, 15.0) var SPACE = 15.0
 
+
 func initialize(game_config):
 	get_node("character/Camera").make_current()
 
@@ -32,9 +33,9 @@ func initialize(game_config):
 
 	self.game_config = game_config
 	map_config = game_config.map_config
-	
-	current_map_point.mark_visited(false)
+
 	_generate_points()
+	current_map_point.mark_visited(false)
 	# highlight all the points, the current node has paths to
 	_highlight_points(current_map_point.map_point_config)
 
