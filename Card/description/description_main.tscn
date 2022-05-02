@@ -68,7 +68,7 @@ transparent_bg = true
 margin_right = 44.0
 margin_bottom = 19.0
 theme = SubResource( 7 )
-text = "BACK"
+text = "Назад"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -84,7 +84,6 @@ transform = Transform( 1.5, 0, 0, 0, 0.1, 0, 0, 0, 1, 0, 0, 0 )
 shape = SubResource( 4 )
 
 [node name="MeshInstance" type="MeshInstance" parent="MeshInstance/Button_tmp"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 mesh = SubResource( 5 )
 material/0 = SubResource( 9 )
 

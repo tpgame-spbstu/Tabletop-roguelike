@@ -20,12 +20,12 @@ func analyze_board():
 	if effected_card.owner_number == card.owner_number:
 		# Effected card is friendly
 		return
-	var symbol = effected_card.get_symbol_or_null("weakening effect")
+	var symbol = effected_card.get_symbol_or_null("Слабость")
 	# POTENTIAL BUG when card have more then one effect of same type
 	if symbol != null && symbol.source == self:
 		# Effected card already has effect
 		return
-	var effect = SymbolManager.get_symbol_copy("weakening effect")
+	var effect = SymbolManager.get_symbol_copy("Слабость")
 	effect.source = self
 	effected_card.add_effect_symbol(effect)
 

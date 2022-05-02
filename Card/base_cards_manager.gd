@@ -44,7 +44,7 @@ func _ready():
 		"Жук быстрый", 
 		"res://Card/Textures/Insects Bee.png", 
 		Cost.new(3, 0, 0), 
-		[SymbolManager.get_symbol("fast")], 
+		[SymbolManager.get_symbol("Быстрый")], 
 		[], 
 		[], 
 		1, 1))
@@ -53,7 +53,7 @@ func _ready():
 		"Жук медленный", 
 		"res://Card/Textures/Insects Black Ant Protector.png", 
 		Cost.new(3, 0, 0), 
-		[SymbolManager.get_symbol("slow")], 
+		[SymbolManager.get_symbol("Медленный")], 
 		[], 
 		[], 
 		3, 3))
@@ -71,7 +71,7 @@ func _ready():
 		"Жук ослабляющий", 
 		"res://Card/Textures/Forest Spider.png", 
 		Cost.new(3, 0, 0), 
-		[SymbolManager.get_symbol("weakening")], 
+		[SymbolManager.get_symbol("Ослабление")], 
 		[], 
 		[], 
 		1, 2))
@@ -80,7 +80,7 @@ func _ready():
 		"Жук котратаки", 
 		"res://Card/Textures/Insects Hell Mantis.png", 
 		Cost.new(4, 0, 0), 
-		[SymbolManager.get_symbol("counterattack")], 
+		[SymbolManager.get_symbol("Ответный удар")], 
 		[], 
 		[], 
 		1, 3))
@@ -89,7 +89,7 @@ func _ready():
 		"Жук дальнобойный", 
 		"res://Card/Textures/Insects Black Ant Archer.png", 
 		Cost.new(3, 0, 0), 
-		[SymbolManager.get_symbol("range")], 
+		[SymbolManager.get_symbol("Стрелок")], 
 		[], 
 		[], 
 		2, 1))
@@ -98,7 +98,7 @@ func _ready():
 		"Банши", 
 		"res://Card/Textures/Darkness Banshee.png", 
 		Cost.new(4, 0, 0), 
-		[SymbolManager.get_symbol("weakening"), SymbolManager.get_symbol("fast")], 
+		[SymbolManager.get_symbol("Ослабление"), SymbolManager.get_symbol("Быстрый")], 
 		[], 
 		[], 
 		2, 1))
@@ -107,7 +107,7 @@ func _ready():
 		"Мандрагора", 
 		"res://Card/Textures/Earth Mandrake.png", 
 		Cost.new(3, 0, 0), 
-		[SymbolManager.get_symbol("weakening")], 
+		[SymbolManager.get_symbol("Ослабление")], 
 		[], 
 		[], 
 		1, 1))
@@ -116,7 +116,7 @@ func _ready():
 		"Мумия", 
 		"res://Card/Textures/Egypt Mummy A.png",
 		Cost.new(3, 0, 0), 
-		[SymbolManager.get_symbol("slow"), SymbolManager.get_symbol("counterattack")], 
+		[SymbolManager.get_symbol("Медленный"), SymbolManager.get_symbol("Ответный удар")], 
 		[], 
 		[], 
 		2, 2))
@@ -125,7 +125,7 @@ func _ready():
 		"Жрец тьмы", 
 		"res://Card/Textures/flayer_01.png",
 		Cost.new(3, 0, 0), 
-		[SymbolManager.get_symbol("slow"), SymbolManager.get_symbol("weakening")], 
+		[SymbolManager.get_symbol("Медленный"), SymbolManager.get_symbol("Ослабление")], 
 		[], 
 		[], 
 		3, 1))
@@ -134,7 +134,7 @@ func _ready():
 		"Гоблин-лучник", 
 		"res://Card/Textures/Goblin Archer.png",
 		Cost.new(2, 0, 0), 
-		[SymbolManager.get_symbol("range")], 
+		[SymbolManager.get_symbol("Стрелок")], 
 		[], 
 		[], 
 		1, 1))
