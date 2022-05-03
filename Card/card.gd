@@ -79,6 +79,7 @@ func process_attack():
 	# Get target cell to attack
 	var attack_range = 1
 	if has_symbol("range"):
+		anim_name = "range_attack_" + str(owner_number)
 		attack_range += 1
 	var target_board_cell = board_cell.get_relative_board_cell(attack_range * player_attack_direction[owner_number], 0)
 	if target_board_cell == null:
