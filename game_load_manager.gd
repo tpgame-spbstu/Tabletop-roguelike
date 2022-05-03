@@ -71,7 +71,7 @@ static func get_temp_deck_config():
 	deck_config.cards.append(BaseCardsManager.get_card_config_copy("Жук средний"))
 	deck_config.cards.append(BaseCardsManager.get_card_config_copy("Жук ослабляющий"))
 	deck_config.cards.append(BaseCardsManager.get_card_config_copy("Жук ослабляющий"))
-	deck_config.cards.append(BaseCardsManager.get_card_config_copy("Жук котратаки"))
+	deck_config.cards.append(BaseCardsManager.get_card_config_copy("Жук контратаки"))
 	deck_config.cards.append(BaseCardsManager.get_card_config_copy("Жук дальнобойный"))
 	deck_config.cards.append(BaseCardsManager.get_card_config_copy("Жук дальнобойный"))
 	return deck_config
