@@ -86,3 +86,9 @@ func cancel_highlight():
 	if is_highlighted:
 		$MeshInstance.set_surface_material(0, base_board_cell_material)
 	is_highlighted = false
+
+
+func get_size() -> Vector2:
+	var mesh = (get_node("MeshInstance") as MeshInstance).get_mesh() as QuadMesh
+	var scale = m_inst.get_scale()
+	return mesh.get_size() * Vector2(scale.x, scale.y)
