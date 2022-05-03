@@ -1,6 +1,7 @@
 [gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Map/Location/map_point.gd" type="Script" id=1]
+[ext_resource path="res://Map/Banner/banner.tscn" type="PackedScene" id=2]
 
 [sub_resource type="BoxShape" id=36]
 extents = Vector3( 3, 0.15, 3 )
@@ -30,6 +31,9 @@ shape = SubResource( 36 )
 transform = Transform( 3, 0, 0, 0, 0.15, 0, 0, 0, 3, 0, 0, 0 )
 mesh = SubResource( 37 )
 material/0 = null
+
+[node name="banner" parent="." instance=ExtResource( 2 )]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -2.706, 0.16, 0 )
 
 [node name="on_hover_mesh" type="MeshInstance" parent="."]
 transform = Transform( 3, 0, 0, 0, 0.15, 0, 0, 0, 3, 0, 0, 0 )

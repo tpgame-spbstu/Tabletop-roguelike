@@ -33,9 +33,12 @@ func initialize(game_config):
 
 	self.game_config = game_config
 	map_config = game_config.map_config
+
 	_generate_points()
+	current_map_point.mark_visited(false)
 	# highlight all the points, the current node has paths to
 	_highlight_points(current_map_point.map_point_config)
+
 	character.transform = current_map_point.transform
 
 
@@ -178,6 +181,7 @@ func _on_map_point_click(map_point):
 		cur_location_scene.queue_free()
 		self.show()
 
+		current_map_point.mark_visited()
 		# highlight all the vertexes from the current (the one pressed) vertex
 		_highlight_points(current_map_point.map_point_config)
 
