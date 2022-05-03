@@ -193,7 +193,7 @@ margin_top = -142.5
 margin_right = -71.485
 margin_bottom = -99.5
 theme = SubResource( 4 )
-text = "Грмокость"
+text = "Громкость"
 scroll_active = false
 __meta__ = {
 "_edit_use_anchors_": false
