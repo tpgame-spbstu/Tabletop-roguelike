@@ -1,0 +1,24 @@
+[gd_resource type="Animation" format=2]
+
+[resource]
+resource_name = "attack_1"
+length = 0.8
+tracks/0/type = "transform"
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = PoolRealArray( 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0.4, 1, 0, 0.5, -0.2, 0, 0, 0, 1, 1, 1, 1, 0.6, 1, 0, 0.2, 0.2, 0.173648, 0, 0, 0.984808, 1, 1, 1, 0.8, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1 )
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.4, 0.6, 0.8 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( 20, 0, 0 ), Vector3( 20, 0, 0 ), Vector3( 0, 0, 0 ) ]
+}
