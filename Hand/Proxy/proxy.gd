@@ -109,14 +109,12 @@ func attach_obj_to(obj: Spatial):
 
 
 ## remove obj from self
-func remove_from(obj: Spatial, adoption_parent):
+func remove_from(obj: Spatial, adoption_parent) -> Transform:
 	var trans = global_transform
 	if obj == _occupant:
 		remove_child(obj)
-		# add `obj` to the grandparent, hopefully
-		adoption_parent.add_child(obj)
-		obj.global_transform = trans
 		_occupant = null
+	return trans
 
 
 func get_size() -> Vector3:

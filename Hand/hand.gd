@@ -233,16 +233,17 @@ func remove_card(card, move_to: Vector3=Vector3(-7, 2, -7), animation=null):
 	_hovered = null
 	_proxies.erase(proxy)
 	# remove the connection between proxy and its obj
-	proxy.remove_from(card, get_parent())
+	var card_trans = proxy.remove_from(card, get_parent())
 	# say goodbye to proxy
 	proxy.queue_free()
-	
+
 	_cards.erase(card)
 	# update visual
 	draw_cards()
 	# # TODO animation to move the card as free obj to its destination
 	# card.set_transform(Transform.IDENTITY)
 	# card.translate(move_to)
+	return card_trans
 
 
 func draw_cards():
