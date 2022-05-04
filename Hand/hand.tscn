@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Hand/hand.gd" type="Script" id=2]
+
+[node name="hand" type="Spatial"]
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 5, 0 )
+projection = 1
+current = true
+fov = 116.147
+size = 15.0
+
+[node name="poly" type="ImmediateGeometry" parent="."]
+
+[node name="line" type="ImmediateGeometry" parent="."]
