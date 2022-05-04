@@ -2,6 +2,9 @@ extends Tween
 
 class_name HoverTween
 
+
+export(float, 0.1, 1, 0.05) var DRAWING_IN_VEC_SCALE = 0.3
+
 enum {
 	NONE, # no animation
 	ENTER, # animation on mouse entering the card's collision obj
@@ -76,7 +79,7 @@ func on_exit():
 		NONE, ENTER:
 			set_state(EXIT)
 			card.set_scale(Vector3.ONE)
-			var vec = Vector3.FORWARD.rotated(Vector3.UP, card.get_orig_rot_y())
+			var vec = Vector3.FORWARD.rotated(Vector3.UP, card.get_orig_rot_y()) * DRAWING_IN_VEC_SCALE
 			card.rotate(Vector3.UP, card.get_orig_rot_y())
 			# draw the card in the deck
 			interpolate_property(card, "translation", card.get_orig_trans().origin + vec, card.get_orig_trans().origin,
