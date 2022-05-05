@@ -1,9 +1,8 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Map/map.gd" type="Script" id=1]
 [ext_resource path="res://Models/Trees/Trees.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Map/map_environment.tres" type="Environment" id=3]
-[ext_resource path="res://fonts/ubuntu_b_16.tres" type="Theme" id=4]
 [ext_resource path="res://fonts/ubuntu_b_32.tres" type="Theme" id=5]
 
 [sub_resource type="PlaneMesh" id=3]
@@ -36,7 +35,7 @@ mesh = SubResource( 5 )
 material/0 = null
 
 [node name="Camera" type="Camera" parent="character"]
-transform = Transform( -1, 4.37114e-08, -7.57103e-08, 0, 0.866025, 0.5, 8.74228e-08, 0.5, -0.866025, 1.90735e-06, 18.6789, -15.8874 )
+transform = Transform( -1, -6.18172e-08, 6.18172e-08, 0, 0.707106, 0.707106, -8.74228e-08, 0.707106, -0.707106, 0, 21.054, -14.657 )
 environment = ExtResource( 3 )
 fov = 79.5
 far = 406.3
@@ -49,8 +48,8 @@ light_energy = 1.348
 shadow_enabled = true
 
 [node name="map_gui" type="Control" parent="."]
-margin_right = 1024.0
-margin_bottom = 600.0
+anchor_right = 1.0
+anchor_bottom = 1.0
 mouse_filter = 2
 __meta__ = {
 "_edit_use_anchors_": false
@@ -61,18 +60,21 @@ margin_left = 6.0
 margin_top = 7.0
 margin_right = 127.0
 margin_bottom = 27.0
-theme = ExtResource( 4 )
+theme = ExtResource( 5 )
 text = "Главное меню"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="explore_location_button" type="Button" parent="map_gui"]
 anchor_left = 0.5
-anchor_top = 1.0
+anchor_top = 0.75
 anchor_right = 0.5
-anchor_bottom = 1.0
-margin_left = -106.0
-margin_top = -79.0
-margin_right = 114.0
-margin_bottom = -36.0
+anchor_bottom = 0.75
+margin_left = -110.0
+margin_top = -21.0
+margin_right = 110.0
+margin_bottom = 22.0
 theme = ExtResource( 5 )
 text = "Исследовать"
 __meta__ = {
