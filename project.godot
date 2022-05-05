@@ -35,6 +35,11 @@ _global_script_classes=[ {
 "path": "res://lin_move_animation.gd"
 }, {
 "base": "Reference",
+"class": "SmoothMoveAnimation",
+"language": "GDScript",
+"path": "res://smooth_move_animation.gd"
+}, {
+"base": "Reference",
 "class": "Symbol",
 "language": "GDScript",
 "path": "res://Symbols/symbol.gd"
@@ -45,6 +50,7 @@ _global_script_class_icons={
 "GameLoadManager": "",
 "HoverTween": "",
 "LinMoveAnimation": "",
+"SmoothMoveAnimation": "",
 "Symbol": ""
 }
 

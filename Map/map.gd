@@ -187,7 +187,7 @@ func _on_map_point_click(map_point):
 		# lowlight all the vertexes, that has paths from the current (not the one pressed) vertex
 		_lowlight_points(current_map_point.map_point_config)
 		# Wait for character move animation
-		var animation = LinMoveAnimation.new(current_map_point.global_transform, 
+		var animation = SmoothMoveAnimation.new(current_map_point.global_transform, 
 			map_point.global_transform, 1.0, character)
 		AnimationManager.add_animation(animation)
 		set_moving_state()
