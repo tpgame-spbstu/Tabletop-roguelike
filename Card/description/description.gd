@@ -27,7 +27,7 @@ func draw_symbols(one_symbol, sym_id):
 	var path = one_symbol.symbol_texture
 	var symb_desc = symbol_scene.instance()
 	var img_texture  = load(path)
-	symb_desc.get_node("name").text = one_symbol.symbol_name
+	symb_desc.get_node("name").text = one_symbol.symbol_name_to_print
 	symb_desc.get_node("sprite").texture = img_texture
 	symb_desc.get_node("details").text = one_symbol.symbol_description
 	symb_desc.translate(Vector2(0, sym_id * len_between_symbols))

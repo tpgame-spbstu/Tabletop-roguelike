@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Hand/Proxy/proxy.gd" type="Script" id=1]
+
+[node name="proxy" type="Area"]
+collision_mask = 2
+script = ExtResource( 1 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 5, 0 )
+projection = 1
+fov = 65.7
+size = 5.0

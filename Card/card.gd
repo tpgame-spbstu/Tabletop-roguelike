@@ -20,6 +20,10 @@ onready var card_visuals = $card_visuals
 onready var unit_visuals = $unit_visuals
 
 
+func get_size():
+	return Vector3(0.8, 0.02, 1)
+
+
 func initialize(card_config, owner_number, fight_global_signals, fight_state):
 	self.fight_global_signals = fight_global_signals
 	self.fight_state = fight_state
@@ -79,6 +83,7 @@ func process_attack():
 	# Get target cell to attack
 	var attack_range = 1
 	if has_symbol("range"):
+		anim_name = "range_attack_" + str(owner_number)
 		attack_range += 1
 	var target_board_cell = board_cell.get_relative_board_cell(attack_range * player_attack_direction[owner_number], 0)
 	if target_board_cell == null:

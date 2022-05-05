@@ -42,7 +42,8 @@ func _on_card_moved(prev_board_cell, cur_board_cell, _card):
 	analyze_board()
 
 
-func _init(symbol_name, symbol_texture, symbol_description, is_visible, can_be_transferred).(symbol_name, symbol_texture, symbol_description, is_visible, can_be_transferred):
+func _init(symbol_name, symbol_texture, symbol_description, is_visible, can_be_transferred, symbol_name_to_print="default").\
+(symbol_name, symbol_texture, symbol_description,is_visible, can_be_transferred, symbol_name_to_print):
 	pass
 
 

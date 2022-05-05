@@ -77,7 +77,7 @@ func _ready():
 		1, 2))
 	
 	list_card_config(CardConfig.new(
-		"Жук котратаки", 
+		"Жук контратаки", 
 		"res://Card/Textures/Insects Hell Mantis.png", 
 		Cost.new(4, 0, 0), 
 		[SymbolManager.get_symbol("counterattack")], 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://fonts/ubuntu_b_16.tres" type="Theme" id=1]
 [ext_resource path="res://fonts/ubuntu_b_32.tres" type="Theme" id=2]
@@ -15,6 +15,14 @@ font_data = ExtResource( 8 )
 
 [sub_resource type="Theme" id=2]
 default_font = SubResource( 1 )
+
+[sub_resource type="DynamicFont" id=3]
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 8 )
+
+[sub_resource type="Theme" id=4]
+default_font = SubResource( 3 )
 
 [node name="fight_ui" type="Control"]
 anchor_right = 1.0
@@ -34,7 +42,7 @@ anchor_bottom = 1.0
 margin_left = -74.0
 margin_top = -28.0
 theme = ExtResource( 1 )
-text = "Attack"
+text = "Атака"
 scroll_active = false
 __meta__ = {
 "_edit_use_anchors_": false,
@@ -46,12 +54,12 @@ anchor_left = 0.998
 anchor_top = -0.007
 anchor_right = 0.998
 anchor_bottom = -0.007
-margin_left = -84.952
+margin_left = -119.952
 margin_top = 4.2
 margin_right = 2.04797
 margin_bottom = 30.2
 theme = ExtResource( 1 )
-text = "Bot turn"
+text = "Ход противника"
 __meta__ = {
 "_edit_use_anchors_": false,
 "_editor_description_": ""
@@ -235,11 +243,11 @@ visible = false
 anchor_top = 0.427
 anchor_bottom = 0.427
 margin_left = 52.0
-margin_top = -9.20001
-margin_right = 111.0
-margin_bottom = 7.79999
+margin_top = -9.19998
+margin_right = 203.0
+margin_bottom = 7.80002
 theme = ExtResource( 3 )
-text = "HP bot"
+text = "Здоровье противника"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -253,7 +261,7 @@ margin_top = -8.39999
 margin_right = 134.0
 margin_bottom = 8.60001
 theme = ExtResource( 3 )
-text = "HP player"
+text = "Здоровье"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -267,7 +275,7 @@ margin_top = -10.0
 margin_right = 118.0
 margin_bottom = 9.99997
 theme = ExtResource( 3 )
-text = "Energy"
+text = "Энергия"
 
 [node name="Bones_label" type="RichTextLabel" parent="ColorRect"]
 visible = false
@@ -278,7 +286,7 @@ margin_top = -11.0
 margin_right = 112.0
 margin_bottom = 11.0
 theme = ExtResource( 3 )
-text = "Bones"
+text = "Кости"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -292,15 +300,16 @@ margin_top = -9.40002
 margin_right = 162.0
 margin_bottom = 9.59998
 theme = ExtResource( 3 )
-text = "card available"
+text = "Доступных карт"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="button_exit_to_map" type="Button" parent="ColorRect"]
-margin_right = 57.0
+margin_right = 56.0
 margin_bottom = 47.0
-text = "Map"
+theme = ExtResource( 1 )
+text = "Карта"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -321,20 +330,21 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -162.0
+margin_left = -173.0
 margin_top = -63.0
-margin_right = 146.0
+margin_right = 152.0
 margin_bottom = 47.0
 theme = SubResource( 2 )
 custom_colors/default_color = Color( 0.890196, 0.819608, 0.0627451, 1 )
-text = "Victory"
+text = "Победа"
 
 [node name="return_to_map" type="Button" parent="Final_status"]
 margin_left = -39.0
 margin_top = 64.0
 margin_right = 64.0
 margin_bottom = 107.0
-text = "return to map"
+theme = SubResource( 4 )
+text = "Карта мира"
 __meta__ = {
 "_edit_use_anchors_": false
 }

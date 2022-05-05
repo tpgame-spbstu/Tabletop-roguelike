@@ -5,6 +5,8 @@ onready var rows := $rows
 var rows_count
 var column_count
 
+var _board_width: float
+
 var fight_global_signals
 signal board_left_click(board_cell, card)
 signal board_right_click(board_cell, card)
@@ -21,6 +23,8 @@ func initialize(fight_global_signals):
 			var cell = get_board_cell(row_index, column_index)
 			cell.initialize(self, row_index, column_index)
 			cell.connect("input_event", self, "_on_board_cell_input_event")
+	# get the distance between centers, add the `card_width / 2` from both sides
+	_board_width = abs(get_board_cell(0, 0).get_global_transform().origin.x - get_board_cell(0, rows.get_child(0).get_child_count() - 1).get_global_transform().origin.x) + get_board_cell(0, 0).get_size().x
 
 
 func get_board_cell(row_index, column_index):
@@ -169,3 +173,7 @@ func get_cell_neighbours(board_cell):
 		neighbours.append(null)
 	
 	return neighbours
+
+
+func get_board_width() -> float:
+	return _board_width

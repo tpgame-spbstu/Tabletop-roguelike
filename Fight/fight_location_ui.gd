@@ -46,8 +46,8 @@ func _on_fight_state_player_2_health_changed(player_2_health):
 
 
 func _on_fight_state_player_1_draw_cards_enter():
-	$Status1.margin_left = -160
-	$Status1.text = "Card selection"
+	$Status1.margin_left = -120
+	$Status1.text = "Взятие карты"
 	$Status1.show()
 	$Status2.hide()
 	$ColorRect/Bones.show()
@@ -58,12 +58,12 @@ func _on_fight_state_player_1_draw_cards_enter():
 
 func _on_fight_state_player_1_attack_enter():
 	$Status1.margin_left = -74
-	$Status1.text = "Attack"
+	$Status1.text = "Атака"
 
 
 func _on_fight_state_player_1_place_and_move_enter():
-	$Status1.margin_left = -175
-	$Status1.text = "Place and move"
+	$Status1.margin_left = -125
+	$Status1.text = "Выставление"
 
 
 func _on_fight_state_player_2_draw_cards_enter():
@@ -158,8 +158,8 @@ func _on_final_status_return_to_map_pressed():
 
 
 func _on_fight_state_player_1_win_enter():
-	show_final_status("Victory")
+	show_final_status("Победа")
 
 
 func _on_fight_state_player_2_win_enter():
-	show_final_status("Defeat")
+	show_final_status("Проигрыш")
