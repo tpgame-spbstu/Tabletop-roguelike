@@ -5,10 +5,11 @@ signal map_point_click(map_point)
 
 var utils = preload("res://Map/utils.gd").new()
 onready var _banner = $banner
+onready var _sprite_type = $sprite_type
 var map_point_config = null
 export(Color) var hover_color = Color(0, 1, 0, 1)
 export(Color) var highlight_color = Color(1, 1, 1, 1)
-
+var is_not_visited = true
 
 func initialize(map, map_point_config):
 	self.map_point_config = map_point_config
@@ -17,8 +18,13 @@ func initialize(map, map_point_config):
 	# connecting the hovering signals
 	connect("mouse_entered", self, "_on_mouse_entered")
 	connect("mouse_exited", self, "_on_mouse_exited")
-
+	_set_sprite_type(map_point_config.type)
 	_set_textures(map_point_config.get_textures())
+
+
+func _process(delta):
+	if is_not_visited:
+		_sprite_type.rotate_y(delta * PI)
 
 
 func get_size():
@@ -31,6 +37,17 @@ func get_mesh() -> MeshInstance:
 
 func _set_textures(textures: Array):
 	utils.change_textures(get_mesh(), textures)
+
+
+func _set_sprite_type(type):
+	var img_texture
+	if type == map_point_config.types_map.FIGHT:
+		img_texture  = load("res://Map/Sprites/sword.png")
+	elif type == map_point_config.types_map.MOD:
+		img_texture  = load("res://Map/Sprites/book.png")
+	else:
+		img_texture  = load("res://Map/Sprites/default.png")
+	_sprite_type.texture = img_texture
 
 
 func _on_Point_input_event(camera, event, position, normal, shape_idx):
@@ -46,6 +63,8 @@ func _on_Point_input_event(camera, event, position, normal, shape_idx):
 func mark_visited(animate: bool=true):
 	map_point_config.set_visited(true)
 	_banner.set_sail(animate)
+	_sprite_type.queue_free()
+	is_not_visited = false
 
 
 ## make the 'bounding' mesh visible

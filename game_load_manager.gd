@@ -35,13 +35,17 @@ static func get_temp_map_config():
 
 	var fight_scene : String = "res://Fight/fight_location.tscn"
 	var sacrifice_scene : String = "res://Sacrifice_location/sacrifice_location.tscn"
-	var loc5 = MapPointConfig.new(fight_scene, {"shuffle_seed": 5, "ai_card_queue": card_queue2}, Vector2(-1, 1))
-	var loc4 = MapPointConfig.new(fight_scene, {"shuffle_seed": 1, "ai_card_queue": card_queue3}, Vector2(-1, 3))
-	var loc3 = MapPointConfig.new(fight_scene, {"shuffle_seed": 1337, "ai_card_queue": card_queue1}, Vector2(1, 2))
-	var loc2 = MapPointConfig.new(sacrifice_scene, {}, Vector2(1, 1), false,
-		["res://Map/Location/point_textures/texture_cheese_albedo.png"])
-	var loc1 = MapPointConfig.new(fight_scene, {"shuffle_seed": 10, "ai_card_queue": card_queue2}, Vector2(0, 0))
-	var loc0 = MapPointConfig.new("", {}, Vector2(0, -1))
+	var loc5 = MapPointConfig.new(fight_scene, {"shuffle_seed": 5, 
+		"ai_card_queue": card_queue2}, Vector2(-1, 1), MapPointConfig.types_map.FIGHT)
+	var loc4 = MapPointConfig.new(fight_scene, {"shuffle_seed": 1, 
+		"ai_card_queue": card_queue3}, Vector2(-1, 3), MapPointConfig.types_map.FIGHT)
+	var loc3 = MapPointConfig.new(fight_scene, {"shuffle_seed": 1337, 
+		"ai_card_queue": card_queue1}, Vector2(1, 2), MapPointConfig.types_map.FIGHT)
+	var loc2 = MapPointConfig.new(sacrifice_scene, {}, Vector2(1, 1), MapPointConfig.types_map.MOD, 
+		false, ["res://Map/Location/point_textures/texture_cheese_albedo.png"])
+	var loc1 = MapPointConfig.new(fight_scene, {"shuffle_seed": 10, "ai_card_queue": card_queue2},
+		Vector2(0, 0), MapPointConfig.types_map.FIGHT)
+	var loc0 = MapPointConfig.new("", {}, Vector2(0, -1), MapPointConfig.types_map.FIGHT)
 
 	# creating the graph `vertex`: [`available_vertexes`]
 	var point_map = {

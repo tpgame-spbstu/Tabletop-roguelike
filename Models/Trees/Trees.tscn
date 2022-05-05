@@ -1,10 +1,16 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Models/Trees/Tree1.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Models/Trees/Tree2.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Models/Trees/Tree3.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Models/Other/_stone_3.fbx" type="PackedScene" id=4]
+[ext_resource path="res://Models/Other/_flower_3.fbx" type="PackedScene" id=5]
+[ext_resource path="res://Models/Other/_flower_4.fbx" type="PackedScene" id=6]
+[ext_resource path="res://Models/Other/_flower_6.fbx" type="PackedScene" id=7]
+[ext_resource path="res://Models/Other/_stone_2.fbx" type="PackedScene" id=8]
 
 [node name="Trees" type="Spatial"]
+transform = Transform( 1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0 )
 
 [node name="Tree Type0 03" parent="." instance=ExtResource( 1 )]
 transform = Transform( 1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, -4.83853, -0.343149, 36.4518 )
@@ -64,7 +70,7 @@ transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, -20.5599, -0.381339, 9.41934 )
 transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 9.32001, 0, 44.1056 )
 
 [node name="Tree Type1 03" parent="." instance=ExtResource( 3 )]
-transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 10.0104, -0.167382, 15.7882 )
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 14.3631, -0.167382, 15.7882 )
 
 [node name="Tree Type1 04" parent="." instance=ExtResource( 3 )]
 transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 23.7912, 3.05176e-06, 34.9588 )
@@ -125,3 +131,42 @@ transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 7.31652, 0, -2.84032 )
 
 [node name="Tree Type1 20" parent="." instance=ExtResource( 3 )]
 transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, -27.5629, 0.0252754, 2.16812 )
+
+[node name="_flower_4" parent="." instance=ExtResource( 6 )]
+transform = Transform( 1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 2.99861, 0, -6.63489 )
+
+[node name="_flower_9" parent="." instance=ExtResource( 6 )]
+transform = Transform( 1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 5.43723, 0, -6.63489 )
+
+[node name="_flower_10" parent="." instance=ExtResource( 6 )]
+transform = Transform( 1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 3.67223, 0, -4.5703 )
+
+[node name="_flower_5" parent="." instance=ExtResource( 6 )]
+transform = Transform( 1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 4.92778, 0, -4.79745 )
+
+[node name="_stone_4" parent="." instance=ExtResource( 4 )]
+transform = Transform( 1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, -4.8257, 0, -10.5301 )
+
+[node name="_flower_6" parent="." instance=ExtResource( 7 )]
+transform = Transform( 1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, -5.03731, 0, 7.54008 )
+
+[node name="_flower_7" parent="." instance=ExtResource( 7 )]
+transform = Transform( 1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, -3.35418, 0, 6.13252 )
+
+[node name="_flower_8" parent="." instance=ExtResource( 7 )]
+transform = Transform( 1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, -7.24919, 0, 5.1739 )
+
+[node name="_flower_11" parent="." instance=ExtResource( 7 )]
+transform = Transform( 1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, -5.79479, 0, 3.84651 )
+
+[node name="_flower_12" parent="." instance=ExtResource( 7 )]
+transform = Transform( 1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, -7.59832, 0, 3.99688 )
+
+[node name="_stone_2" parent="." instance=ExtResource( 8 )]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, -6.075, 0, -7.1617 )
+
+[node name="_stone_3" parent="." instance=ExtResource( 8 )]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 4.65852, 0, -0.441639 )
+
+[node name="_flower_3" parent="." instance=ExtResource( 5 )]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, -1.99931, 0, -3.4195 )

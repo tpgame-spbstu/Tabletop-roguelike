@@ -8,7 +8,7 @@
 size = Vector2( 500, 500 )
 
 [sub_resource type="SpatialMaterial" id=4]
-albedo_color = Color( 0.105882, 0.454902, 0, 1 )
+albedo_color = Color( 0.0980392, 0.341176, 0.027451, 1 )
 
 [sub_resource type="CapsuleMesh" id=5]
 
