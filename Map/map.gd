@@ -37,8 +37,6 @@ func initialize(game_config):
 	map_config = game_config.map_config
 	
 	_generate_points()
-	# highlight all the points, the current node has paths to
-	_highlight_points(current_map_point.map_point_config)
 	
 	character.transform = current_map_point.transform
 	if current_map_point.map_point_config.is_visited():
@@ -50,6 +48,8 @@ func initialize(game_config):
 func set_choosing_state():
 	$map_gui/explore_location_button.hide()
 	_state = _MapState.CHOOSING
+	# highlight all the points, the current node has paths to
+	_highlight_points(current_map_point.map_point_config)
 
 
 func set_blocked_state():
@@ -219,8 +219,6 @@ func _on_explore_location_button_pressed():
 	self.show()
 
 	current_map_point.mark_visited()
-	# highlight all the vertexes from the current (the one pressed) vertex
-	_highlight_points(current_map_point.map_point_config)
 
 	get_node("character/Camera").make_current()
 	# Process location interaction result
