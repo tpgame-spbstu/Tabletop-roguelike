@@ -19,7 +19,7 @@ onready var character = $character
 enum _MapState { BLOCKED, MOVING, CHOOSING}
 var _state
 
-export(Color) var unreachable_edge_color = Color(0.2, 0.2, 0.2, 0.2)
+export(Color) var unreachable_edge_color = Color(1, 1, 1, 0.2)
 export(Color) var reachable_edge_color = Color(1, 1, 1, 1)
 export(float, 0.1, 5.0, 2.0) var PATH_WIDTH = 2
 export(float, 1.0, 30.0, 15.0) var SPACE = 15.0
