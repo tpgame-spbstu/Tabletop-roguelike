@@ -8,8 +8,6 @@ var map_config
 var current_map_point
 var PathSection = load("res://Map/Path/path_section.tscn")
 var utils = preload("res://Map/utils.gd").new()
-# stores the number of paths, that enters the vertex
-var _semi_enters = Dictionary()
 # stores paths between points
 # [[start_vertex, end_vertex]]: path
 var _paths = Dictionary()
@@ -22,6 +20,7 @@ enum _MapState { BLOCKED, MOVING, CHOOSING}
 var _state
 
 export(Color) var unreachable_edge_color = Color(0.2, 0.2, 0.2, 0.2)
+export(Color) var reachable_edge_color = Color(1, 1, 1, 1)
 export(float, 0.1, 5.0, 2.0) var PATH_WIDTH = 2
 export(float, 1.0, 30.0, 15.0) var SPACE = 15.0
 
@@ -37,6 +36,7 @@ func initialize(game_config):
 	map_config = game_config.map_config
 	
 	_generate_points()
+	_repaint_paths_availablility()
 	
 	character.transform = current_map_point.transform
 	if current_map_point.map_point_config.is_visited():
@@ -106,8 +106,6 @@ func _generate_points() -> void:
 func _add_paths(p_conf):
 	# draw the paths
 	for dest in map_config.map_point_graph[p_conf]:
-		_semi_enters[dest] = _semi_enters.get(dest, 0) + 1
-
 		var path_sec = PathSection.instance()
 		var dx = (dest.pos.x - p_conf.pos.x) * SPACE
 		var dy = (dest.pos.y - p_conf.pos.y) * SPACE
@@ -130,39 +128,36 @@ func _add_paths(p_conf):
 		add_child(path_sec)
 
 
-## removes paths from available ones
+## repaints paths for current_map_point
 ##
-## @desc: paints the unavailable paths with different color
+## @desc: repaints reachable and unreachable paths with proper color
 ##        no side effects (doesn't mess the map_config.map_config_graph up)
-func _remove_paths(graph, curr, next):
-	var to_remove = Array()
-	# fill the array with all the vertexes, available from this one
-	# except the next one (clicked)
-	for p in graph[curr]:
-		if p != next:
-			to_remove.push_back([curr, p])
-
-	# remove all unreachable paths: if there was only one edge to the vertex,
-	# edges from it should also be removed
-	while to_remove:
-		var edge = to_remove.pop_back()
-		var f = edge[0]
-		var s = edge[1]
-		# about to remove the entering edge
-		_semi_enters[s] -= 1
-		# if there is no way to enter this vertex
-		if not _semi_enters[s]:
-			# push all the vertexes, available from this one: they're unreachable
-			for _s in graph[s]:
-				to_remove.push_back([s, _s])
-		# change the color of unreachable edges
-		var path = _paths[edge]
-	# set the path from the current point to the clicked one
+func _repaint_paths_availablility():
+	# Firstly, paint all paths as unreachable
+	var all_paths = _paths.values()
+	for path in all_paths:
 		utils.change_mat_color(path.get_mesh(), unreachable_edge_color)
-	# as unreachable
-	var mesh = _paths[[curr, next]].get_mesh()
-
-	utils.change_mat_color(mesh, unreachable_edge_color)
+	
+	# Secondly, paint all reachable from current point paths
+	# using depth-first graph traversal
+	var p_to_process = [current_map_point.map_point_config]
+	# A list to prevent repetitions and cycles
+	var p_processed = []
+	
+	while not p_to_process.empty():
+		var p_conf = p_to_process.pop_back()
+		
+		for dest in map_config.map_point_graph[p_conf]:
+			assert(dest != p_conf)
+			var path = _paths[[p_conf, dest]]
+			
+			utils.change_mat_color(path.get_mesh(), reachable_edge_color)
+			
+			if dest in p_to_process or dest in p_processed:
+				continue
+			p_to_process.push_back(dest)
+		
+		p_processed.push_back(p_conf)
 
 
 ## highlight all the points, that have paths from the `p_conf`
@@ -183,7 +178,6 @@ func _on_map_point_click(map_point):
 
 	# if the path from the current location to the clicked one exists
 	if map_point.map_point_config in map_config.map_point_graph[current_map_point.map_point_config]:
-		_remove_paths(map_config.map_point_graph, current_map_point.map_point_config, map_point.map_point_config)
 		# lowlight all the vertexes, that has paths from the current (not the one pressed) vertex
 		_lowlight_points(current_map_point.map_point_config)
 		# Wait for character move animation
@@ -195,6 +189,7 @@ func _on_map_point_click(map_point):
 		# Change current map point
 		map_config.current_map_point_config = map_point.map_point_config
 		current_map_point = map_point
+		_repaint_paths_availablility()
 		set_blocked_state()
 
 
