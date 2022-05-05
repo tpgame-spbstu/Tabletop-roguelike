@@ -1,6 +1,6 @@
 extends Spatial
 
-signal return_to_main_menu()
+signal return_to_main_menu(result)
 
 var GameConfig = load("res://game_config.gd")
 var game_config
@@ -18,6 +18,8 @@ var _graph = Dictionary()
 # [point_config]: point
 var _points = Dictionary()
 onready var character = $character
+enum _MapState { BLOCKED, MOVING, CHOOSING}
+var _state
 
 export(Color) var unreachable_edge_color = Color(0.2, 0.2, 0.2, 0.2)
 export(float, 0.1, 5.0, 2.0) var PATH_WIDTH = 2
@@ -26,20 +28,48 @@ export(float, 1.0, 30.0, 15.0) var SPACE = 15.0
 
 func initialize(game_config):
 	get_node("character/Camera").make_current()
-
+	
 	assert(game_config != null)
 	assert(game_config.map_config != null)
 	assert(game_config.deck_config != null)
-
+	
 	self.game_config = game_config
 	map_config = game_config.map_config
-
+	
 	_generate_points()
-	current_map_point.mark_visited(false)
 	# highlight all the points, the current node has paths to
 	_highlight_points(current_map_point.map_point_config)
-
+	
 	character.transform = current_map_point.transform
+	if current_map_point.map_point_config.is_visited():
+		set_choosing_state()
+	else:
+		set_blocked_state()
+
+
+func set_choosing_state():
+	$map_gui/explore_location_button.hide()
+	_state = _MapState.CHOOSING
+
+
+func set_blocked_state():
+	$map_gui/explore_location_button.show()
+	_state = _MapState.BLOCKED
+
+
+func set_moving_state():
+	$map_gui/explore_location_button.hide()
+	_state = _MapState.MOVING
+
+
+func show():
+	.show()
+	$map_gui.show()
+
+func hide():
+	.hide()
+	$map_gui.hide()
+	
 
 
 """
@@ -147,11 +177,8 @@ func _lowlight_points(p_conf):
 		_points[p].lowlight()
 
 
-var waiting_animation := false
-
-
 func _on_map_point_click(map_point):
-	if waiting_animation:
+	if _state != _MapState.CHOOSING:
 		return
 
 	# if the path from the current location to the clicked one exists
@@ -163,36 +190,47 @@ func _on_map_point_click(map_point):
 		var animation = LinMoveAnimation.new(current_map_point.global_transform, 
 			map_point.global_transform, 1.0, character)
 		AnimationManager.add_animation(animation)
-		waiting_animation = true
+		set_moving_state()
 		yield(animation, "animation_ended")
-		waiting_animation = false
 		# Change current map point
 		map_config.current_map_point_config = map_point.map_point_config
 		current_map_point = map_point
-		# Load next location scene
-		var cur_location_scene = load(map_config.current_map_point_config.scene).instance()
-		get_parent().add_child(cur_location_scene)
-		cur_location_scene.initialize(game_config.deck_config, 
-			game_config.inventory_config, map_config.current_map_point_config.params)
-		# Hide map and wait for exit from location
-		self.hide()
-		var result = yield(cur_location_scene, "return_to_map")
-		# Delete location and show map
-		cur_location_scene.queue_free()
-		self.show()
+		set_blocked_state()
 
-		current_map_point.mark_visited()
-		# highlight all the vertexes from the current (the one pressed) vertex
-		_highlight_points(current_map_point.map_point_config)
 
-		get_node("character/Camera").make_current()
-		# Process location interaction result
-		match result:
-			"win":
-				pass
-			"lose":
-				emit_signal("return_to_main_menu")
-				return
-			_:
-				pass
-		GameLoadManager.save_game(game_config)
+func _on_main_menu_button_pressed():
+	if _state != _MapState.MOVING:
+		emit_signal("return_to_main_menu", "return")
+
+
+func _on_explore_location_button_pressed():
+	if _state != _MapState.BLOCKED:
+		return
+	# Load next location scene
+	var cur_location_scene = load(map_config.current_map_point_config.scene).instance()
+	get_parent().add_child(cur_location_scene)
+	cur_location_scene.initialize(game_config.deck_config, 
+		game_config.inventory_config, map_config.current_map_point_config.params)
+	# Hide map and wait for exit from location
+	self.hide()
+	var result = yield(cur_location_scene, "return_to_map")
+	# Delete location and show map
+	cur_location_scene.queue_free()
+	self.show()
+
+	current_map_point.mark_visited()
+	# highlight all the vertexes from the current (the one pressed) vertex
+	_highlight_points(current_map_point.map_point_config)
+
+	get_node("character/Camera").make_current()
+	# Process location interaction result
+	match result:
+		"win":
+			pass
+		"lose":
+			emit_signal("return_to_main_menu", "lose")
+			return
+		_:
+			pass
+	set_choosing_state()
+	GameLoadManager.save_game(game_config)

@@ -1,8 +1,10 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Map/map.gd" type="Script" id=1]
 [ext_resource path="res://Models/Trees/Trees.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Map/map_environment.tres" type="Environment" id=3]
+[ext_resource path="res://fonts/ubuntu_b_16.tres" type="Theme" id=4]
+[ext_resource path="res://fonts/ubuntu_b_32.tres" type="Theme" id=5]
 
 [sub_resource type="PlaneMesh" id=3]
 size = Vector2( 500, 500 )
@@ -45,3 +47,37 @@ far = 406.3
 transform = Transform( -0.804469, 0.489579, -0.336365, 0, 0.566277, 0.824215, 0.593995, 0.663055, -0.455552, 0, 0, 0 )
 light_energy = 1.348
 shadow_enabled = true
+
+[node name="map_gui" type="Control" parent="."]
+margin_right = 1024.0
+margin_bottom = 600.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="main_menu_button" type="Button" parent="map_gui"]
+margin_left = 6.0
+margin_top = 7.0
+margin_right = 127.0
+margin_bottom = 27.0
+theme = ExtResource( 4 )
+text = "Главное меню"
+
+[node name="explore_location_button" type="Button" parent="map_gui"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -106.0
+margin_top = -79.0
+margin_right = 114.0
+margin_bottom = -36.0
+theme = ExtResource( 5 )
+text = "Исследовать"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="pressed" from="map_gui/main_menu_button" to="." method="_on_main_menu_button_pressed"]
+[connection signal="pressed" from="map_gui/explore_location_button" to="." method="_on_explore_location_button_pressed"]

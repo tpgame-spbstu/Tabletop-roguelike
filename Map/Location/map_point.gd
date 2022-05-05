@@ -12,13 +12,15 @@ export(Color) var highlight_color = Color(1, 1, 1, 1)
 
 func initialize(map, map_point_config):
 	self.map_point_config = map_point_config
-  
+	
 	connect("map_point_click", map, "_on_map_point_click")
 	# connecting the hovering signals
 	connect("mouse_entered", self, "_on_mouse_entered")
 	connect("mouse_exited", self, "_on_mouse_exited")
 
 	_set_textures(map_point_config.get_textures())
+	if map_point_config.is_visited():
+		mark_visited(false)
 
 
 func get_size():
