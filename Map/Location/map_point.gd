@@ -9,7 +9,6 @@ onready var _sprite_type = $sprite_type
 var map_point_config = null
 export(Color) var hover_color = Color(0, 1, 0, 1)
 export(Color) var highlight_color = Color(1, 1, 1, 1)
-var is_not_visited = true
 
 func initialize(map, map_point_config):
 	self.map_point_config = map_point_config
@@ -23,7 +22,7 @@ func initialize(map, map_point_config):
 
 
 func _process(delta):
-	if is_not_visited:
+	if not map_point_config._is_visited:
 		_sprite_type.rotate_y(delta * PI)
 
 
@@ -64,7 +63,6 @@ func mark_visited(animate: bool=true):
 	map_point_config.set_visited(true)
 	_banner.set_sail(animate)
 	_sprite_type.queue_free()
-	is_not_visited = false
 
 
 ## make the 'bounding' mesh visible
