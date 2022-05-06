@@ -1,8 +1,9 @@
 [gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Map/map.gd" type="Script" id=1]
-[ext_resource path="res://Models/Trees/Trees.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Models/Scene/Trees/Trees.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Map/map_environment.tres" type="Environment" id=3]
+
 
 [sub_resource type="PlaneMesh" id=3]
 size = Vector2( 500, 500 )

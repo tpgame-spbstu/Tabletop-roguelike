@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Models/Models/table/01 - Default.material" type="Material" id=1]
+[ext_resource path="res://Models/Models/table/Desk.fbx" type="PackedScene" id=2]
+
+[node name="Desk" instance=ExtResource( 2 )]
+
+[node name="Desk_LP" parent="RootNode" index="0"]
+transform = Transform( 4.37114e-08, -3.82137e-15, 1, -8.74228e-08, -1, 0, 1, -8.74228e-08, -4.37114e-08, 0, 0, 0 )
+material/0 = ExtResource( 1 )
