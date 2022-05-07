@@ -84,23 +84,17 @@ func _generate_points() -> void:
 		# if this tile is the starting point
 		if point_config == map_config.current_map_point_config:
 			current_map_point = point
-			# special case: there is no path to the starting vertex, 
-			# hence no 'graph traversal'
-			current_map_point.lowlight()
 		add_child(point)
 		# put the tile on the map
 		point.translate(Vector3(point_config.pos.x, 0, point_config.pos.y) * SPACE)
 		# initialize the map_point
 		point.initialize(self, point_config)
+		point.lowlight()
 
 		# crutch as I need to highlight points, not point_configs
 		_points[point_config] = point
 
 		_add_paths(point_config)
-	# graph is built only after all the map_points are iterated over
-	# lowlight every vertex
-	for p_conf in _points:
-		_lowlight_points(p_conf)
 
 
 func _add_paths(p_conf):

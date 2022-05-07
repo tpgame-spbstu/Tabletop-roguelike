@@ -40,7 +40,6 @@ func load_map():
 			pass
 		"lose":
 			gameConfig = null
-			return
 		_:
 			pass
 	print("ok")
