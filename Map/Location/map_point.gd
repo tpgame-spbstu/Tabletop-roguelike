@@ -17,6 +17,8 @@ func initialize(map, map_point_config):
 	# connecting the hovering signals
 	connect("mouse_entered", self, "_on_mouse_entered")
 	connect("mouse_exited", self, "_on_mouse_exited")
+	connect("mouse_entered", map, "_on_map_point_mouse_entered", [self])
+	connect("mouse_exited", map, "_on_map_point_mouse_exited", [self])
 
 	_set_textures(map_point_config.get_textures())
 	if map_point_config.is_visited():

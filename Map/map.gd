@@ -46,17 +46,20 @@ func initialize(game_config):
 
 
 func set_choosing_state():
+	$map_gui/tip.hide()
 	_state = _MapState.CHOOSING
 	# highlight all the points, the current node has paths to
 	_highlight_points(current_map_point.map_point_config)
 
 
 func set_blocked_state():
+	$map_gui/tip.hide()
 	current_map_point.highlight()
 	_state = _MapState.BLOCKED
 
 
 func set_moving_state():
+	$map_gui/tip.hide()
 	_state = _MapState.MOVING
 
 
@@ -219,6 +222,21 @@ func _on_map_point_click(map_point):
 		_MapState.BLOCKED:
 			if map_point == current_map_point:
 				explore_location()
+
+
+func _on_map_point_mouse_entered(map_point):
+	if _state == _MapState.BLOCKED and map_point == current_map_point:
+		$map_gui/tip.show_tip("Исследовать")
+		return
+	if (_state == _MapState.CHOOSING 
+	and map_point.map_point_config 
+	in map_config.map_point_graph[current_map_point.map_point_config]):
+		$map_gui/tip.show_tip("Идти дальше")
+		return
+
+
+func _on_map_point_mouse_exited(map_point):
+	$map_gui/tip.hide()
 
 
 func _on_main_menu_button_pressed():
