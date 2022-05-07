@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=2]
+[gd_scene load_steps=48 format=2]
 
 [ext_resource path="res://Fight/fight_location.gd" type="Script" id=1]
 [ext_resource path="res://Fight/AI Player/ai_player.tscn" type="PackedScene" id=2]
@@ -12,7 +12,6 @@
 [ext_resource path="res://Fight/Human Player/human_player.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Map/map_environment.tres" type="Environment" id=11]
 [ext_resource path="res://Fight/fight_loger.gd" type="Script" id=12]
-[ext_resource path="res://Fight/Assets/textures/icStrenght.png" type="Texture" id=13]
 [ext_resource path="res://Models/Scene/Bones/bonegltf.tscn" type="PackedScene" id=14]
 [ext_resource path="res://Models/Scene/Bones/skull_broken.tscn" type="PackedScene" id=15]
 [ext_resource path="res://Models/Scene/lightninggltf.tscn" type="PackedScene" id=16]
@@ -292,21 +291,15 @@ material/0 = SubResource( 13 )
 [node name="resources_status" type="Spatial" parent="."]
 script = ExtResource( 7 )
 
+[node name="lightninggltf" parent="resources_status" instance=ExtResource( 16 )]
+transform = Transform( -0.2, -1.74846e-08, 8.74228e-09, 8.74228e-09, 3.82137e-16, 0.2, -1.74846e-08, 0.2, 3.82137e-16, -3.44201, 0, -1.01714 )
+
 [node name="energy_status" type="Spatial" parent="resources_status"]
 
 [node name="energy1" type="MeshInstance" parent="resources_status/energy_status"]
 transform = Transform( 0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -2.32496, 8.74996e-05, -1.0398 )
 mesh = ExtResource( 21 )
 material/0 = SubResource( 35 )
-
-[node name="Sprite3D" type="Sprite3D" parent="resources_status/energy_status"]
-transform = Transform( 0.05, 0, 0, 0, -2.18557e-09, -0.05, 0, 0.05, -2.18557e-09, -3.44306, -0.0047878, -1.02133 )
-visible = false
-modulate = Color( 0.764706, 0.713726, 0.27451, 1 )
-texture = ExtResource( 13 )
-
-[node name="lightninggltf" parent="resources_status/energy_status" instance=ExtResource( 16 )]
-transform = Transform( -0.2, -1.74846e-08, 8.74228e-09, 8.74228e-09, 3.82137e-16, 0.2, -1.74846e-08, 0.2, 3.82137e-16, -3.44201, 0, -1.01714 )
 
 [node name="energy2" type="MeshInstance" parent="resources_status/energy_status"]
 transform = Transform( 0.0945126, 0, 0.0326707, 0, 0.1, 0, -0.0326707, 0, 0.0945126, -2.47368, 8.74996e-05, -1.0398 )
@@ -338,13 +331,13 @@ transform = Transform( 0.0559396, 0, -0.0828901, 0, 0.1, 0, 0.0828901, 0, 0.0559
 mesh = ExtResource( 21 )
 material/0 = SubResource( 41 )
 
-[node name="bones_status" type="Spatial" parent="resources_status"]
-
-[node name="bonegltf" parent="resources_status/bones_status" instance=ExtResource( 14 )]
+[node name="bonegltf" parent="resources_status" instance=ExtResource( 14 )]
 transform = Transform( 0.211372, -0.212632, -0.0104701, 0, 0.0147543, -0.299637, 0.21289, 0.211116, 0.0103955, -3.43421, 0, -1.36087 )
 
-[node name="bonegltf2" parent="resources_status/bones_status" instance=ExtResource( 14 )]
+[node name="bonegltf2" parent="resources_status" instance=ExtResource( 14 )]
 transform = Transform( 0.250539, 0.160892, 0.0366582, -0.0364875, 0.119009, -0.272957, -0.160931, 0.223496, 0.118957, -3.39569, 0.0285812, -1.39182 )
+
+[node name="bones_status" type="Spatial" parent="resources_status"]
 
 [node name="bone1" type="MeshInstance" parent="resources_status/bones_status"]
 transform = Transform( 0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -2.32496, 8.74996e-05, -1.37677 )
@@ -381,15 +374,15 @@ transform = Transform( 0.0559396, 0, -0.0828901, 0, 0.1, 0, 0.0828901, 0, 0.0559
 mesh = ExtResource( 21 )
 material/0 = SubResource( 48 )
 
-[node name="blood_status" type="Spatial" parent="resources_status"]
-
-[node name="potionSmall_red" type="MeshInstance" parent="resources_status/blood_status"]
+[node name="potionSmall_red" type="MeshInstance" parent="resources_status"]
 transform = Transform( 0.3, 0, 0, 0, -1.31134e-08, -0.3, 0, 0.3, -1.31134e-08, -3.42359, 0, -1.85543 )
 mesh = ExtResource( 19 )
-skeleton = NodePath("../../..")
+skeleton = NodePath("../..")
 material/0 = null
 material/1 = null
 material/2 = null
+
+[node name="blood_status" type="Spatial" parent="resources_status"]
 
 [node name="blood1" type="MeshInstance" parent="resources_status/blood_status"]
 transform = Transform( 0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -2.32496, 8.74996e-05, -1.70087 )
