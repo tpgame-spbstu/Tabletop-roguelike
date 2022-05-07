@@ -103,4 +103,3 @@ transform = Transform( -0.866984, 0, -0.498336, 0, 1, 0, 0.498336, 0, -0.866984,
 transform = Transform( -0.866984, 0, -0.498336, 0, 1, 0, 0.498336, 0, -0.866984, 48.0167, -7.62939e-06, -22.5426 )
 
 [connection signal="pressed" from="map_gui/main_menu_button" to="." method="_on_main_menu_button_pressed"]
-[connection signal="pressed" from="map_gui/explore_location_button" to="." method="_on_explore_location_button_pressed"]

@@ -46,19 +46,17 @@ func initialize(game_config):
 
 
 func set_choosing_state():
-	$map_gui/explore_location_button.hide()
 	_state = _MapState.CHOOSING
 	# highlight all the points, the current node has paths to
 	_highlight_points(current_map_point.map_point_config)
 
 
 func set_blocked_state():
-	$map_gui/explore_location_button.show()
+	current_map_point.highlight()
 	_state = _MapState.BLOCKED
 
 
 func set_moving_state():
-	$map_gui/explore_location_button.hide()
 	_state = _MapState.MOVING
 
 
@@ -166,35 +164,23 @@ func _lowlight_points(p_conf):
 		_points[p].lowlight()
 
 
-func _on_map_point_click(map_point):
-	if _state != _MapState.CHOOSING:
-		return
-
-	# if the path from the current location to the clicked one exists
-	if map_point.map_point_config in map_config.map_point_graph[current_map_point.map_point_config]:
-		# lowlight all the vertexes, that has paths from the current (not the one pressed) vertex
-		_lowlight_points(current_map_point.map_point_config)
-		# Wait for character move animation
-		var animation = SmoothMoveAnimation.new(current_map_point.global_transform, 
-			map_point.global_transform, 1.0, character)
-		AnimationManager.add_animation(animation)
-		set_moving_state()
-		yield(animation, "animation_ended")
-		# Change current map point
-		map_config.current_map_point_config = map_point.map_point_config
-		current_map_point = map_point
-		_repaint_paths_availablility()
-		set_blocked_state()
+func move_to_next_point(map_point):
+	# lowlight all the vertexes, that has paths from the current (not the one pressed) vertex
+	_lowlight_points(current_map_point.map_point_config)
+	# Wait for character move animation
+	var animation = SmoothMoveAnimation.new(current_map_point.global_transform, 
+		map_point.global_transform, 1.0, character)
+	AnimationManager.add_animation(animation)
+	set_moving_state()
+	yield(animation, "animation_ended")
+	# Change current map point
+	map_config.current_map_point_config = map_point.map_point_config
+	current_map_point = map_point
+	_repaint_paths_availablility()
+	set_blocked_state()
 
 
-func _on_main_menu_button_pressed():
-	if _state != _MapState.MOVING:
-		emit_signal("return_to_main_menu", "return")
-
-
-func _on_explore_location_button_pressed():
-	if _state != _MapState.BLOCKED:
-		return
+func explore_location():
 	# Load next location scene
 	var cur_location_scene = load(map_config.current_map_point_config.scene).instance()
 	get_parent().add_child(cur_location_scene)
@@ -207,6 +193,7 @@ func _on_explore_location_button_pressed():
 	cur_location_scene.queue_free()
 	self.show()
 
+	current_map_point.lowlight()
 	current_map_point.mark_visited()
 
 	get_node("character/Camera").make_current()
@@ -221,3 +208,19 @@ func _on_explore_location_button_pressed():
 			pass
 	set_choosing_state()
 	GameLoadManager.save_game(game_config)
+
+
+func _on_map_point_click(map_point):
+	match(_state):
+		_MapState.CHOOSING:
+			# if the path from the current location to the clicked one exists
+			if map_point.map_point_config in map_config.map_point_graph[current_map_point.map_point_config]:
+				move_to_next_point(map_point)
+		_MapState.BLOCKED:
+			if map_point == current_map_point:
+				explore_location()
+
+
+func _on_main_menu_button_pressed():
+	if _state != _MapState.MOVING:
+		emit_signal("return_to_main_menu", "return")
