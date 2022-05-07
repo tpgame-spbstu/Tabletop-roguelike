@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://Fight/fight_location.gd" type="Script" id=1]
 [ext_resource path="res://Fight/AI Player/ai_player.tscn" type="PackedScene" id=2]
@@ -19,7 +19,6 @@
 [ext_resource path="res://Fight/hand_hightlight.gd" type="Script" id=18]
 [ext_resource path="res://Models/Models/potion/potionSmall_red.obj" type="ArrayMesh" id=19]
 [ext_resource path="res://Models/Scene/Desk.tscn" type="PackedScene" id=20]
-[ext_resource path="res://Models/Scene/gems_mesh.tres" type="ArrayMesh" id=21]
 
 [sub_resource type="QuadMesh" id=10]
 material = ExtResource( 17 )
@@ -39,111 +38,6 @@ albedo_color = Color( 0.0196078, 0.203922, 0.262745, 1 )
 
 [sub_resource type="SpatialMaterial" id=13]
 albedo_color = Color( 0, 0.231373, 0.623529, 1 )
-
-[sub_resource type="SpatialMaterial" id=35]
-albedo_color = Color( 0.737255, 0.737255, 0.737255, 1 )
-metallic = 0.06
-roughness = 0.0
-
-[sub_resource type="SpatialMaterial" id=36]
-albedo_color = Color( 0.92549, 0.717647, 0.0941176, 1 )
-metallic = 0.06
-roughness = 0.0
-
-[sub_resource type="SpatialMaterial" id=37]
-albedo_color = Color( 0.92549, 0.717647, 0.0941176, 1 )
-metallic = 0.06
-roughness = 0.0
-
-[sub_resource type="SpatialMaterial" id=38]
-albedo_color = Color( 0.92549, 0.717647, 0.0941176, 1 )
-metallic = 0.06
-roughness = 0.0
-
-[sub_resource type="SpatialMaterial" id=39]
-albedo_color = Color( 0.92549, 0.717647, 0.0941176, 1 )
-metallic = 0.06
-roughness = 0.0
-
-[sub_resource type="SpatialMaterial" id=40]
-albedo_color = Color( 0.92549, 0.717647, 0.0941176, 1 )
-metallic = 0.06
-roughness = 0.0
-
-[sub_resource type="SpatialMaterial" id=41]
-albedo_color = Color( 0.92549, 0.717647, 0.0941176, 1 )
-metallic = 0.06
-roughness = 0.0
-
-[sub_resource type="SpatialMaterial" id=42]
-albedo_color = Color( 0.0980392, 0.0823529, 0.203922, 1 )
-metallic = 0.06
-roughness = 0.0
-
-[sub_resource type="SpatialMaterial" id=43]
-albedo_color = Color( 0.92549, 0.717647, 0.0941176, 1 )
-metallic = 0.06
-roughness = 0.0
-
-[sub_resource type="SpatialMaterial" id=44]
-albedo_color = Color( 0.92549, 0.717647, 0.0941176, 1 )
-metallic = 0.06
-roughness = 0.0
-
-[sub_resource type="SpatialMaterial" id=45]
-albedo_color = Color( 0.92549, 0.717647, 0.0941176, 1 )
-metallic = 0.06
-roughness = 0.0
-
-[sub_resource type="SpatialMaterial" id=46]
-albedo_color = Color( 0.92549, 0.717647, 0.0941176, 1 )
-metallic = 0.06
-roughness = 0.0
-
-[sub_resource type="SpatialMaterial" id=47]
-albedo_color = Color( 0.92549, 0.717647, 0.0941176, 1 )
-metallic = 0.06
-roughness = 0.0
-
-[sub_resource type="SpatialMaterial" id=48]
-albedo_color = Color( 0.92549, 0.717647, 0.0941176, 1 )
-metallic = 0.06
-roughness = 0.0
-
-[sub_resource type="SpatialMaterial" id=49]
-albedo_color = Color( 0.0980392, 0.0823529, 0.203922, 1 )
-metallic = 0.06
-roughness = 0.0
-
-[sub_resource type="SpatialMaterial" id=50]
-albedo_color = Color( 0.92549, 0.717647, 0.0941176, 1 )
-metallic = 0.06
-roughness = 0.0
-
-[sub_resource type="SpatialMaterial" id=51]
-albedo_color = Color( 0.92549, 0.717647, 0.0941176, 1 )
-metallic = 0.06
-roughness = 0.0
-
-[sub_resource type="SpatialMaterial" id=52]
-albedo_color = Color( 0.92549, 0.717647, 0.0941176, 1 )
-metallic = 0.06
-roughness = 0.0
-
-[sub_resource type="SpatialMaterial" id=53]
-albedo_color = Color( 0.92549, 0.717647, 0.0941176, 1 )
-metallic = 0.06
-roughness = 0.0
-
-[sub_resource type="SpatialMaterial" id=54]
-albedo_color = Color( 0.92549, 0.717647, 0.0941176, 1 )
-metallic = 0.06
-roughness = 0.0
-
-[sub_resource type="SpatialMaterial" id=55]
-albedo_color = Color( 0.92549, 0.717647, 0.0941176, 1 )
-metallic = 0.06
-roughness = 0.0
 
 [node name="fight_location" type="Spatial"]
 script = ExtResource( 1 )
@@ -292,90 +186,20 @@ material/0 = SubResource( 13 )
 script = ExtResource( 7 )
 
 [node name="lightninggltf" parent="resources_status" instance=ExtResource( 16 )]
-transform = Transform( -0.2, -1.74846e-08, 8.74228e-09, 8.74228e-09, 3.82137e-16, 0.2, -1.74846e-08, 0.2, 3.82137e-16, -3.44201, 0, -1.01714 )
+transform = Transform( -0.2, -1.74846e-08, 8.74228e-09, 8.74228e-09, 3.82137e-16, 0.2, -1.74846e-08, 0.2, 3.82137e-16, -2.37239, 0, -1.01714 )
 
 [node name="energy_status" type="Spatial" parent="resources_status"]
 
-[node name="energy1" type="MeshInstance" parent="resources_status/energy_status"]
-transform = Transform( 0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -2.32496, 8.74996e-05, -1.0398 )
-mesh = ExtResource( 21 )
-material/0 = SubResource( 35 )
-
-[node name="energy2" type="MeshInstance" parent="resources_status/energy_status"]
-transform = Transform( 0.0945126, 0, 0.0326707, 0, 0.1, 0, -0.0326707, 0, 0.0945126, -2.47368, 8.74996e-05, -1.0398 )
-mesh = ExtResource( 21 )
-material/0 = SubResource( 36 )
-
-[node name="energy3" type="MeshInstance" parent="resources_status/energy_status"]
-transform = Transform( 0.0779731, 0, -0.0626114, 0, 0.1, 0, 0.0626114, 0, 0.0779731, -2.62352, 8.74996e-05, -1.0398 )
-mesh = ExtResource( 21 )
-material/0 = SubResource( 37 )
-
-[node name="energy4" type="MeshInstance" parent="resources_status/energy_status"]
-transform = Transform( 0.0191306, 0, 0.098153, 0, 0.1, 0, -0.098153, 0, 0.0191306, -2.77089, 8.74996e-05, -1.0398 )
-mesh = ExtResource( 21 )
-material/0 = SubResource( 38 )
-
-[node name="energy5" type="MeshInstance" parent="resources_status/energy_status"]
-transform = Transform( 0.0993778, 0, -0.0111382, 0, 0.1, 0, 0.0111382, 0, 0.0993778, -2.91444, 8.74996e-05, -1.0398 )
-mesh = ExtResource( 21 )
-material/0 = SubResource( 39 )
-
-[node name="energy6" type="MeshInstance" parent="resources_status/energy_status"]
-transform = Transform( 0.038307, 0, 0.0923719, 0, 0.1, 0, -0.0923719, 0, 0.038307, -3.05307, 8.74996e-05, -1.0398 )
-mesh = ExtResource( 21 )
-material/0 = SubResource( 40 )
-
-[node name="energy7" type="MeshInstance" parent="resources_status/energy_status"]
-transform = Transform( 0.0559396, 0, -0.0828901, 0, 0.1, 0, 0.0828901, 0, 0.0559396, -3.19453, 8.74996e-05, -1.0398 )
-mesh = ExtResource( 21 )
-material/0 = SubResource( 41 )
-
 [node name="bonegltf" parent="resources_status" instance=ExtResource( 14 )]
-transform = Transform( 0.211372, -0.212632, -0.0104701, 0, 0.0147543, -0.299637, 0.21289, 0.211116, 0.0103955, -3.43421, 0, -1.36087 )
+transform = Transform( 0.211372, -0.212632, -0.0104701, 0, 0.0147543, -0.299637, 0.21289, 0.211116, 0.0103955, -2.37122, 0, -1.36087 )
 
 [node name="bonegltf2" parent="resources_status" instance=ExtResource( 14 )]
-transform = Transform( 0.250539, 0.160892, 0.0366582, -0.0364875, 0.119009, -0.272957, -0.160931, 0.223496, 0.118957, -3.39569, 0.0285812, -1.39182 )
+transform = Transform( 0.250539, 0.160892, 0.0366582, -0.0364875, 0.119009, -0.272957, -0.160931, 0.223496, 0.118957, -2.3327, 0.0285812, -1.39182 )
 
 [node name="bones_status" type="Spatial" parent="resources_status"]
 
-[node name="bone1" type="MeshInstance" parent="resources_status/bones_status"]
-transform = Transform( 0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -2.32496, 8.74996e-05, -1.37677 )
-mesh = ExtResource( 21 )
-material/0 = SubResource( 42 )
-
-[node name="bone2" type="MeshInstance" parent="resources_status/bones_status"]
-transform = Transform( 0.0945126, 0, 0.0326707, 0, 0.1, 0, -0.0326707, 0, 0.0945126, -2.47368, 8.74996e-05, -1.37677 )
-mesh = ExtResource( 21 )
-material/0 = SubResource( 43 )
-
-[node name="bone3" type="MeshInstance" parent="resources_status/bones_status"]
-transform = Transform( 0.0779731, 0, -0.0626114, 0, 0.1, 0, 0.0626114, 0, 0.0779731, -2.62352, 8.74996e-05, -1.37677 )
-mesh = ExtResource( 21 )
-material/0 = SubResource( 44 )
-
-[node name="bone4" type="MeshInstance" parent="resources_status/bones_status"]
-transform = Transform( 0.0191306, 0, 0.098153, 0, 0.1, 0, -0.098153, 0, 0.0191306, -2.77089, 8.74996e-05, -1.37677 )
-mesh = ExtResource( 21 )
-material/0 = SubResource( 45 )
-
-[node name="bone5" type="MeshInstance" parent="resources_status/bones_status"]
-transform = Transform( 0.0993778, 0, -0.0111382, 0, 0.1, 0, 0.0111382, 0, 0.0993778, -2.91444, 8.74996e-05, -1.37677 )
-mesh = ExtResource( 21 )
-material/0 = SubResource( 46 )
-
-[node name="bone6" type="MeshInstance" parent="resources_status/bones_status"]
-transform = Transform( 0.038307, 0, 0.0923719, 0, 0.1, 0, -0.0923719, 0, 0.038307, -3.05307, 8.74996e-05, -1.37677 )
-mesh = ExtResource( 21 )
-material/0 = SubResource( 47 )
-
-[node name="bone7" type="MeshInstance" parent="resources_status/bones_status"]
-transform = Transform( 0.0559396, 0, -0.0828901, 0, 0.1, 0, 0.0828901, 0, 0.0559396, -3.19453, 8.74996e-05, -1.37677 )
-mesh = ExtResource( 21 )
-material/0 = SubResource( 48 )
-
 [node name="potionSmall_red" type="MeshInstance" parent="resources_status"]
-transform = Transform( 0.3, 0, 0, 0, -1.31134e-08, -0.3, 0, 0.3, -1.31134e-08, -3.42359, 0, -1.85543 )
+transform = Transform( 0.3, 0, 0, 0, -1.31134e-08, -0.3, 0, 0.3, -1.31134e-08, -2.34918, 0, -1.85543 )
 mesh = ExtResource( 19 )
 skeleton = NodePath("../..")
 material/0 = null
@@ -383,41 +207,6 @@ material/1 = null
 material/2 = null
 
 [node name="blood_status" type="Spatial" parent="resources_status"]
-
-[node name="blood1" type="MeshInstance" parent="resources_status/blood_status"]
-transform = Transform( 0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -2.32496, 8.74996e-05, -1.70087 )
-mesh = ExtResource( 21 )
-material/0 = SubResource( 49 )
-
-[node name="blood2" type="MeshInstance" parent="resources_status/blood_status"]
-transform = Transform( 0.0945126, 0, 0.0326707, 0, 0.1, 0, -0.0326707, 0, 0.0945126, -2.47368, 8.74996e-05, -1.70087 )
-mesh = ExtResource( 21 )
-material/0 = SubResource( 50 )
-
-[node name="blood3" type="MeshInstance" parent="resources_status/blood_status"]
-transform = Transform( 0.0779731, 0, -0.0626114, 0, 0.1, 0, 0.0626114, 0, 0.0779731, -2.62352, 8.74996e-05, -1.70087 )
-mesh = ExtResource( 21 )
-material/0 = SubResource( 51 )
-
-[node name="blood4" type="MeshInstance" parent="resources_status/blood_status"]
-transform = Transform( 0.0191306, 0, 0.098153, 0, 0.1, 0, -0.098153, 0, 0.0191306, -2.77089, 8.74996e-05, -1.70087 )
-mesh = ExtResource( 21 )
-material/0 = SubResource( 52 )
-
-[node name="blood5" type="MeshInstance" parent="resources_status/blood_status"]
-transform = Transform( 0.0993778, 0, -0.0111382, 0, 0.1, 0, 0.0111382, 0, 0.0993778, -2.91444, 8.74996e-05, -1.70087 )
-mesh = ExtResource( 21 )
-material/0 = SubResource( 53 )
-
-[node name="blood6" type="MeshInstance" parent="resources_status/blood_status"]
-transform = Transform( 0.038307, 0, 0.0923719, 0, 0.1, 0, -0.0923719, 0, 0.038307, -3.05307, 8.74996e-05, -1.70087 )
-mesh = ExtResource( 21 )
-material/0 = SubResource( 54 )
-
-[node name="blood7" type="MeshInstance" parent="resources_status/blood_status"]
-transform = Transform( 0.0559396, 0, -0.0828901, 0, 0.1, 0, 0.0828901, 0, 0.0559396, -3.19453, 8.74996e-05, -1.70087 )
-mesh = ExtResource( 21 )
-material/0 = SubResource( 55 )
 
 [node name="skull_broken" parent="resources_status" instance=ExtResource( 15 )]
 transform = Transform( -0.688008, 0.0763884, -0.721672, 0.00210528, 0.99465, 0.103276, 0.7257, 0.0695353, -0.684488, 3.09948, 0, 0.584778 )
