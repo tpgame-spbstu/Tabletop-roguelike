@@ -126,7 +126,7 @@ func set_sail(animate: bool):
 		var final_y = pole_trans.y + pole_size.y * (1 - margin_from_top) / 2 - fl_size.y / 2
 
 		_flag.show()
-		var tween = Tween.new()
+		var tween = Tween.new()	
 		add_child(tween)
 		# just for chuckles :) for normal use any of the commented below is recommended
 		tween.interpolate_property(_flag, "translation:y", init_y, final_y, flag_raising_dur, Tween.TRANS_BOUNCE, Tween.EASE_OUT)
