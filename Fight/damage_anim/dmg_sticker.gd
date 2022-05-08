@@ -1,7 +1,10 @@
 extends Sprite3D
 
+signal tween_finished
+
 onready var _viewport = $Viewport
 onready var _dmg = $Viewport/dmg
+onready var _tween = Tween.new()
 
 export(float, 0.1, 4, 0.1) var life_time = 2  # time of animation
 export(float, 0, 4, 0.01) var wait_for = 0.4  # time to wait for before the animation
@@ -16,6 +19,12 @@ func _ready():
 	set_texture(_viewport.get_texture())
 	set_billboard_mode(SpatialMaterial.BILLBOARD_ENABLED)
 
+	add_child(_tween)
+
+
+func _on_tween_finished():
+	emit_signal("tween_finished")
+
 
 ## create the damage sticker
 ##
@@ -26,23 +35,20 @@ func _ready():
 ## :dur: duration of dissappearing animation
 ## :spread: spreading angle. The `dest` vector is rotated in between `spread/2` over FORWARD vec
 ##
-## :return: void
+## :return: void, calls `_on_tween_finished` on tween completion
 func create(dmg, dest=direction, wait=wait_for, crit=false, dur=life_time, spread=spread_angle) -> void:
 	_dmg.set_msg(int(dmg))
 
-	var tween = Tween.new()
-	add_child(tween)
 	var movement = dest.rotated(Vector3.FORWARD, rand_range(-spread / 2, spread / 2))
 
-	tween.interpolate_property(self, "global_transform:origin", get_global_transform().origin, get_global_transform().origin + movement,
+	_tween.interpolate_property(self, "global_transform:origin", get_global_transform().origin, get_global_transform().origin + movement,
 		dur, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT, wait)
-	tween.interpolate_property(_dmg, "modulate:a", 1.0, 0.0,
+	_tween.interpolate_property(_dmg, "modulate:a", 1.0, 0.0,
 		dur, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT, wait)
 
 	if crit:
 		modulate = crit_color
-		tween.interpolate_property(self, "scale", get_scale() * crit_scale, get_scale(), crit_dur, Tween.TRANS_BACK, Tween.EASE_IN, wait)
+		_tween.interpolate_property(self, "scale", get_scale() * crit_scale, get_scale(), crit_dur, Tween.TRANS_BACK, Tween.EASE_IN, wait)
 
-	tween.start()
-	yield(tween, "tween_all_completed")
-	queue_free()
+	_tween.start()
+	_tween.connect("tween_all_completed", self, "_on_tween_finished", [], CONNECT_ONESHOT)
