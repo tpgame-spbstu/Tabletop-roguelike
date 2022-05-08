@@ -25,14 +25,6 @@ func get_size():
 	return (get_node("CollisionShape").shape as BoxShape).get_extents() * 2
 
 
-func get_mesh() -> MeshInstance:
-	return get_node("MeshInstance") as MeshInstance
-
-
-func _set_textures(textures: Array):
-	utils.change_textures(get_mesh(), textures)
-
-
 func _set_sprite_type(type):
 	var img_texture
 	if type == map_point_config.types_map.FIGHT:
