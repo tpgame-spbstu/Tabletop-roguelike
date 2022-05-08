@@ -59,22 +59,14 @@ func mark_visited(animate: bool=true):
 
 
 ## make the 'bounding' mesh visible
-##
-## @warn: truth be told, not sure what `use_shadow_to_opacity`
-##        exactly does, but in allows to completely hide or
-##        show the mesh, hence is used here
 func highlight():
-	var mat = utils.get_mat($on_hover_mesh)
-	mat.flags_use_shadow_to_opacity = false
-	utils.set_mat($on_hover_mesh, mat)
+	$on_hover_mesh.show()
 
 
 # legit antonym for highlight
 # https://www.synonyms.com/antonyms/highlight
 func lowlight():
-	var mat = utils.get_mat($on_hover_mesh)
-	mat.flags_use_shadow_to_opacity = true
-	utils.set_mat($on_hover_mesh, mat)
+	$on_hover_mesh.hide()
 
 
 func _on_mouse_entered():
