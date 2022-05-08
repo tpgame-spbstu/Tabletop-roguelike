@@ -95,7 +95,8 @@ func _on_human_player_1_card_to_play_selected(card):
 
 ## sets the camera into shaking
 func add_trauma(amount=def_trauma):
-	_trauma = amount
+	# make additive
+	_trauma = min(_trauma + amount, def_trauma * 2)
 
 
 func set_camera_position(new_position):
