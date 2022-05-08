@@ -33,18 +33,6 @@ tracks/0/keys = {
 "update": 0,
 "values": [ Vector3( 0, 0, 0 ), Vector3( 0, -30, 0 ), Vector3( 0, 0, 0 ), Vector3( 0, 30, 0 ), Vector3( 0, 0, 0 ) ]
 }
-tracks/1/type = "value"
-tracks/1/path = NodePath("sprite_type:transform")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0, 0.5 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Transform( 1, 0, 0, 0, 2, 0, 0, 0, 1, 0, 5.659, 0 ), Transform( 0.866, 0, -0.5, 0, 1, 0, 0.5, 0, 0.866, 0, 6, 0 ) ]
-}
 
 [node name="Point" type="Area"]
 script = ExtResource( 1 )
@@ -65,7 +53,7 @@ mesh = SubResource( 42 )
 material/0 = null
 
 [node name="sprite_type" type="Sprite3D" parent="."]
-transform = Transform( 0.975409, 0, -0.220172, 0, 1, 0, 0.220172, 0, 0.975409, 0, 5.7954, 0 )
+transform = Transform( 0.888136, 0, -0.45958, 0, 1, 0, 0.45958, 0, 0.888136, 0, 5.659, 0 )
 texture = ExtResource( 4 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
