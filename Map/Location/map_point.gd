@@ -18,12 +18,7 @@ func initialize(map, map_point_config):
 	connect("mouse_entered", self, "_on_mouse_entered")
 	connect("mouse_exited", self, "_on_mouse_exited")
 	_set_sprite_type(map_point_config.type)
-	_set_textures(map_point_config.get_textures())
-
-
-func _process(delta):
-	if not map_point_config._is_visited:
-		_sprite_type.rotate_y(delta * PI)
+	$AnimationPlayer.play("sprite_animation")
 
 
 func get_size():
@@ -63,6 +58,7 @@ func mark_visited(animate: bool=true):
 	map_point_config.set_visited(true)
 	_banner.set_sail(animate)
 	_sprite_type.queue_free()
+	$AnimationPlayer.stop()
 
 
 ## make the 'bounding' mesh visible

@@ -42,7 +42,7 @@ static func get_temp_map_config():
 	var loc3 = MapPointConfig.new(fight_scene, {"shuffle_seed": 1337, 
 		"ai_card_queue": card_queue1}, Vector2(1, 2), MapPointConfig.types_map.FIGHT)
 	var loc2 = MapPointConfig.new(sacrifice_scene, {}, Vector2(1, 1), MapPointConfig.types_map.MOD, 
-		false, ["res://Map/Location/point_textures/texture_cheese_albedo.png"])
+		false)
 	var loc1 = MapPointConfig.new(fight_scene, {"shuffle_seed": 10, "ai_card_queue": card_queue2},
 		Vector2(0, 0), MapPointConfig.types_map.FIGHT)
 	var loc0 = MapPointConfig.new("", {}, Vector2(0, -1), MapPointConfig.types_map.FIGHT)

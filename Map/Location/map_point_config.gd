@@ -6,14 +6,13 @@ var params: Dictionary
 var pos: Vector2
 # array of textures (as string paths to rss)
 # one texture per surface
-var _textures: Array setget ,get_textures
 # whether the map_point was visited
 var _is_visited: bool = false setget set_visited, is_visited
 enum types_map {MOD, FIGHT}
 var type
 
 func _init(scene: String, params: Dictionary, pos: Vector2, type=types_map.FIGHT,
- is_visited: bool=false, textures: Array=[]):
+ is_visited: bool=false):
 	# scene to be opened
 	self.scene = scene
 	self.type = type
@@ -21,11 +20,6 @@ func _init(scene: String, params: Dictionary, pos: Vector2, type=types_map.FIGHT
 	# position of the current map point
 	self.pos = pos
 	_is_visited = is_visited
-	_textures = textures
-
-
-func get_textures():
-	return _textures
 
 
 func set_visited(val: bool):
