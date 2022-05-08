@@ -22,6 +22,7 @@ func reduce_enemy_health(attacker_number, delta):
 	if attacker_number == 1:
 		set_player_2_health(player_2_health - delta)
 	else:
+		get_viewport().get_camera().add_trauma()
 		set_player_1_health(player_1_health - delta)
 
 

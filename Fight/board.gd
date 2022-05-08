@@ -84,9 +84,9 @@ func player_1_attack():
 			if card == null or card.owner_number != 1:
 				# Empty cell or other player's card
 				continue
-			var tmp_state = card.process_attack()
-			if tmp_state != null:
-				yield(tmp_state, "completed")
+			var victim = card.get_victim()
+			if victim:
+				yield(card.attack(victim), "completed")
 
 
 func player_2_attack():
@@ -97,9 +97,9 @@ func player_2_attack():
 			if card == null or card.owner_number != 2:
 				# Empty cell or other player's card
 				continue
-			var tmp_state = card.process_attack()
-			if tmp_state != null:
-				yield(tmp_state, "completed")
+			var victim = card.get_victim()
+			if victim:
+				yield(card.attack(victim), "completed")
 
 
 # Move card from it's current cell to new cell with animation
