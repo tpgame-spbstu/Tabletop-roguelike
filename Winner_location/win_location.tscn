@@ -1,0 +1,56 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://Winner_location/chel.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Winner_location/env.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Winner_location/win_location.gd" type="Script" id=3]
+[ext_resource path="res://Winner_location/dialog-cloud.tscn" type="PackedScene" id=4]
+[ext_resource path="res://fonts/Ubuntu-B.ttf" type="DynamicFontData" id=5]
+
+[sub_resource type="ViewportTexture" id=1]
+viewport_path = NodePath("Viewport")
+
+[sub_resource type="DynamicFont" id=2]
+size = 22
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 5 )
+
+[sub_resource type="Theme" id=3]
+default_font = SubResource( 2 )
+
+[node name="Spatial" type="Spatial"]
+script = ExtResource( 3 )
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( -0.847066, 0, -0.531487, 0, 1, 0, 0.531487, 0, -0.847066, -3.74963, 3.65297, -8.96132 )
+
+[node name="env" parent="." instance=ExtResource( 2 )]
+
+[node name="ant" parent="." instance=ExtResource( 1 )]
+transform = Transform( -0.615806, 0, -0.33284, -0.0153481, 0.699255, 0.0283965, 0.332486, 0.0322789, -0.615151, -0.653839, -2.38419e-07, -4.06415 )
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform( 0.619564, 0, 0.196573, 0, 0.65, 0, -0.196573, 0, 0.619564, -3.2883, 4.52017, -2.7155 )
+flip_h = true
+flip_v = true
+texture = SubResource( 1 )
+
+[node name="Viewport" type="Viewport" parent="."]
+size = Vector2( 500, 430 )
+transparent_bg = true
+
+[node name="dialog" parent="Viewport" instance=ExtResource( 4 )]
+
+[node name="Button" type="Button" parent="."]
+margin_left = 442.0
+margin_top = 528.0
+margin_right = 556.0
+margin_bottom = 563.0
+theme = SubResource( 3 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "NEXT"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]
