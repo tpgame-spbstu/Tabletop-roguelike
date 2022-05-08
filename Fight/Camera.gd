@@ -16,10 +16,10 @@ var _noise_y = 0  # second coord in getting the noise
 var _pos_to_return = null  # original transform before shaking
 
 export(float, 0, 1, 0.01) var decay = 0.7  # how quickly the shaking stops [0, 1]
-export(Vector2) var max_offset = Vector2(3, 3)  # maximum hor/ver shake in pixels
-export(float, 0, 0.5, 0.01) var max_pitch = 0.1  # x rot in rads
-export(float, 0, 0.5, 0.01) var max_yaw = 0.1  # y rot in rads
-export(float, 0, 0.5, 0.01) var max_roll = 0.1  # z rot in rads
+export(Vector3) var max_offset = Vector3(3, 3, 3)  # maximum x\y\z shake
+export(float, 0, 0.8, 0.01) var max_pitch = 0.1  # x rot in rads
+export(float, 0, 0.8, 0.01) var max_yaw = 0.1  # y rot in rads
+export(float, 0, 0.8, 0.01) var max_roll = 0.1  # z rot in rads
 export(int, 1, 128, 1) var period = 4  # lower -> higher-frequency noise
 export(int, 1, 9, 1) var octaves = 2  # higher -> more detailed noise, more time to generate
 export(float, 0.4, 1, 0.05) var def_trauma = 0.75
@@ -93,6 +93,7 @@ func _on_human_player_1_card_to_play_selected(card):
 	current_position = BOARD_POSITION
 
 
+## sets the camera into shaking
 func add_trauma(amount=def_trauma):
 	_trauma = amount
 
@@ -112,7 +113,10 @@ func _shake():
 	rot.x = max_pitch * amount * _noise.get_noise_2d(_noise.seed, _noise_y)
 	rot.y = max_yaw * amount * _noise.get_noise_2d(_noise.seed + 1, _noise_y)
 	rot.z = max_roll * amount * _noise.get_noise_2d(_noise.seed + 2, _noise_y)
-	h_offset = max_offset.x * amount * _noise.get_noise_2d(_noise.seed + 3, _noise_y)
-	v_offset = max_offset.y * amount * _noise.get_noise_2d(_noise.seed + 4, _noise_y)
+	var trans = Vector3.ZERO
+	trans.x = max_offset.x * amount * _noise.get_noise_2d(_noise.seed + 3, _noise_y)
+	trans.y = max_offset.y * amount * _noise.get_noise_2d(_noise.seed + 4, _noise_y)
+	trans.z = max_offset.z * amount * _noise.get_noise_2d(_noise.seed + 5, _noise_y)
 
 	set_rotation(_pos_to_return.basis.get_euler() + rot)
+	set_translation(_pos_to_return.origin + trans)
