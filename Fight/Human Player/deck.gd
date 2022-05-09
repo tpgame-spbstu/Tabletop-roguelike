@@ -11,7 +11,8 @@ onready var deck_list := $deck_list
 var CardScene := preload("res://Card/card.tscn") as PackedScene
 var fight_global_signals
 var fight_state
-
+var spacer_width = 0.002 #space between cards in deck
+var max_visible_cards_count = 10 #
 var dummy_count = 7
 var dummy_card_config = BaseCardsManager.get_card_config_copy("Пень")
 
@@ -34,6 +35,10 @@ func initialize(fight_global_signals, fight_state, deck_config, shuffle_seed, ow
 func add_new_card_to_bottom(card_config, owner_number):
 	var new_card = CardScene.instance()
 	deck_list.add_child(new_card)
+	var visible_cards_count = deck_list.get_child_count()
+	if(visible_cards_count > max_visible_cards_count):
+		visible_cards_count = max_visible_cards_count
+	new_card.translate(Vector3(0, (-new_card.get_size().y - spacer_width) * visible_cards_count, 0))
 	new_card.initialize(card_config, owner_number, fight_global_signals, fight_state)
 
 func _on_Area_input_event(camera: Node, event: InputEvent, position: Vector3, normal: Vector3, shape_idx: int):
@@ -42,7 +47,7 @@ func _on_Area_input_event(camera: Node, event: InputEvent, position: Vector3, no
 		if mouse_button_event.pressed and mouse_button_event.button_index == BUTTON_LEFT :
 			var card = null
 			if deck_list.get_child_count() != 0:
-				card = deck_list.get_child(0)
+				card = deck_list.get_child(deck_list.get_child_count()-1)
 			emit_signal("deck_click", self, card)
 
 
