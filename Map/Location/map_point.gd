@@ -11,6 +11,13 @@ var map_point_config = null
 export(Color) var hover_color = Color(0, 1, 0, 1)
 export(Color) var highlight_color = Color(1, 1, 1, 1)
 
+export(int) var collision_layer_index = 4
+
+
+func _ready():
+	self.set_collision_layer_bit(collision_layer_index - 1, true)
+
+
 func initialize(map, map_point_config):
 	self.map_point_config = map_point_config
 	
@@ -25,6 +32,7 @@ func initialize(map, map_point_config):
 		mark_visited(false)
 	_set_sprite_type(map_point_config.type)
 	$AnimationPlayer.play("sprite_animation")
+	update_hover()
 
 
 func get_size():
@@ -66,6 +74,7 @@ func mark_current():
 ## make the 'bounding' mesh visible
 func highlight():
 	$on_hover_mesh.show()
+	update_hover()
 
 
 # legit antonym for highlight
@@ -74,9 +83,24 @@ func lowlight():
 	$on_hover_mesh.hide()
 
 
+func is_mouse_hovered():
+	var cam = get_viewport().get_camera()
+	var mouse_pos = get_viewport().get_mouse_position()
+	return RaycastUtils.is_mouse_hovered_on_area(self, collision_layer_index, cam, get_world(), mouse_pos)
+
+
+func update_hover(is_hovered = null):
+	if is_hovered == null:
+		is_hovered = is_mouse_hovered()
+	if is_hovered:
+		utils.change_mat_color($on_hover_mesh, hover_color)
+	else:
+		utils.change_mat_color($on_hover_mesh, highlight_color)
+
+
 func _on_mouse_entered():
-	utils.change_mat_color($on_hover_mesh, hover_color)
+	update_hover(true)
 
 
 func _on_mouse_exited():
-	utils.change_mat_color($on_hover_mesh, highlight_color)
+	update_hover(false)
