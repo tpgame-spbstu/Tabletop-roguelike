@@ -64,3 +64,4 @@ func update():
 			var path = symbol.symbol_texture
 			self.draw_symbols(path, cur_symb_id)
 			cur_symb_id += 1
+
