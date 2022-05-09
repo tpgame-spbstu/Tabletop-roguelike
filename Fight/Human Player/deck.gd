@@ -9,6 +9,7 @@ signal deck_mouse_entered(deck, card)
 signal deck_mouse_exited(deck, card)
 
 onready var highlighter := $deck_highlight
+onready var card_counter := $cards_counter
 
 onready var deck_list := $deck_list
 
@@ -46,6 +47,7 @@ func initialize(fight_global_signals, fight_state, human_player_state, deck_conf
 	if deck_config == null:
 		for i in range(dummy_count):
 			add_new_card_to_bottom(dummy_card_config, owner_number)
+		card_counter.set_value(get_card_count())
 		return
 	
 	var local_card_list = deck_config.cards.duplicate() as Array
@@ -54,6 +56,7 @@ func initialize(fight_global_signals, fight_state, human_player_state, deck_conf
 	
 	for card_config in local_card_list:
 		add_new_card_to_bottom(card_config, owner_number)
+	card_counter.set_value(get_card_count())
 
 
 func add_new_card_to_bottom(card_config, owner_number):
@@ -70,13 +73,17 @@ func _on_Area_input_event(camera: Node, event: InputEvent, position: Vector3, no
 		var mouse_button_event := event as InputEventMouseButton
 		if mouse_button_event.pressed and mouse_button_event.button_index == BUTTON_LEFT :
 			var card = null
-			if deck_list.get_child_count() != 0:
+			if get_card_count() != 0:
 				card = deck_list.get_child(deck_list.get_child_count()-1)
 			emit_signal("deck_click", self, card)
 
 
 func get_card_count():
 	return deck_list.get_child_count()
+
+
+func highlight():
+	highlighter.highlight()
 
 
 func is_mouse_hovered():
@@ -134,6 +141,11 @@ func update_hover(is_hovered = null):
 		emit_signal("deck_mouse_exited", self, card)
 
 
+func remove_card(card):
+	deck_list.remove_child(card)
+	card_counter.set_value(get_card_count())
+
+
 func _on_Area_mouse_entered():
 	update_hover(true)
 
@@ -156,4 +168,3 @@ func _on_attack_enter():
 
 func _on_extra_draws_count_changed(count):
 	update_hover()
-	
