@@ -205,5 +205,6 @@ material/0 = SubResource( 13 )
 [connection signal="extra_draws_count_changed" from="human_player_1/human_player_state" to="fight_loger" method="_on_human_player_state_extra_draws_count_changed"]
 [connection signal="extra_draws_count_changed" from="human_player_1/human_player_state" to="fight_ui" method="_on_human_player_state_extra_draws_count_changed"]
 [connection signal="debug_return_to_map_pressed" from="fight_ui" to="." method="_on_fight_ui_debug_return_to_map_pressed"]
+[connection signal="return_to_main_menu" from="fight_ui" to="." method="_on_return_to_main_menu"]
 
 [editable path="human_player_1"]

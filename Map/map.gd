@@ -203,7 +203,6 @@ func explore_location():
 	self.show()
 
 	current_map_point.lowlight()
-	current_map_point.mark_visited()
 
 	get_node("character/Camera").make_current()
 	# Process location interaction result
@@ -213,8 +212,12 @@ func explore_location():
 		"lose":
 			emit_signal("return_to_main_menu", "lose")
 			return
+		"main_menu":
+			emit_signal("return_to_main_menu")
+			return
 		_:
 			pass
+	current_map_point.mark_visited()
 	set_choosing_state()
 	GameLoadManager.save_game(game_config)
 
