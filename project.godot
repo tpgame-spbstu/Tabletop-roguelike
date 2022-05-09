@@ -37,7 +37,12 @@ _global_script_classes=[ {
 "base": "Object",
 "class": "RaycastUtils",
 "language": "GDScript",
-"path": "res://raycats_utils.gd"
+"path": "res://raycast_utils.gd"
+}, {
+"base": "Reference",
+"class": "SmoothMoveAnimation",
+"language": "GDScript",
+"path": "res://smooth_move_animation.gd"
 }, {
 "base": "Reference",
 "class": "Symbol",
@@ -51,6 +56,7 @@ _global_script_class_icons={
 "HoverTween": "",
 "LinMoveAnimation": "",
 "RaycastUtils": "",
+"SmoothMoveAnimation": "",
 "Symbol": ""
 }
 

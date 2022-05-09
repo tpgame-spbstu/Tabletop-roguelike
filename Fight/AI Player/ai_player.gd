@@ -59,7 +59,7 @@ func play_card(board_cell, card_to_play):
 	## CODE_HERE
 	
 	# Play animation
-	var animation = LinMoveAnimation.new(card_spawn_point.global_transform, 
+	var animation = SmoothMoveAnimation.new(card_spawn_point.global_transform, 
 		board_cell.global_transform, 0.2, card_to_play)
 	AnimationManager.add_animation(animation)
 	yield(animation, "animation_ended")

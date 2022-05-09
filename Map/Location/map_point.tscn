@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Map/Location/map_point.gd" type="Script" id=1]
 [ext_resource path="res://Map/Banner/banner.tscn" type="PackedScene" id=2]
@@ -6,15 +6,15 @@
 [ext_resource path="res://Map/Sprites/default.png" type="Texture" id=4]
 
 [sub_resource type="CylinderShape" id=43]
-radius = 5.0
+radius = 6.0
 height = 1.0
 
 [sub_resource type="SpatialMaterial" id=41]
 
 [sub_resource type="CylinderMesh" id=42]
 material = SubResource( 41 )
-top_radius = 5.0
-bottom_radius = 5.0
+top_radius = 6.0
+bottom_radius = 6.0
 height = 0.15
 
 [sub_resource type="Animation" id=44]
@@ -34,8 +34,26 @@ tracks/0/keys = {
 "values": [ Vector3( 0, 0, 0 ), Vector3( 0, -30, 0 ), Vector3( 0, 0, 0 ), Vector3( 0, 30, 0 ), Vector3( 0, 0, 0 ) ]
 }
 
+[sub_resource type="Animation" id=45]
+resource_name = "sprite_animation (copy)"
+length = 2.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("sprite_type:rotation_degrees")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1, 1.5, 2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( 0, -30, 0 ), Vector3( 0, 0, 0 ), Vector3( 0, 30, 0 ), Vector3( 0, 0, 0 ) ]
+}
+
 [node name="Point" type="Area"]
 script = ExtResource( 1 )
+highlight_color = Color( 0.945098, 1, 0, 1 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, 0.999999, 0, 0, 0, 1, 0, 0, 0 )
@@ -53,10 +71,11 @@ mesh = SubResource( 42 )
 material/0 = null
 
 [node name="sprite_type" type="Sprite3D" parent="."]
-transform = Transform( 0.888136, 0, -0.45958, 0, 1, 0, 0.45958, 0, 0.888136, 0, 5.659, 0 )
+transform = Transform( 0.998655, 0, 0.0518499, 0, 1, 0, -0.0518499, 0, 0.998655, 0, 5.659, 0 )
 texture = ExtResource( 4 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/sprite_animation = SubResource( 44 )
+"anims/sprite_animation (copy)" = SubResource( 45 )
 
 [connection signal="input_event" from="." to="." method="_on_Point_input_event"]

@@ -81,7 +81,7 @@ func play_card(board_cell, card_to_play):
 	add_child(card_to_play)
 
 	# Play animation
-	var animation = LinMoveAnimation.new(card_trans, 
+	var animation = SmoothMoveAnimation.new(card_trans, 
 		board_cell.global_transform, 0.2, card_to_play)
 	AnimationManager.add_animation(animation)
 	yield(animation, "animation_ended")
@@ -239,7 +239,7 @@ func _on_deck_click(deck, card):
 func draw_card(deck, card):
 	var dest = hand.add_card(card, false)
 	dest = Transform(Basis(Vector3(0, dest[1], 0)), dest[0] + hand.get_global_transform().origin)
-	var animation = LinMoveAnimation.new(deck.global_transform,
+	var animation = SmoothMoveAnimation.new(deck.global_transform,
 		dest, 0.2, card)
 	AnimationManager.add_animation(animation)
 	input_allowed = false

@@ -3,6 +3,7 @@
 [ext_resource path="res://Map/Path/path_section.gd" type="Script" id=1]
 
 [sub_resource type="SpatialMaterial" id=7]
+flags_transparent = true
 
 [sub_resource type="CubeMesh" id=6]
 material = SubResource( 7 )
