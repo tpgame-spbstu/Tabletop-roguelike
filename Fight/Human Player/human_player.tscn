@@ -1,4 +1,3 @@
-
 [gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Fight/Human Player/hand.gd" type="Script" id=1]
@@ -41,9 +40,6 @@ script = ExtResource( 1 )
 
 [node name="dummy_deck" parent="." instance=ExtResource( 15 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 0, -1 )
-
-[node name="cards_counter" parent="dummy_deck" instance=ExtResource( 11 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.842035 )
 
 [node name="turn_end_pause_timer" type="Timer" parent="."]
 one_shot = true
