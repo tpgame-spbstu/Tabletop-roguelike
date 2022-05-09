@@ -18,8 +18,15 @@ var fight_global_signals
 var fight_state
 var human_player_state
 
+export(int) var collision_layer_index = 5
+
 var dummy_count = 7
 var dummy_card_config = BaseCardsManager.get_card_config_copy("Пень")
+
+
+func _ready():
+	$Area.set_collision_layer_bit(collision_layer_index - 1, true)
+
 
 func initialize(fight_global_signals, fight_state, human_player_state, deck_config, shuffle_seed, owner_number):
 	self.fight_global_signals = fight_global_signals
@@ -69,7 +76,7 @@ func get_card_count():
 func is_mouse_hovered():
 	var cam = get_viewport().get_camera()
 	var mouse_pos = get_viewport().get_mouse_position()
-	return RaycastUtils.is_mouse_hovered_on_area($Area, 4, cam, get_world(), mouse_pos)
+	return RaycastUtils.is_mouse_hovered_on_area($Area, collision_layer_index, cam, get_world(), mouse_pos)
 
 
 var HighlightState := preload("res://Fight/Human Player/deck_highlight.gd").HighlightState
@@ -139,7 +146,8 @@ func _on_place_and_move_enter():
 
 func _on_attack_enter():
 	update_hover()
-	
+
+
 func _on_extra_draws_count_changed(count):
 	update_hover()
 	
