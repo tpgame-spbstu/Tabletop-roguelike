@@ -46,7 +46,7 @@ static func get_temp_map_config():
 		false)
 	var loc1 = MapPointConfig.new(fight_scene, {"shuffle_seed": 10, "ai_card_queue": card_queue2},
 		Vector2(0, 0), MapPointConfig.types_map.FIGHT)
-	var loc0 = MapPointConfig.new("", {}, Vector2(0, -1), MapPointConfig.types_map.FIGHT)
+	var loc0 = MapPointConfig.new("", {}, Vector2(0, -1), MapPointConfig.types_map.FIGHT, true)
 
 	# creating the graph `vertex`: [`available_vertexes`]
 	var point_map = {
@@ -101,7 +101,7 @@ static func generate_new_game(game_seed = 0):
 
 
 static func load_game():
-	return get_temp_game_config()
+	return null
 
 
 static func save_game(game_config):
