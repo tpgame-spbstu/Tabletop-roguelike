@@ -46,3 +46,7 @@ func _on_fight_state_player_2_win():
 
 func _on_fight_ui_debug_return_to_map_pressed():
 	emit_signal("return_to_map")
+
+
+func _on_return_to_main_menu():
+	emit_signal("return_to_map", "main_menu")
