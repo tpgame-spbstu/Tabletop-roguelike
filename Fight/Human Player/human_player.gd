@@ -237,6 +237,7 @@ func _on_deck_click(deck, card):
 
 # Draw card from deck
 func draw_card(deck, card):
+	deck.remove_card(card)
 	var dest = hand.add_card(card, false)
 	dest = Transform(Basis(Vector3(0, dest[1], 0)), dest[0] + hand.get_global_transform().origin)
 	var animation = LinMoveAnimation.new(deck.global_transform,

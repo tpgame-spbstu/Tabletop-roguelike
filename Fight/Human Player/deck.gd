@@ -5,6 +5,7 @@ extends Spatial
 signal deck_click(deck, card)
 
 onready var highlighter := $deck_highlight
+onready var card_counter := $cards_counter
 
 onready var deck_list := $deck_list
 
@@ -21,6 +22,7 @@ func initialize(fight_global_signals, fight_state, deck_config, shuffle_seed, ow
 	if deck_config == null:
 		for i in range(dummy_count):
 			add_new_card_to_bottom(dummy_card_config, owner_number)
+		card_counter.set_value(get_card_count())
 		return
 	
 	var local_card_list = deck_config.cards.duplicate() as Array
@@ -29,6 +31,7 @@ func initialize(fight_global_signals, fight_state, deck_config, shuffle_seed, ow
 	
 	for card_config in local_card_list:
 		add_new_card_to_bottom(card_config, owner_number)
+	card_counter.set_value(get_card_count())
 
 
 func add_new_card_to_bottom(card_config, owner_number):
@@ -41,14 +44,13 @@ func _on_Area_input_event(camera: Node, event: InputEvent, position: Vector3, no
 		var mouse_button_event := event as InputEventMouseButton
 		if mouse_button_event.pressed and mouse_button_event.button_index == BUTTON_LEFT :
 			var card = null
-			if deck_list.get_child_count() != 0:
+			if get_card_count() != 0:
 				card = deck_list.get_child(0)
 			emit_signal("deck_click", self, card)
 
 
 func get_card_count():
 	return deck_list.get_child_count()
-
 
 
 func highlight():
@@ -58,3 +60,7 @@ func highlight():
 func cancel_highlight():
 	highlighter.cancel_highlight()
 
+
+func remove_card(card):
+	deck_list.remove_child(card)
+	card_counter.set_value(get_card_count())

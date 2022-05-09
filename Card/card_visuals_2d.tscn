@@ -52,6 +52,9 @@ margin_bottom = 108.0
 theme = SubResource( 2 )
 text = "card_name"
 align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Image" type="Sprite" parent="."]
 position = Vector2( 193, 195 )

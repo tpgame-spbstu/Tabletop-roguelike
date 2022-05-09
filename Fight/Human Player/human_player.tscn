@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Fight/Human Player/hand.gd" type="Script" id=1]
 [ext_resource path="res://Fight/Human Player/deck.gd" type="Script" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://Fight/Human Player/spike.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Fight/gong.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Hand/hand.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Fight/Human Player/cards_counter.tscn" type="PackedScene" id=11]
 
 [sub_resource type="CubeMesh" id=1]
 
@@ -70,6 +71,9 @@ material/0 = null
 [node name="spike" parent="main_deck" instance=ExtResource( 8 )]
 transform = Transform( 0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, -0.15, 0 )
 
+[node name="cards_counter" parent="main_deck" instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.842035 )
+
 [node name="dummy_deck" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 0, -1 )
 script = ExtResource( 2 )
@@ -92,6 +96,9 @@ material/0 = null
 
 [node name="spike" parent="dummy_deck" instance=ExtResource( 8 )]
 transform = Transform( 0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, -0.15, 0 )
+
+[node name="cards_counter" parent="dummy_deck" instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.842035 )
 
 [node name="turn_end_pause_timer" type="Timer" parent="."]
 one_shot = true
