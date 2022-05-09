@@ -54,6 +54,7 @@ func set_choosing_state():
 
 func set_blocked_state():
 	$map_gui/tip.hide()
+	current_map_point.mark_current()
 	current_map_point.highlight()
 	_state = _MapState.BLOCKED
 

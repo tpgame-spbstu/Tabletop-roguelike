@@ -1,5 +1,6 @@
 extends Area
 
+const SPRITE_SHIFT_VECTOR = Vector3(0, 5, 0)
 
 signal map_point_click(map_point)
 
@@ -54,8 +55,12 @@ func _on_Point_input_event(camera, event, position, normal, shape_idx):
 func mark_visited(animate: bool=true):
 	map_point_config.set_visited(true)
 	_banner.set_sail(animate)
-	_sprite_type.queue_free()
 	$AnimationPlayer.stop()
+	_sprite_type.hide()
+
+
+func mark_current():
+	_sprite_type.translate(SPRITE_SHIFT_VECTOR)
 
 
 ## make the 'bounding' mesh visible
