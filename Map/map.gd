@@ -49,7 +49,7 @@ func set_choosing_state():
 	$map_gui/tip.hide()
 	_state = _MapState.CHOOSING
 	# highlight all the points, the current node has paths to
-	_highlight_points(current_map_point.map_point_config)
+	_highlight_points(current_map_point)
 
 
 func set_blocked_state():
@@ -97,6 +97,11 @@ func _generate_points() -> void:
 		_points[point_config] = point
 
 		_add_paths(point_config)
+	
+	for point in _points.values():
+		_graph[point] = []
+		for dest_conf in map_config.map_point_graph[point.map_point_config]:
+			_graph[point].append(_points[dest_conf])
 
 
 func _add_paths(p_conf):
@@ -136,16 +141,16 @@ func _repaint_paths_availablility():
 	
 	# Secondly, paint all reachable from current point paths
 	# using depth-first graph traversal
-	var p_to_process = [current_map_point.map_point_config]
+	var p_to_process = [current_map_point]
 	# A list to prevent repetitions and cycles
 	var p_processed = []
 	
 	while not p_to_process.empty():
-		var p_conf = p_to_process.pop_back()
+		var p = p_to_process.pop_back()
 		
-		for dest in map_config.map_point_graph[p_conf]:
-			assert(dest != p_conf)
-			var path = _paths[[p_conf, dest]]
+		for dest in _graph[p]:
+			assert(dest != p)
+			var path = _paths[[p.map_point_config, dest.map_point_config]]
 			
 			utils.change_mat_color(path.get_mesh(), reachable_edge_color)
 			
@@ -153,24 +158,24 @@ func _repaint_paths_availablility():
 				continue
 			p_to_process.push_back(dest)
 		
-		p_processed.push_back(p_conf)
+		p_processed.push_back(p)
 
 
-## highlight all the points, that have paths from the `p_conf`
-func _highlight_points(p_conf):
-	for p in map_config.map_point_graph[p_conf]:
-		_points[p].highlight()
+## highlight all the points, that have paths from the `point`
+func _highlight_points(point):
+	for p in _graph[point]:
+		p.highlight()
 
 
-## lowlight all the points, that have paths from the `p_conf`
-func _lowlight_points(p_conf):
-	for p in map_config.map_point_graph[p_conf]:
-		_points[p].lowlight()
+## lowlight all the points, that have paths from the `point`
+func _lowlight_points(point):
+	for p in _graph[point]:
+		p.lowlight()
 
 
 func move_to_next_point(map_point):
 	# lowlight all the vertexes, that has paths from the current (not the one pressed) vertex
-	_lowlight_points(current_map_point.map_point_config)
+	_lowlight_points(current_map_point)
 	# Wait for character move animation
 	var animation = SmoothMoveAnimation.new(current_map_point.global_transform, 
 		map_point.global_transform, 1.0, character)
@@ -186,10 +191,10 @@ func move_to_next_point(map_point):
 
 func explore_location():
 	# Load next location scene
-	var cur_location_scene = load(map_config.current_map_point_config.scene).instance()
+	var cur_location_scene = load(current_map_point.map_point_config.scene).instance()
 	get_parent().add_child(cur_location_scene)
 	cur_location_scene.initialize(game_config.deck_config, 
-		game_config.inventory_config, map_config.current_map_point_config.params)
+		game_config.inventory_config, current_map_point.map_point_config.params)
 	# Hide map and wait for exit from location
 	self.hide()
 	var result = yield(cur_location_scene, "return_to_map")
@@ -218,7 +223,7 @@ func _on_map_point_click(map_point):
 	match(_state):
 		_MapState.CHOOSING:
 			# if the path from the current location to the clicked one exists
-			if map_point.map_point_config in map_config.map_point_graph[current_map_point.map_point_config]:
+			if map_point in _graph[current_map_point]:
 				move_to_next_point(map_point)
 		_MapState.BLOCKED:
 			if map_point == current_map_point:
@@ -229,9 +234,7 @@ func _on_map_point_mouse_entered(map_point):
 	if _state == _MapState.BLOCKED and map_point == current_map_point:
 		$map_gui/tip.show_tip("Исследовать")
 		return
-	if (_state == _MapState.CHOOSING 
-	and map_point.map_point_config 
-	in map_config.map_point_graph[current_map_point.map_point_config]):
+	if (_state == _MapState.CHOOSING and map_point in _graph[current_map_point]):
 		$map_gui/tip.show_tip("Идти дальше")
 		return
 
