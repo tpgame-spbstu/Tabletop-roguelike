@@ -6,15 +6,15 @@
 [ext_resource path="res://Map/Sprites/default.png" type="Texture" id=4]
 
 [sub_resource type="CylinderShape" id=43]
-radius = 5.0
+radius = 6.0
 height = 1.0
 
 [sub_resource type="SpatialMaterial" id=41]
 
 [sub_resource type="CylinderMesh" id=42]
 material = SubResource( 41 )
-top_radius = 5.0
-bottom_radius = 5.0
+top_radius = 6.0
+bottom_radius = 6.0
 height = 0.15
 
 [sub_resource type="Animation" id=44]
