@@ -7,7 +7,7 @@
 viewport_path = NodePath("Viewport")
 
 [sub_resource type="CubeMesh" id=2]
-size = Vector3( 0.8, 0.02, 1 )
+size = Vector3( 0.8, 0.002, 1 )
 
 [sub_resource type="SpatialMaterial" id=4]
 albedo_color = Color( 0.0823529, 0.0823529, 0.0823529, 1 )
@@ -24,7 +24,7 @@ gui_disable_input = true
 [node name="card_visuals_2d" parent="Viewport" instance=ExtResource( 2 )]
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
-transform = Transform( -0.4, -6.03983e-08, 2.64009e-15, 0, -1.74846e-08, -0.4, 6.03983e-08, -0.4, 1.74846e-08, 0, 0.03, 0 )
+transform = Transform( -0.4, -6.03983e-08, 2.64009e-15, 0, -1.74846e-08, -0.4, 6.03983e-08, -0.4, 1.74846e-08, 0, 0.002, 0 )
 pixel_size = 0.005
 texture = SubResource( 5 )
 

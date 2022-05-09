@@ -20,10 +20,6 @@ onready var card_visuals = $card_visuals
 onready var unit_visuals = $unit_visuals
 
 
-func get_size():
-	return Vector3(0.8, 0.02, 1)
-
-
 func initialize(card_config, owner_number, fight_global_signals, fight_state):
 	self.fight_global_signals = fight_global_signals
 	self.fight_state = fight_state
@@ -173,3 +169,17 @@ func remove_effect_symbol(symbol):
 	card_config.effect_symbols.erase(symbol)
 	card_visuals.update()
 	unit_visuals.update()
+
+
+func get_size():
+	var platform = card_visuals.platform as MeshInstance
+	var aabb = platform.get_aabb()
+	return aabb.size.move_toward(Vector3(0,1,0),0.001)
+
+
+func get_card_visuals():
+	return card_visuals
+
+
+func get_unit_visuals():
+	return unit_visuals
