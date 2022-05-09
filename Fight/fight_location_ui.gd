@@ -6,6 +6,7 @@ var description_card
 
 signal final_status_return_to_map_pressed()
 signal debug_return_to_map_pressed()
+signal return_to_main_menu()
 
 
 func initialize(board, player):
@@ -163,3 +164,7 @@ func _on_fight_state_player_1_win_enter():
 
 func _on_fight_state_player_2_win_enter():
 	show_final_status("Проигрыш")
+
+
+func _on_button_exit_to_main_menu_pressed():
+	emit_signal("return_to_main_menu")

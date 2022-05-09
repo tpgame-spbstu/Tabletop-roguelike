@@ -32,10 +32,10 @@ func initialize(fight_state, fight_global_signals, board, deck_config, player_nu
 	
 	hand.connect("hand_left_click", self, "_on_hand_left_click")
 	
-	main_deck.initialize(fight_global_signals, fight_state, deck_config, params["shuffle_seed"], player_number)
+	main_deck.initialize(fight_global_signals, fight_state, human_player_state, deck_config, params["shuffle_seed"], player_number)
 	main_deck.connect("deck_click", self, "_on_deck_click")
 	
-	dummy_deck.initialize(fight_global_signals, fight_state, null, null, player_number)
+	dummy_deck.initialize(fight_global_signals, fight_state, human_player_state, null, null, player_number)
 	dummy_deck.connect("deck_click", self, "_on_deck_click")
 	
 	bell.connect("bell_click", self, "_on_bell_click")
@@ -81,7 +81,7 @@ func play_card(board_cell, card_to_play):
 	add_child(card_to_play)
 
 	# Play animation
-	var animation = LinMoveAnimation.new(card_trans, 
+	var animation = SmoothMoveAnimation.new(card_trans, 
 		board_cell.global_transform, 0.2, card_to_play)
 	AnimationManager.add_animation(animation)
 	yield(animation, "animation_ended")
@@ -240,7 +240,7 @@ func draw_card(deck, card):
 	deck.remove_card(card)
 	var dest = hand.add_card(card, false)
 	dest = Transform(Basis(Vector3(0, dest[1], 0)), dest[0] + hand.get_global_transform().origin)
-	var animation = LinMoveAnimation.new(deck.global_transform,
+	var animation = SmoothMoveAnimation.new(deck.global_transform,
 		dest, 0.2, card)
 	AnimationManager.add_animation(animation)
 	input_allowed = false
@@ -312,8 +312,6 @@ func highlight_possible_moves():
 	#hand
 	if human_player_state.card_to_move != null or human_player_state.card_to_play != null:
 		hand.cancel_highlight()
-		dummy_deck.cancel_highlight()
-		main_deck.cancel_highlight()
 		return
 	
 	var is_obtainable = hand.has_obtainable_cards(human_player_state)
@@ -325,23 +323,6 @@ func highlight_possible_moves():
 		has_playable_cards = true
 	else:
 		hand.cancel_highlight()
-	
-	#deck
-	var is_drawable = false
-	if fight_state.turn_state == TurnState.DRAW_CARDS or human_player_state.extra_draw_cost.is_obtainable(human_player_state) and human_player_state.extra_draws_count > 0:
-		if dummy_deck.get_card_count() > 0:
-			dummy_deck.highlight()
-		else:
-			dummy_deck.cancel_highlight()
-			
-		if main_deck.get_card_count() > 0:
-			main_deck.highlight()
-		else:
-			main_deck.cancel_highlight()
-		is_drawable = true
-	else:
-		dummy_deck.cancel_highlight()
-		main_deck.cancel_highlight()
 	
 	#board
 	var is_movable = false
