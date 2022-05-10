@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://Fight/fight_location.gd" type="Script" id=1]
 [ext_resource path="res://Fight/AI Player/ai_player.tscn" type="PackedScene" id=2]
@@ -6,13 +6,19 @@
 [ext_resource path="res://Fight/board_cell.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Fight/fight_global_signals.gd" type="Script" id=5]
 [ext_resource path="res://Fight/fight_ui.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Fight/resources_status.gd" type="Script" id=7]
 [ext_resource path="res://Fight/fight_state.gd" type="Script" id=8]
 [ext_resource path="res://Fight/Camera.gd" type="Script" id=9]
 [ext_resource path="res://Fight/Human Player/human_player.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Map/map_environment.tres" type="Environment" id=11]
 [ext_resource path="res://Fight/fight_loger.gd" type="Script" id=12]
+[ext_resource path="res://Models/Scene/Bones/bonegltf.tscn" type="PackedScene" id=14]
+[ext_resource path="res://Models/Scene/Bones/skull_broken.tscn" type="PackedScene" id=15]
+[ext_resource path="res://Models/Scene/lightninggltf.tscn" type="PackedScene" id=16]
 [ext_resource path="res://Fight/Assets/selected_board_cell_material.tres" type="Material" id=17]
 [ext_resource path="res://Fight/hand_hightlight.gd" type="Script" id=18]
+[ext_resource path="res://Models/Models/potion/potionSmall_red.obj" type="ArrayMesh" id=19]
+[ext_resource path="res://Models/Scene/Desk.tscn" type="PackedScene" id=20]
 
 [sub_resource type="QuadMesh" id=10]
 material = ExtResource( 17 )
@@ -156,7 +162,8 @@ script = ExtResource( 9 )
 [node name="fight_ui" parent="." instance=ExtResource( 6 )]
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.373791, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.45728, -0.0812066, -0.296759 )
+visible = false
 mesh = SubResource( 7 )
 material/0 = SubResource( 8 )
 
@@ -174,6 +181,38 @@ material/0 = SubResource( 12 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1 )
 mesh = SubResource( 11 )
 material/0 = SubResource( 13 )
+
+[node name="resources_status" type="Spatial" parent="."]
+script = ExtResource( 7 )
+
+[node name="lightninggltf" parent="resources_status" instance=ExtResource( 16 )]
+transform = Transform( -0.2, -1.74846e-08, 8.74228e-09, 8.74228e-09, 3.82137e-16, 0.2, -1.74846e-08, 0.2, 3.82137e-16, -2.37239, 0, -1.01714 )
+
+[node name="energy_status" type="Spatial" parent="resources_status"]
+
+[node name="bonegltf" parent="resources_status" instance=ExtResource( 14 )]
+transform = Transform( 0.211372, -0.212632, -0.0104701, 0, 0.0147543, -0.299637, 0.21289, 0.211116, 0.0103955, -2.37122, 0, -1.36087 )
+
+[node name="bonegltf2" parent="resources_status" instance=ExtResource( 14 )]
+transform = Transform( 0.250539, 0.160892, 0.0366582, -0.0364875, 0.119009, -0.272957, -0.160931, 0.223496, 0.118957, -2.3327, 0.0285812, -1.39182 )
+
+[node name="bones_status" type="Spatial" parent="resources_status"]
+
+[node name="potionSmall_red" type="MeshInstance" parent="resources_status"]
+transform = Transform( 0.3, 0, 0, 0, -1.31134e-08, -0.3, 0, 0.3, -1.31134e-08, -2.34918, 0, -1.85543 )
+mesh = ExtResource( 19 )
+skeleton = NodePath("../..")
+material/0 = null
+material/1 = null
+material/2 = null
+
+[node name="blood_status" type="Spatial" parent="resources_status"]
+
+[node name="skull_broken" parent="resources_status" instance=ExtResource( 15 )]
+transform = Transform( -0.688008, 0.0763884, -0.721672, 0.00210528, 0.99465, 0.103276, 0.7257, 0.0695353, -0.684488, 3.09948, 0, 0.584778 )
+
+[node name="Desk" parent="." instance=ExtResource( 20 )]
+transform = Transform( 5, 0, 0, 0, 5, 0, 0, 0, 5, -3.90537, -1.5388, 0.0392361 )
 
 [connection signal="loop_number_changed" from="fight_state" to="fight_loger" method="_on_fight_state_loop_number_changed"]
 [connection signal="loop_number_changed" from="fight_state" to="fight_ui" method="_on_fight_state_loop_number_changed"]
@@ -200,8 +239,10 @@ material/0 = SubResource( 13 )
 [connection signal="card_to_play_selected" from="human_player_1" to="Camera" method="_on_human_player_1_card_to_play_selected"]
 [connection signal="bones_changed" from="human_player_1/human_player_state" to="fight_loger" method="_on_human_player_state_bones_changed"]
 [connection signal="bones_changed" from="human_player_1/human_player_state" to="fight_ui" method="_on_human_player_state_bones_changed"]
+[connection signal="bones_changed" from="human_player_1/human_player_state" to="resources_status" method="_on_human_player_state_bones_changed"]
 [connection signal="energy_changed" from="human_player_1/human_player_state" to="fight_loger" method="_on_human_player_state_energy_changed"]
 [connection signal="energy_changed" from="human_player_1/human_player_state" to="fight_ui" method="_on_human_player_state_energy_changed"]
+[connection signal="energy_changed" from="human_player_1/human_player_state" to="resources_status" method="_on_human_player_state_energy_changed"]
 [connection signal="extra_draws_count_changed" from="human_player_1/human_player_state" to="fight_loger" method="_on_human_player_state_extra_draws_count_changed"]
 [connection signal="extra_draws_count_changed" from="human_player_1/human_player_state" to="fight_ui" method="_on_human_player_state_extra_draws_count_changed"]
 [connection signal="debug_return_to_map_pressed" from="fight_ui" to="." method="_on_fight_ui_debug_return_to_map_pressed"]
