@@ -112,7 +112,7 @@ func move_card(board_cell, card_to_move):
 	self.add_child(card_to_move)
 	
 	# Play animation
-	var animation = LinMoveAnimation.new(prev_board_cell.global_transform, 
+	var animation = SmoothMoveAnimation.new(prev_board_cell.global_transform, 
 		board_cell.global_transform, 0.2, card_to_move)
 	AnimationManager.add_animation(animation)
 	yield(animation, "animation_ended")

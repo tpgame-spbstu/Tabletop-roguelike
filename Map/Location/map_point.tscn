@@ -1,44 +1,81 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Map/Location/map_point.gd" type="Script" id=1]
 [ext_resource path="res://Map/Banner/banner.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Map/Location/stone_point.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Map/Sprites/default.png" type="Texture" id=4]
 
-[sub_resource type="BoxShape" id=36]
-extents = Vector3( 3, 0.15, 3 )
+[sub_resource type="CylinderShape" id=43]
+radius = 6.0
+height = 1.0
 
-[sub_resource type="SpatialMaterial" id=38]
-albedo_color = Color( 0.478431, 0.0901961, 0.0901961, 1 )
+[sub_resource type="SpatialMaterial" id=41]
 
-[sub_resource type="CubeMesh" id=37]
-material = SubResource( 38 )
+[sub_resource type="CylinderMesh" id=42]
+material = SubResource( 41 )
+top_radius = 6.0
+bottom_radius = 6.0
+height = 0.15
 
-[sub_resource type="SpatialMaterial" id=39]
-flags_unshaded = true
-params_cull_mode = 2
+[sub_resource type="Animation" id=44]
+resource_name = "sprite_animation"
+length = 2.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("sprite_type:rotation_degrees")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1, 1.5, 2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( 0, -30, 0 ), Vector3( 0, 0, 0 ), Vector3( 0, 30, 0 ), Vector3( 0, 0, 0 ) ]
+}
 
-[sub_resource type="CubeMesh" id=40]
-material = SubResource( 39 )
-size = Vector3( 2.3, 1.9, 2.3 )
+[sub_resource type="Animation" id=45]
+resource_name = "sprite_animation (copy)"
+length = 2.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("sprite_type:rotation_degrees")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1, 1.5, 2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( 0, -30, 0 ), Vector3( 0, 0, 0 ), Vector3( 0, 30, 0 ), Vector3( 0, 0, 0 ) ]
+}
 
 [node name="Point" type="Area"]
 script = ExtResource( 1 )
+highlight_color = Color( 0.945098, 1, 0, 1 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, 0.999999, 0, 0, 0, 1, 0, 0, 0 )
-shape = SubResource( 36 )
-
-[node name="MeshInstance" type="MeshInstance" parent="."]
-transform = Transform( 3, 0, 0, 0, 0.15, 0, 0, 0, 3, 0, 0, 0 )
-mesh = SubResource( 37 )
-material/0 = null
+shape = SubResource( 43 )
 
 [node name="banner" parent="." instance=ExtResource( 2 )]
-transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -2.706, 0.16, 0 )
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -2.706, 0.875459, 0 )
+
+[node name="scene" parent="." instance=ExtResource( 3 )]
+transform = Transform( 0.05, 0, 0, 0, 0.05, 0, 0, 0, 0.05, 0, 0.0173252, 0 )
 
 [node name="on_hover_mesh" type="MeshInstance" parent="."]
-transform = Transform( 3, 0, 0, 0, 0.15, 0, 0, 0, 3, 0, 0, 0 )
-mesh = SubResource( 40 )
-skeleton = NodePath("../MeshInstance")
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0791323, 0 )
+mesh = SubResource( 42 )
 material/0 = null
+
+[node name="sprite_type" type="Sprite3D" parent="."]
+transform = Transform( 0.998655, 0, 0.0518499, 0, 1, 0, -0.0518499, 0, 0.998655, 0, 5.659, 0 )
+texture = ExtResource( 4 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/sprite_animation = SubResource( 44 )
+"anims/sprite_animation (copy)" = SubResource( 45 )
 
 [connection signal="input_event" from="." to="." method="_on_Point_input_event"]

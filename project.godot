@@ -34,6 +34,16 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://lin_move_animation.gd"
 }, {
+"base": "Object",
+"class": "RaycastUtils",
+"language": "GDScript",
+"path": "res://raycast_utils.gd"
+}, {
+"base": "Reference",
+"class": "SmoothMoveAnimation",
+"language": "GDScript",
+"path": "res://smooth_move_animation.gd"
+}, {
 "base": "Reference",
 "class": "Symbol",
 "language": "GDScript",
@@ -45,6 +55,8 @@ _global_script_class_icons={
 "GameLoadManager": "",
 "HoverTween": "",
 "LinMoveAnimation": "",
+"RaycastUtils": "",
+"SmoothMoveAnimation": "",
 "Symbol": ""
 }
 

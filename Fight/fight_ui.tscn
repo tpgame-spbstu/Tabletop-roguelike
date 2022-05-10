@@ -305,11 +305,21 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="button_exit_to_map" type="Button" parent="ColorRect"]
-margin_right = 56.0
+[node name="button_exit_to_main_menu" type="Button" parent="ColorRect"]
+margin_right = 106.0
 margin_bottom = 47.0
 theme = ExtResource( 1 )
-text = "Карта"
+text = "Главное меню"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="button_exit_to_map" type="Button" parent="ColorRect"]
+margin_top = 47.0
+margin_right = 106.0
+margin_bottom = 94.0
+theme = ExtResource( 1 )
+text = "Пропуск боя (debug)"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -361,5 +371,6 @@ __meta__ = {
 [connection signal="mouse_exited" from="ColorRect/Bones" to="." method="_on_Bones_mouse_exited"]
 [connection signal="mouse_entered" from="ColorRect/card" to="." method="_on_card_mouse_entered"]
 [connection signal="mouse_exited" from="ColorRect/card" to="." method="_on_card_mouse_exited"]
+[connection signal="pressed" from="ColorRect/button_exit_to_main_menu" to="." method="_on_button_exit_to_main_menu_pressed"]
 [connection signal="pressed" from="ColorRect/button_exit_to_map" to="." method="_on_button_exit_to_map_pressed"]
 [connection signal="pressed" from="Final_status/return_to_map" to="." method="_on_final_status_return_to_map_pressed"]
