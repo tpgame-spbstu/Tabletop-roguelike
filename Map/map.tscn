@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Map/map.gd" type="Script" id=1]
 [ext_resource path="res://Models/Scene/Trees/Trees.tscn" type="PackedScene" id=2]
@@ -6,7 +6,11 @@
 [ext_resource path="res://Map/tip.gd" type="Script" id=4]
 [ext_resource path="res://fonts/ubuntu_b_32.tres" type="Theme" id=5]
 [ext_resource path="res://fonts/ubuntu_b_16.tres" type="Theme" id=6]
-
+[ext_resource path="res://Models/Other/_stone_3.fbx" type="PackedScene" id=7]
+[ext_resource path="res://Models/Other/_flower_6.fbx" type="PackedScene" id=8]
+[ext_resource path="res://Models/Other/_stone_2.fbx" type="PackedScene" id=9]
+[ext_resource path="res://Models/Other/_flower_3.fbx" type="PackedScene" id=10]
+[ext_resource path="res://Models/Other/_flower_4.fbx" type="PackedScene" id=11]
 
 [sub_resource type="PlaneMesh" id=3]
 size = Vector2( 500, 500 )
@@ -126,5 +130,173 @@ transform = Transform( -0.866984, 0, -0.498336, 0, 1, 0, 0.498336, 0, -0.866984,
 
 [node name="Trees6" parent="Forest" instance=ExtResource( 2 )]
 transform = Transform( -0.866984, 0, -0.498336, 0, 1, 0, 0.498336, 0, -0.866984, 48.0167, -7.62939e-06, -22.5426 )
+
+[node name="Plants" type="Spatial" parent="Forest"]
+transform = Transform( 0.428178, 0, 0.903694, 0, 1, 0, -0.903694, 0, 0.428178, -2.27353, 0, -6.00315 )
+
+[node name="_flower_4" parent="Forest/Plants" instance=ExtResource( 11 )]
+transform = Transform( 0.971721, 0, 1.1427, 0, 1.5, 0, -1.1427, 0, 0.971721, -1.80072, 0, -8.03948 )
+
+[node name="_flower_9" parent="Forest/Plants" instance=ExtResource( 11 )]
+transform = Transform( 0.971721, 0, 1.1427, 0, 1.5, 0, -1.1427, 0, 0.971721, -0.220943, 0, -9.89722 )
+
+[node name="_flower_10" parent="Forest/Plants" instance=ExtResource( 11 )]
+transform = Transform( 0.971721, 0, 1.1427, 0, 1.5, 0, -1.1427, 0, 0.971721, 0.208462, 0, -7.21517 )
+
+[node name="_flower_5" parent="Forest/Plants" instance=ExtResource( 11 )]
+transform = Transform( 0.971721, 0, 1.1427, 0, 1.5, 0, -1.1427, 0, 0.971721, 0.848783, 0, -8.3188 )
+
+[node name="_stone_4" parent="Forest/Plants" instance=ExtResource( 7 )]
+transform = Transform( 0.971721, 0, 1.1427, 0, 1.5, 0, -1.1427, 0, 0.971721, -9.83678, 0, -4.6023 )
+
+[node name="_flower_6" parent="Forest/Plants" instance=ExtResource( 8 )]
+transform = Transform( 0.971721, 0, 1.1427, 0, 1.5, 0, -1.1427, 0, 0.971721, 3.79197, 0, 7.26502 )
+
+[node name="_flower_7" parent="Forest/Plants" instance=ExtResource( 8 )]
+transform = Transform( 0.971721, 0, 1.1427, 0, 1.5, 0, -1.1427, 0, 0.971721, 3.81005, 0, 5.07097 )
+
+[node name="_flower_8" parent="Forest/Plants" instance=ExtResource( 8 )]
+transform = Transform( 0.971721, 0, 1.1427, 0, 1.5, 0, -1.1427, 0, 0.971721, 0.55653, 0, 7.41718 )
+
+[node name="_flower_11" parent="Forest/Plants" instance=ExtResource( 8 )]
+transform = Transform( 0.971721, 0, 1.1427, 0, 1.5, 0, -1.1427, 0, 0.971721, 0.487507, 0, 5.44932 )
+
+[node name="_flower_12" parent="Forest/Plants" instance=ExtResource( 8 )]
+transform = Transform( 0.971721, 0, 1.1427, 0, 1.5, 0, -1.1427, 0, 0.971721, -0.566296, 0, 6.92065 )
+
+[node name="_stone_2" parent="Forest/Plants" instance=ExtResource( 9 )]
+transform = Transform( 1.29563, 0, 1.5236, 0, 2, 0, -1.5236, 0, 1.29563, -8.08006, 0, -1.4685 )
+
+[node name="_stone_3" parent="Forest/Plants" instance=ExtResource( 9 )]
+transform = Transform( 1.29563, 0, 1.5236, 0, 2, 0, -1.5236, 0, 1.29563, 3.9926, 0, -5.29193 )
+
+[node name="_flower_3" parent="Forest/Plants" instance=ExtResource( 10 )]
+transform = Transform( 1.29563, 0, 1.5236, 0, 2, 0, -1.5236, 0, 1.29563, -2.58896, 0, -2.1491 )
+
+[node name="Plants2" type="Spatial" parent="Forest"]
+transform = Transform( 0.852102, 0, -0.523376, 0, 1, 0, 0.523376, 0, 0.852102, 24.1537, 0, 24.4326 )
+
+[node name="_flower_4" parent="Forest/Plants2" instance=ExtResource( 11 )]
+transform = Transform( 0.971721, 0, 1.1427, 0, 1.5, 0, -1.1427, 0, 0.971721, -1.80072, 0, -8.03948 )
+
+[node name="_flower_9" parent="Forest/Plants2" instance=ExtResource( 11 )]
+transform = Transform( 0.971721, 0, 1.1427, 0, 1.5, 0, -1.1427, 0, 0.971721, -0.220943, 0, -9.89722 )
+
+[node name="_flower_10" parent="Forest/Plants2" instance=ExtResource( 11 )]
+transform = Transform( 0.971721, 0, 1.1427, 0, 1.5, 0, -1.1427, 0, 0.971721, 0.208462, 0, -7.21517 )
+
+[node name="_flower_5" parent="Forest/Plants2" instance=ExtResource( 11 )]
+transform = Transform( 0.971721, 0, 1.1427, 0, 1.5, 0, -1.1427, 0, 0.971721, 0.848783, 0, -8.3188 )
+
+[node name="_stone_4" parent="Forest/Plants2" instance=ExtResource( 7 )]
+transform = Transform( 0.971721, 0, 1.1427, 0, 1.5, 0, -1.1427, 0, 0.971721, -9.83678, 0, -4.6023 )
+
+[node name="_flower_6" parent="Forest/Plants2" instance=ExtResource( 8 )]
+transform = Transform( 0.971721, 0, 1.1427, 0, 1.5, 0, -1.1427, 0, 0.971721, 3.79197, 0, 7.26502 )
+
+[node name="_flower_7" parent="Forest/Plants2" instance=ExtResource( 8 )]
+transform = Transform( 0.971721, 0, 1.1427, 0, 1.5, 0, -1.1427, 0, 0.971721, 3.81005, 0, 5.07097 )
+
+[node name="_flower_8" parent="Forest/Plants2" instance=ExtResource( 8 )]
+transform = Transform( 0.971721, 0, 1.1427, 0, 1.5, 0, -1.1427, 0, 0.971721, 0.55653, 0, 7.41718 )
+
+[node name="_flower_11" parent="Forest/Plants2" instance=ExtResource( 8 )]
+transform = Transform( 0.971721, 0, 1.1427, 0, 1.5, 0, -1.1427, 0, 0.971721, 0.487507, 0, 5.44932 )
+
+[node name="_flower_12" parent="Forest/Plants2" instance=ExtResource( 8 )]
+transform = Transform( 0.971721, 0, 1.1427, 0, 1.5, 0, -1.1427, 0, 0.971721, -0.566296, 0, 6.92065 )
+
+[node name="_stone_2" parent="Forest/Plants2" instance=ExtResource( 9 )]
+transform = Transform( 1.29563, 0, 1.5236, 0, 2, 0, -1.5236, 0, 1.29563, -8.08006, 0, -1.4685 )
+
+[node name="_stone_3" parent="Forest/Plants2" instance=ExtResource( 9 )]
+transform = Transform( 1.29563, 0, 1.5236, 0, 2, 0, -1.5236, 0, 1.29563, 3.9926, 0, -5.29193 )
+
+[node name="_flower_3" parent="Forest/Plants2" instance=ExtResource( 10 )]
+transform = Transform( 1.29563, 0, 1.5236, 0, 2, 0, -1.5236, 0, 1.29563, -2.58896, 0, -2.1491 )
+
+[node name="Plants3" type="Spatial" parent="Forest"]
+transform = Transform( 0.963756, 0, 0.266784, 0, 1, 0, -0.266784, 0, 0.963756, -23.5729, 0, 33.778 )
+
+[node name="_flower_4" parent="Forest/Plants3" instance=ExtResource( 11 )]
+transform = Transform( 0.971721, 0, 1.1427, 0, 1.5, 0, -1.1427, 0, 0.971721, -1.80072, 0, -8.03948 )
+
+[node name="_flower_9" parent="Forest/Plants3" instance=ExtResource( 11 )]
+transform = Transform( 0.971721, 0, 1.1427, 0, 1.5, 0, -1.1427, 0, 0.971721, -0.220943, 0, -9.89722 )
+
+[node name="_flower_10" parent="Forest/Plants3" instance=ExtResource( 11 )]
+transform = Transform( 0.971721, 0, 1.1427, 0, 1.5, 0, -1.1427, 0, 0.971721, 0.208462, 0, -7.21517 )
+
+[node name="_flower_5" parent="Forest/Plants3" instance=ExtResource( 11 )]
+transform = Transform( 0.971721, 0, 1.1427, 0, 1.5, 0, -1.1427, 0, 0.971721, 0.848783, 0, -8.3188 )
+
+[node name="_stone_4" parent="Forest/Plants3" instance=ExtResource( 7 )]
+transform = Transform( 0.971721, 0, 1.1427, 0, 1.5, 0, -1.1427, 0, 0.971721, -9.83678, 0, -4.6023 )
+
+[node name="_flower_6" parent="Forest/Plants3" instance=ExtResource( 8 )]
+transform = Transform( 0.971721, 0, 1.1427, 0, 1.5, 0, -1.1427, 0, 0.971721, 3.79197, 0, 7.26502 )
+
+[node name="_flower_7" parent="Forest/Plants3" instance=ExtResource( 8 )]
+transform = Transform( 0.971721, 0, 1.1427, 0, 1.5, 0, -1.1427, 0, 0.971721, 3.81005, 0, 5.07097 )
+
+[node name="_flower_8" parent="Forest/Plants3" instance=ExtResource( 8 )]
+transform = Transform( 0.971721, 0, 1.1427, 0, 1.5, 0, -1.1427, 0, 0.971721, 0.55653, 0, 7.41718 )
+
+[node name="_flower_11" parent="Forest/Plants3" instance=ExtResource( 8 )]
+transform = Transform( 0.971721, 0, 1.1427, 0, 1.5, 0, -1.1427, 0, 0.971721, 0.487507, 0, 5.44932 )
+
+[node name="_flower_12" parent="Forest/Plants3" instance=ExtResource( 8 )]
+transform = Transform( 0.971721, 0, 1.1427, 0, 1.5, 0, -1.1427, 0, 0.971721, -0.566296, 0, 6.92065 )
+
+[node name="_stone_2" parent="Forest/Plants3" instance=ExtResource( 9 )]
+transform = Transform( 1.29563, 0, 1.5236, 0, 2, 0, -1.5236, 0, 1.29563, -8.08006, 0, -1.4685 )
+
+[node name="_stone_3" parent="Forest/Plants3" instance=ExtResource( 9 )]
+transform = Transform( 1.29563, 0, 1.5236, 0, 2, 0, -1.5236, 0, 1.29563, 3.9926, 0, -5.29193 )
+
+[node name="_flower_3" parent="Forest/Plants3" instance=ExtResource( 10 )]
+transform = Transform( 1.29563, 0, 1.5236, 0, 2, 0, -1.5236, 0, 1.29563, -2.58896, 0, -2.1491 )
+
+[node name="Plants4" type="Spatial" parent="Forest"]
+transform = Transform( 0.963756, 0, 0.266784, 0, 1, 0, -0.266784, 0, 0.963756, 13.287, 1.90735e-06, 48.427 )
+
+[node name="_flower_4" parent="Forest/Plants4" instance=ExtResource( 11 )]
+transform = Transform( 0.971721, 0, 1.1427, 0, 1.5, 0, -1.1427, 0, 0.971721, -1.80072, 0, -8.03948 )
+
+[node name="_flower_9" parent="Forest/Plants4" instance=ExtResource( 11 )]
+transform = Transform( 0.971721, 0, 1.1427, 0, 1.5, 0, -1.1427, 0, 0.971721, -0.220943, 0, -9.89722 )
+
+[node name="_flower_10" parent="Forest/Plants4" instance=ExtResource( 11 )]
+transform = Transform( 0.971721, 0, 1.1427, 0, 1.5, 0, -1.1427, 0, 0.971721, 0.208462, 0, -7.21517 )
+
+[node name="_flower_5" parent="Forest/Plants4" instance=ExtResource( 11 )]
+transform = Transform( 0.971721, 0, 1.1427, 0, 1.5, 0, -1.1427, 0, 0.971721, 0.848783, 0, -8.3188 )
+
+[node name="_stone_4" parent="Forest/Plants4" instance=ExtResource( 7 )]
+transform = Transform( 0.971721, 0, 1.1427, 0, 1.5, 0, -1.1427, 0, 0.971721, -9.83678, 0, -4.6023 )
+
+[node name="_flower_6" parent="Forest/Plants4" instance=ExtResource( 8 )]
+transform = Transform( 0.971721, 0, 1.1427, 0, 1.5, 0, -1.1427, 0, 0.971721, 3.79197, 0, 7.26502 )
+
+[node name="_flower_7" parent="Forest/Plants4" instance=ExtResource( 8 )]
+transform = Transform( 0.971721, 0, 1.1427, 0, 1.5, 0, -1.1427, 0, 0.971721, 3.81005, 0, 5.07097 )
+
+[node name="_flower_8" parent="Forest/Plants4" instance=ExtResource( 8 )]
+transform = Transform( 0.971721, 0, 1.1427, 0, 1.5, 0, -1.1427, 0, 0.971721, 0.55653, 0, 7.41718 )
+
+[node name="_flower_11" parent="Forest/Plants4" instance=ExtResource( 8 )]
+transform = Transform( 0.971721, 0, 1.1427, 0, 1.5, 0, -1.1427, 0, 0.971721, 0.487507, 0, 5.44932 )
+
+[node name="_flower_12" parent="Forest/Plants4" instance=ExtResource( 8 )]
+transform = Transform( 0.971721, 0, 1.1427, 0, 1.5, 0, -1.1427, 0, 0.971721, -0.566296, 0, 6.92065 )
+
+[node name="_stone_2" parent="Forest/Plants4" instance=ExtResource( 9 )]
+transform = Transform( 1.29563, 0, 1.5236, 0, 2, 0, -1.5236, 0, 1.29563, -8.08006, 0, -1.4685 )
+
+[node name="_stone_3" parent="Forest/Plants4" instance=ExtResource( 9 )]
+transform = Transform( 1.29563, 0, 1.5236, 0, 2, 0, -1.5236, 0, 1.29563, 3.9926, 0, -5.29193 )
+
+[node name="_flower_3" parent="Forest/Plants4" instance=ExtResource( 10 )]
+transform = Transform( 1.29563, 0, 1.5236, 0, 2, 0, -1.5236, 0, 1.29563, -2.58896, 0, -2.1491 )
 
 [connection signal="pressed" from="map_gui/main_menu_button" to="." method="_on_main_menu_button_pressed"]
