@@ -4,11 +4,12 @@ extends Spatial
 
 onready var selector := $selector
 onready var hand := $hand
+onready var bell := $gong
 onready var main_deck := $main_deck
 onready var dummy_deck := $dummy_deck
 onready var human_player_state := $human_player_state
 onready var turn_end_pause_timer := $turn_end_pause_timer
-const TURN_END_PAUSE_TIME = 1.2
+const TURN_END_PAUSE_TIME = 0.5
 
 signal card_to_play_selected(card)
 
@@ -21,7 +22,7 @@ var input_allowed := true
 
 var TurnState := preload("res://Fight/fight_state.gd").TurnState
 
-func initialize(fight_state, fight_global_signals, board, bell, deck_config, player_number, params):
+func initialize(fight_state, fight_global_signals, board, deck_config, player_number, params):
 	self.fight_state = fight_state
 	self.fight_global_signals = fight_global_signals
 	self.board = board
@@ -31,10 +32,10 @@ func initialize(fight_state, fight_global_signals, board, bell, deck_config, pla
 	
 	hand.connect("hand_left_click", self, "_on_hand_left_click")
 	
-	main_deck.initialize(fight_global_signals, fight_state, deck_config, params["shuffle_seed"], player_number)
+	main_deck.initialize(fight_global_signals, fight_state, human_player_state, deck_config, params["shuffle_seed"], player_number)
 	main_deck.connect("deck_click", self, "_on_deck_click")
 	
-	dummy_deck.initialize(fight_global_signals, fight_state, null, null, player_number)
+	dummy_deck.initialize(fight_global_signals, fight_state, human_player_state, null, null, player_number)
 	dummy_deck.connect("deck_click", self, "_on_deck_click")
 	
 	bell.connect("bell_click", self, "_on_bell_click")
@@ -62,12 +63,35 @@ func _on_place_and_move_enter():
 
 func _on_attack_enter():
 	# Give all cards a chance to attack
-	board.process_player_attack(player_number)
-	turn_end_pause_timer.start(TURN_END_PAUSE_TIME)
 	input_allowed = false
+	var tmp_state = board.process_player_attack(player_number)
+	if tmp_state != null:
+		yield(tmp_state, "completed")
+	turn_end_pause_timer.start(TURN_END_PAUSE_TIME)
 	yield(turn_end_pause_timer, "timeout")
 	input_allowed = true
 	fight_state.next_state()
+
+
+# Play card to board cell, with lin animation from hand to board_cell
+func play_card(board_cell, card_to_play):
+	
+	# Temporary remove card from hand_cell and add to player root
+	var card_trans = hand.remove_card(card_to_play)
+	add_child(card_to_play)
+
+	# Play animation
+	var animation = SmoothMoveAnimation.new(card_trans, 
+		board_cell.global_transform, 0.2, card_to_play)
+	AnimationManager.add_animation(animation)
+	yield(animation, "animation_ended")
+	
+	# Add to target cell
+	self.remove_child(card_to_play)
+	board_cell.add_card(card_to_play)
+	
+	# Emit global signal
+	fight_global_signals.emit_signal("card_played", board_cell, card_to_play)
 
 
 func _on_board_left_click(board_cell, card):
@@ -93,11 +117,9 @@ func _on_board_left_click(board_cell, card):
 		# Pay cost for card
 		card_to_play.card_config.play_cost.pay(human_player_state)
 		# Play selected card
-		var hand_cell = card_to_play.get_hand_cell_or_null()
 		input_allowed = false
-		yield(board.play_card(hand_cell, board_cell, card_to_play), "completed")
+		yield(play_card(board_cell, card_to_play), "completed")
 		input_allowed = true
-		hand.remove_hand_cell(hand_cell)
 		# Reset selected card
 		cancel_selection()
 		highlight_possible_moves()
@@ -191,7 +213,7 @@ func _on_deck_click(deck, card):
 			if card == null:
 				# Clicked on empty deck
 				# Get damage
-				fight_state.reduse_player_health(player_number, 1)
+				fight_state.reduce_player_health(player_number, 1)
 			else:
 				# Draw card from deck
 				yield(draw_card(deck, card), "completed")
@@ -215,14 +237,19 @@ func _on_deck_click(deck, card):
 
 # Draw card from deck
 func draw_card(deck, card):
-	var animation = LinMoveAnimation.new(deck.global_transform,
-		hand.global_transform, 0.2, card)
+	deck.remove_card(card)
+	var dest = hand.add_card(card, false)
+	dest = Transform(Basis(Vector3(0, dest[1], 0)), dest[0] + hand.get_global_transform().origin)
+	var animation = SmoothMoveAnimation.new(deck.global_transform,
+		dest, 0.2, card)
 	AnimationManager.add_animation(animation)
 	input_allowed = false
 	yield(animation, "animation_ended")
 	input_allowed = true
-	card.get_parent().remove_child(card)
-	hand.add_card(card)
+
+	hand.draw_cards()
+	card.set_global_transform(hand._proxies[~0].get_global_transform())
+	card.global_rotate(Vector3.UP, -PI)
 
 
 func _on_bell_click(bell):
@@ -285,8 +312,6 @@ func highlight_possible_moves():
 	#hand
 	if human_player_state.card_to_move != null or human_player_state.card_to_play != null:
 		hand.cancel_highlight()
-		dummy_deck.cancel_highlight()
-		main_deck.cancel_highlight()
 		return
 	
 	var is_obtainable = hand.has_obtainable_cards(human_player_state)
@@ -298,23 +323,6 @@ func highlight_possible_moves():
 		has_playable_cards = true
 	else:
 		hand.cancel_highlight()
-	
-	#deck
-	var is_drawable = false
-	if fight_state.turn_state == TurnState.DRAW_CARDS or human_player_state.extra_draw_cost.is_obtainable(human_player_state) and human_player_state.extra_draws_count > 0:
-		if dummy_deck.get_card_count() > 0:
-			dummy_deck.highlight()
-		else:
-			dummy_deck.cancel_highlight()
-			
-		if main_deck.get_card_count() > 0:
-			main_deck.highlight()
-		else:
-			main_deck.cancel_highlight()
-		is_drawable = true
-	else:
-		dummy_deck.cancel_highlight()
-		main_deck.cancel_highlight()
 	
 	#board
 	var is_movable = false

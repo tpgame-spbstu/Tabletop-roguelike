@@ -4,6 +4,11 @@ onready var description_card_scene := preload("res://Card/description/descriptio
 var description_card
 
 
+signal final_status_return_to_map_pressed()
+signal debug_return_to_map_pressed()
+signal return_to_main_menu()
+
+
 func initialize(board, player):
 	board.connect("board_right_click", self, "_on_board_right_click")
 	player.hand.connect("hand_right_click", self, "_on_hand_right_click")
@@ -42,8 +47,8 @@ func _on_fight_state_player_2_health_changed(player_2_health):
 
 
 func _on_fight_state_player_1_draw_cards_enter():
-	$Status1.margin_left = -160
-	$Status1.text = "Card selection"
+	$Status1.margin_left = -120
+	$Status1.text = "Взятие карты"
 	$Status1.show()
 	$Status2.hide()
 	$ColorRect/Bones.show()
@@ -54,12 +59,12 @@ func _on_fight_state_player_1_draw_cards_enter():
 
 func _on_fight_state_player_1_attack_enter():
 	$Status1.margin_left = -74
-	$Status1.text = "Attack"
+	$Status1.text = "Атака"
 
 
 func _on_fight_state_player_1_place_and_move_enter():
-	$Status1.margin_left = -175
-	$Status1.text = "Place and move"
+	$Status1.margin_left = -125
+	$Status1.text = "Выставление"
 
 
 func _on_fight_state_player_2_draw_cards_enter():
@@ -131,12 +136,10 @@ func _on_loop_mouse_exited():
 	$loop_label.hide()
 
 
-func _on_fight_state_player_1_win():
+func show_final_status(message):
 	$Final_status.show()
-	$Final_status/RichTextLabel.text = "Victory"
-	$Final_status/return_to_map_lose.hide()
-	$Final_status/return_to_map_win.show()
-	
+	$Final_status/RichTextLabel.text = message
+	$Final_status/return_to_map.show()
 
 
 func _on_fight_state_player_2_attack_enter():
@@ -147,9 +150,21 @@ func _on_fight_state_player_2_place_and_move_enter():
 	pass # Replace with function body.
 
 
-func _on_fight_state_player_2_win():
-	$Final_status.show()
-	$Final_status/RichTextLabel.text = "Defeat"
-	$Final_status/return_to_map_lose.show()
-	$Final_status/return_to_map_win.hide()
+func _on_button_exit_to_map_pressed():
+	emit_signal("debug_return_to_map_pressed")
 
+
+func _on_final_status_return_to_map_pressed():
+	emit_signal("final_status_return_to_map_pressed")
+
+
+func _on_fight_state_player_1_win_enter():
+	show_final_status("Победа")
+
+
+func _on_fight_state_player_2_win_enter():
+	show_final_status("Проигрыш")
+
+
+func _on_button_exit_to_main_menu_pressed():
+	emit_signal("return_to_main_menu")

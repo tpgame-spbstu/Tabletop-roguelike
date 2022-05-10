@@ -24,10 +24,25 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://game_load_manager.gd"
 }, {
+"base": "Tween",
+"class": "HoverTween",
+"language": "GDScript",
+"path": "res://Hand/Proxy/hover_tween.gd"
+}, {
 "base": "Reference",
 "class": "LinMoveAnimation",
 "language": "GDScript",
 "path": "res://lin_move_animation.gd"
+}, {
+"base": "Object",
+"class": "RaycastUtils",
+"language": "GDScript",
+"path": "res://raycast_utils.gd"
+}, {
+"base": "Reference",
+"class": "SmoothMoveAnimation",
+"language": "GDScript",
+"path": "res://smooth_move_animation.gd"
 }, {
 "base": "Reference",
 "class": "Symbol",
@@ -38,7 +53,10 @@ _global_script_class_icons={
 "CardQueueItem": "",
 "Cost": "",
 "GameLoadManager": "",
+"HoverTween": "",
 "LinMoveAnimation": "",
+"RaycastUtils": "",
+"SmoothMoveAnimation": "",
 "Symbol": ""
 }
 
@@ -58,9 +76,23 @@ SymbolManager="*res://Symbols/symbol_manager.gd"
 AnimationManager="*res://animation_manager.gd"
 BaseCardsManager="*res://Card/base_cards_manager.gd"
 
+[debug]
+
+gdscript/warnings/unused_class_variable=true
+gdscript/warnings/return_value_discarded=false
+gdscript/warnings/unsafe_property_access=true
+gdscript/warnings/unsafe_method_access=true
+gdscript/warnings/unsafe_cast=true
+gdscript/warnings/unsafe_call_argument=true
+
 [global]
 
 font=false
+
+[network]
+
+limits/debugger_stdout/max_chars_per_second=2147483647
+limits/debugger_stdout/max_messages_per_frame=1180
 
 [physics]
 

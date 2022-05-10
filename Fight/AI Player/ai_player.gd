@@ -21,7 +21,7 @@ var Card := preload("res://Card/card.tscn")
 
 
 # Set up exturnal nodes, connect state change signals and load card queue from params
-func initialize(fight_state, fight_global_signals, board, player_number, params):
+func initialize(fight_state, fight_global_signals, board, deck_config, player_number, params):
 	self.fight_state = fight_state
 	self.fight_global_signals = fight_global_signals
 	self.board = board
@@ -42,13 +42,37 @@ func _on_draw_cards_enter():
 
 # First place new cards, then move all cards (wait for animations)
 func _on_place_and_move_enter():
-	var res = place_cards()
-	if res != null:
-		yield(res, "completed")
-	res = move_cards()
-	if res != null:
-		yield(res, "completed")
+	var temp_state = place_cards()
+	if temp_state != null:
+		yield(temp_state, "completed")
+	temp_state = move_cards()
+	if temp_state != null:
+		yield(temp_state, "completed")
 	fight_state.next_state()
+
+
+# Play card to board cell, with lin animation to board_cell
+func play_card(board_cell, card_to_play):
+	# Later will look more like HumanPlayer.play_card
+	
+	# Temporary remove card from hand_cell and add to player root
+	## CODE_HERE
+	
+	# Play animation
+	var animation = SmoothMoveAnimation.new(card_spawn_point.global_transform, 
+		board_cell.global_transform, 0.2, card_to_play)
+	AnimationManager.add_animation(animation)
+	yield(animation, "animation_ended")
+	
+	# Remove empty hand cell
+	## CODE_HERE
+	
+	# Add to target cell
+	self.remove_child(card_to_play)
+	board_cell.add_card(card_to_play)
+	
+	# Emit global signal
+	fight_global_signals.emit_signal("card_played", board_cell, card_to_play)
 
 
 func place_cards():
@@ -63,10 +87,10 @@ func place_cards():
 		if target_cell.get_card_or_null() == null:
 			# Board cell is empty - create new card
 			var card_to_play = Card.instance()
-			card_spawn_point.add_child(card_to_play)
+			self.add_child(card_to_play)
 			card_to_play.initialize(card_queue[i].card_config, player_number, fight_global_signals, fight_state)
 			# Wait for animation
-			yield(board.play_card(card_spawn_point, target_cell, card_to_play), "completed")
+			yield(play_card(target_cell, card_to_play), "completed")
 			# Remove from queue
 			card_queue.remove(i)
 		else:
@@ -95,5 +119,7 @@ func move_cards():
 
 func _on_attack_enter():
 	# Give all cards a chance to attack
-	board.process_player_attack(player_number)
+	var temp_state = board.process_player_attack(player_number)
+	if temp_state != null:
+		yield(temp_state, "completed")
 	fight_state.next_state()

@@ -1,0 +1,11 @@
+Model Information:
+* title:	Treeant
+* source:	https://sketchfab.com/3d-models/treeant-abce37658cc741b59a8f308e6545c772
+* author:	proxy_doug (https://sketchfab.com/proxy_doug)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Treeant" (https://sketchfab.com/3d-models/treeant-abce37658cc741b59a8f308e6545c772) by proxy_doug (https://sketchfab.com/proxy_doug) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

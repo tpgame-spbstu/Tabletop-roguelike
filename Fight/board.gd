@@ -1,7 +1,11 @@
 extends Spatial
 
+onready var rows := $rows
+
 var rows_count
 var column_count
+
+var _board_width: float
 
 var fight_global_signals
 signal board_left_click(board_cell, card)
@@ -12,13 +16,15 @@ signal board_right_click(board_cell, card)
 func initialize(fight_global_signals):
 	
 	self.fight_global_signals = fight_global_signals
-	rows_count = get_child_count()
-	column_count = get_child(0).get_child_count()
+	rows_count = rows.get_child_count()
+	column_count = rows.get_child(0).get_child_count()
 	for row_index in range(rows_count):
 		for column_index in range(column_count):
 			var cell = get_board_cell(row_index, column_index)
 			cell.initialize(self, row_index, column_index)
 			cell.connect("input_event", self, "_on_board_cell_input_event")
+	# get the distance between centers, add the `card_width / 2` from both sides
+	_board_width = abs(get_board_cell(0, 0).get_global_transform().origin.x - get_board_cell(0, rows.get_child(0).get_child_count() - 1).get_global_transform().origin.x) + get_board_cell(0, 0).get_size().x
 
 
 func get_board_cell(row_index, column_index):
@@ -32,7 +38,7 @@ func get_board_cell(row_index, column_index):
 		# Not a cell, but base of player 2
 		return 2
 	# Correct cell indexes
-	return get_child(row_index).get_child(column_index)
+	return rows.get_child(row_index).get_child(column_index)
 
 
 # Get row index of current player's base
@@ -65,9 +71,9 @@ func _on_board_cell_input_event(board_cell, event):
 # Give a chance to attack to all player's cards in right order
 func process_player_attack(player_number):
 	if player_number == 1:
-		player_1_attack()
+		return player_1_attack()
 	else:
-		player_2_attack()
+		return player_2_attack()
 
 
 func player_1_attack():
@@ -78,7 +84,9 @@ func player_1_attack():
 			if card == null or card.owner_number != 1:
 				# Empty cell or other player's card
 				continue
-			card.process_attack()
+			var tmp_state = card.process_attack()
+			if tmp_state != null:
+				yield(tmp_state, "completed")
 
 
 func player_2_attack():
@@ -89,33 +97,34 @@ func player_2_attack():
 			if card == null or card.owner_number != 2:
 				# Empty cell or other player's card
 				continue
-			card.process_attack()
+			var tmp_state = card.process_attack()
+			if tmp_state != null:
+				yield(tmp_state, "completed")
 
 
 # Move card from it's current cell to new cell with animation
 func move_card(board_cell, card_to_move):
 	var prev_board_cell = card_to_move.get_board_cell_or_null()
 	assert(prev_board_cell != null)
-	var animation = LinMoveAnimation.new(prev_board_cell.global_transform, 
+	
+	# Temporary remove card from cell and add to board root
+	prev_board_cell.remove_card(card_to_move)
+	self.add_child(card_to_move)
+	
+	# Play animation
+	var animation = SmoothMoveAnimation.new(prev_board_cell.global_transform, 
 		board_cell.global_transform, 0.2, card_to_move)
 	AnimationManager.add_animation(animation)
 	yield(animation, "animation_ended")
-	prev_board_cell.remove_card(card_to_move)
+	
+	# Add to target cell
+	self.remove_child(card_to_move)
 	board_cell.add_card(card_to_move)
+	
+	# Emit global signal
 	fight_global_signals.emit_signal("card_moved", prev_board_cell, board_cell, card_to_move)
 
 
-# Play card to board cell, with lin animation from stsrt_point to board_cell
-func play_card(start_point, board_cell, card_to_play):
-	var animation = LinMoveAnimation.new(start_point.global_transform, 
-		board_cell.global_transform, 0.2, card_to_play)
-	AnimationManager.add_animation(animation)
-	yield(animation, "animation_ended")
-	card_to_play.get_parent().remove_child(card_to_play)
-	board_cell.add_card(card_to_play)
-	fight_global_signals.emit_signal("card_played", board_cell, card_to_play)
-	
-	
 func cancel_highlight():
 	for row_index in range(rows_count):
 		for column_index in range(column_count):
@@ -164,3 +173,7 @@ func get_cell_neighbours(board_cell):
 		neighbours.append(null)
 	
 	return neighbours
+
+
+func get_board_width() -> float:
+	return _board_width

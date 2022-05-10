@@ -3,7 +3,6 @@ extends Spatial
 # Card class - card class for fight
 
 var BoardCell := load("res://Fight/board_cell.gd") as Script
-var HandCell := load("res://Fight/Human Player/hand_cell.gd") as Script
 var CardConfig := load("res://Card/card_config.gd")
 
 var owner_number
@@ -38,21 +37,20 @@ func get_board_cell_or_null():
 	return parent if BoardCell.instance_has(parent) else null
 
 
-func get_hand_cell_or_null():
-	var parent = get_parent()
-	return parent if HandCell.instance_has(parent) else null
-
-
 # Process incoming damage
 func reduce_health(delta):
 	card_config.health -= delta
 	card_visuals.update()
 	unit_visuals.update()
+	$AnimationPlayer.play("being_beaten")
+	yield($AnimationPlayer, "animation_finished")
 	if card_config.health <= 0:
 		die()
 		return
 	if has_symbol("counterattack"):
-		process_attack()
+		var tmp_state = process_attack()
+		if tmp_state != null:
+			yield(tmp_state, "completed")
 
 
 func _on_card_played(board_cell, card):
@@ -75,12 +73,13 @@ func process_attack():
 	var anim_name = "attack_" + str(owner_number)
 	print(anim_name)
 	assert(board_cell != null)
-	if card_config.power <= 0:
-		# can't attack if power 0 or less
+	if card_config.power <= 0 or card_config.health <= 0:
+		# can't attack if power 0 or less or dead
 		return
 	# Get target cell to attack
 	var attack_range = 1
 	if has_symbol("range"):
+		anim_name = "range_attack_" + str(owner_number)
 		attack_range += 1
 	var target_board_cell = board_cell.get_relative_board_cell(attack_range * player_attack_direction[owner_number], 0)
 	if target_board_cell == null:
@@ -90,26 +89,25 @@ func process_attack():
 		# If target cell is out of bounds, but base
 		if target_board_cell != owner_number:
 			$AnimationPlayer.play(anim_name)
+			yield($AnimationPlayer, "animation_finished")
 			# Attack enemy base
-			fight_state.reduse_enemy_health(owner_number, card_config.power)
+			fight_state.reduce_enemy_health(owner_number, card_config.power)
 		return
 	var target_card = target_board_cell.get_card_or_null()
 	if target_card == null:
 		if target_board_cell.is_enemy_base(owner_number):
 			$AnimationPlayer.play(anim_name)
+			yield($AnimationPlayer, "animation_finished")
 			# Attack if target cell is enemy base and empty
-			fight_state.reduse_enemy_health(owner_number, card_config.power)
+			fight_state.reduce_enemy_health(owner_number, card_config.power)
 		return
 	if target_card.owner_number == owner_number:
 		# can't attack friendly card
 		return
 	$AnimationPlayer.play(anim_name)
-	var anim = target_card.get_node("AnimationPlayer")
-	anim.play("being_beaten")
-	yield(anim, "animation_finished")
+	yield($AnimationPlayer, "animation_finished")
 	# Attack enemy card
-	target_card.reduce_health(card_config.power)
-		
+	yield(target_card.reduce_health(card_config.power), "completed")
 
 
 func get_move_cost_or_null(target_board_cell):
@@ -173,4 +171,16 @@ func remove_effect_symbol(symbol):
 	unit_visuals.update()
 
 
+func get_size():
+	var platform = card_visuals.platform as MeshInstance
+	var aabb = platform.get_aabb()
+	var size = aabb.size + Vector3(0,0.001,0)
+	return size
 
+
+func get_card_visuals():
+	return card_visuals
+
+
+func get_unit_visuals():
+	return unit_visuals

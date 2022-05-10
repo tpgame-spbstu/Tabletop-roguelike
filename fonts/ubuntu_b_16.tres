@@ -5,7 +5,7 @@ font_path = "res://fonts/Ubuntu-B.ttf"
 
 [sub_resource type="DynamicFont" id=2]
 resource_local_to_scene = true
-size = 21
+size = 15
 use_mipmaps = true
 use_filter = true
 font_data = SubResource( 1 )

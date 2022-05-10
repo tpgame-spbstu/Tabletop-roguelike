@@ -50,7 +50,8 @@ func disconnect_and_remove():
 	card.remove_effect_symbol(self)
 
 
-func _init(symbol_name, symbol_texture, symbol_description, is_visible, can_be_transferred).(symbol_name, symbol_texture, symbol_description, is_visible, can_be_transferred):
+func _init(symbol_name, symbol_texture, symbol_description, is_visible, can_be_transferred, symbol_name_to_print="default").\
+(symbol_name, symbol_texture, symbol_description, is_visible, can_be_transferred, symbol_name_to_print):
 	pass
 
 
