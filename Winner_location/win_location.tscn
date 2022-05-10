@@ -6,7 +6,7 @@
 [ext_resource path="res://Winner_location/dialog-cloud.tscn" type="PackedScene" id=4]
 [ext_resource path="res://fonts/Ubuntu-B.ttf" type="DynamicFontData" id=5]
 
-[sub_resource type="ViewportTexture" id=1]
+[sub_resource type="ViewportTexture" id=4]
 viewport_path = NodePath("Viewport")
 
 [sub_resource type="DynamicFont" id=2]
@@ -29,17 +29,17 @@ transform = Transform( -0.847066, 0, -0.531487, 0, 1, 0, 0.531487, 0, -0.847066,
 [node name="ant" parent="." instance=ExtResource( 1 )]
 transform = Transform( -0.615806, 0, -0.33284, -0.0153481, 0.699255, 0.0283965, 0.332486, 0.0322789, -0.615151, -0.653839, -2.38419e-07, -4.06415 )
 
-[node name="Sprite3D" type="Sprite3D" parent="."]
-transform = Transform( 0.619564, 0, 0.196573, 0, 0.65, 0, -0.196573, 0, 0.619564, -3.2883, 4.52017, -2.7155 )
-flip_h = true
-flip_v = true
-texture = SubResource( 1 )
-
 [node name="Viewport" type="Viewport" parent="."]
 size = Vector2( 500, 430 )
 transparent_bg = true
 
 [node name="dialog" parent="Viewport" instance=ExtResource( 4 )]
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform( 0.619564, 0, 0.196573, 0, 0.65, 0, -0.196573, 0, 0.619564, -3.2883, 4.52017, -2.7155 )
+flip_h = true
+flip_v = true
+texture = SubResource( 4 )
 
 [node name="Button" type="Button" parent="."]
 margin_left = 442.0
