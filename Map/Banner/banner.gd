@@ -6,7 +6,6 @@ onready var _flag: MeshInstance = $flag
 # @warn: if changing the texture, set the correct
 #        translation! (it's shifted for the current one)
 onready var _inc_cirle: Sprite3D = $incantation_circle
-onready var _tween: Tween = Tween.new()
 # ratio of the height of flag to the height of the flag pole
 export(float, 0.01, 1, 0.01) var hfl_to_hpole = 0.2
 # percentage of flag pole height to skip before the top of the flag
@@ -130,8 +129,6 @@ func set_sail(animate: bool):
 		add_child(tween)
 		# just for chuckles :) for normal use any of the commented below is recommended
 		tween.interpolate_property(_flag, "translation:y", init_y, final_y, flag_raising_dur, Tween.TRANS_BOUNCE, Tween.EASE_OUT)
-		# _tween.interpolate_property(_flag, "translation:y", init_y, final_y, anim_dur, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
-		# _tween.interpolate_property(_flag, "translation:y", init_y, final_y, anim_dur, Tween.TRANS_CIRC, Tween.EASE_OUT)
 		tween.start()
 		tween.connect("tween_all_completed", self, "_on_tween_completed", [tween])
 

@@ -38,13 +38,6 @@ shape = SubResource( 2 )
 [node name="TreeantArmature" type="Spatial" parent="Model/Root"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.9247e-05, -0.00377274, -0.0137 )
 
-[node name="Skeleton" type="Skeleton" parent="Model/Root/TreeantArmature"]
-bones/0/name = "TreeantArmature_rootJoint"
-bones/0/parent = -1
-bones/0/rest = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
-bones/0/enabled = true
-bones/0/bound_children = [  ]
-
 [node name="Treeant" type="Spatial" parent="Model/Root/TreeantArmature"]
 
 [node name="Treeant_0" type="MeshInstance" parent="Model/Root/TreeantArmature/Treeant"]

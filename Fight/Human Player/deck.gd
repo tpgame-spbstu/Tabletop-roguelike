@@ -21,7 +21,7 @@ var human_player_state
 
 export(int) var collision_layer_index = 5
 
-var spacer_width = 0.002 #space between cards in deck
+var spacer_width = 0.02 #space between cards in deck
 var max_visible_cards_count = 10 #
 var dummy_count = 7
 var dummy_card_config = BaseCardsManager.get_card_config_copy("Пень")
