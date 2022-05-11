@@ -11,9 +11,9 @@ var blood_count = 5
 
 var gems_scale = Vector3(0.1, 0.1, 0.1)
 var space = Vector3(-0.15 ,0, 0)
-var energy_start_pos = Vector3(-2.594,0,-1.04)
-var bones_start_pos = Vector3(-2.594,0,-1.377)
-var blood_start_pos = Vector3(-2.594,0,-1.714)
+var energy_start_pos = Vector3(-2.73,0,-1.04)
+var bones_start_pos = Vector3(-2.73,0,-1.377)
+var blood_start_pos = Vector3(-2.73,0,-1.714)
 
 var t_gems = preload("res://Models/Scene/gems.tscn").instance()
 
