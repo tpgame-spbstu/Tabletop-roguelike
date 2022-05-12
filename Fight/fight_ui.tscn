@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://fonts/ubuntu_b_16.tres" type="Theme" id=1]
 [ext_resource path="res://fonts/ubuntu_b_32.tres" type="Theme" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://Fight/Assets/textures/icHope.png" type="Texture" id=6]
 [ext_resource path="res://Fight/Assets/textures/icStrenght.png" type="Texture" id=7]
 [ext_resource path="res://fonts/Ubuntu-B.ttf" type="DynamicFontData" id=8]
+[ext_resource path="res://Card/description/description_main.tscn" type="PackedScene" id=9]
 
 [sub_resource type="DynamicFont" id=1]
 size = 84
@@ -358,6 +359,10 @@ text = "Карта мира"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="description_card" parent="." instance=ExtResource( 9 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0 )
+visible = false
 
 [connection signal="mouse_entered" from="loop" to="." method="_on_loop_mouse_entered"]
 [connection signal="mouse_exited" from="loop" to="." method="_on_loop_mouse_exited"]

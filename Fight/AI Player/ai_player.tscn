@@ -15,3 +15,5 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -1 )
 
 [node name="open_cards_enter_point" type="Spatial" parent="."]
 transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -3.5, 0, -0.25 )
+
+[connection signal="card_right_click" from="open_cards" to="." method="_on_open_cards_card_right_click"]

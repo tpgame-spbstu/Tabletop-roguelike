@@ -8,6 +8,8 @@ onready var card_spawn_point := $card_spawn_point
 onready var open_cards_enter_point := $open_cards_enter_point
 onready var open_cards := $open_cards
 
+signal show_card_description(card)
+
 var board
 var fight_state
 var fight_global_signals
@@ -169,3 +171,7 @@ func _on_attack_enter():
 	if temp_state != null:
 		yield(temp_state, "completed")
 	fight_state.next_state()
+
+
+func _on_open_cards_card_right_click(card):
+	emit_signal("show_card_description", card)

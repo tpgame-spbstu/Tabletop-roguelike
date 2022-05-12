@@ -11,6 +11,7 @@ onready var human_player_state := $human_player_state
 onready var turn_end_pause_timer := $turn_end_pause_timer
 const TURN_END_PAUSE_TIME = 0.5
 
+signal show_card_description(card)
 signal card_to_play_selected(card)
 
 var board
@@ -31,6 +32,7 @@ func initialize(fight_state, fight_global_signals, board, deck_config, player_nu
 	board.connect("board_left_click", self, "_on_board_left_click")
 	
 	hand.connect("hand_left_click", self, "_on_hand_left_click")
+	hand.connect("hand_right_click", self, "_on_hand_right_click")
 	
 	main_deck.initialize(fight_global_signals, fight_state, human_player_state, deck_config, params["shuffle_seed"], player_number)
 	main_deck.connect("deck_click", self, "_on_deck_click")
@@ -165,6 +167,11 @@ func _on_board_left_click(board_cell, card):
 		highlight_possible_card_moves(board_cell)
 		selector.move_to(board_cell)
 		selector.set_state("move")
+
+
+
+func _on_hand_right_click(hand_cell, card):
+	emit_signal("show_card_description", card)
 
 
 func _on_hand_left_click(hand_cell, card):
