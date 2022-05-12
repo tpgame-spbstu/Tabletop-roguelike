@@ -326,7 +326,6 @@ __meta__ = {
 }
 
 [node name="Final_status" type="Control" parent="."]
-visible = false
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -341,13 +340,16 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -173.0
-margin_top = -63.0
-margin_right = 152.0
-margin_bottom = 47.0
+margin_left = -241.0
+margin_top = -64.0
+margin_right = 240.0
+margin_bottom = 35.0
 theme = SubResource( 2 )
 custom_colors/default_color = Color( 0.890196, 0.819608, 0.0627451, 1 )
-text = "Победа"
+bbcode_enabled = true
+bbcode_text = "[center] Победа [/center]"
+text = " Победа "
+fit_content_height = true
 
 [node name="return_to_map" type="Button" parent="Final_status"]
 margin_left = -39.0
