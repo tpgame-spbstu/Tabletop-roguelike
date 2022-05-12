@@ -12,6 +12,8 @@ func value_from_local(local_position):
 func _on_self_input_event(camera, event, position, normal, shape_idx):
 	var local_position := to_local(position)
 	var value = value_from_local(local_position)
+	if abs(value) > 1:
+		return
 	if event is InputEventMouseMotion:
 		emit_signal("mouse_motion", value)
 	elif event is InputEventMouseButton:

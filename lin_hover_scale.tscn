@@ -3,6 +3,7 @@
 [ext_resource path="res://lin_hover_scale.gd" type="Script" id=1]
 
 [sub_resource type="BoxShape" id=1]
+margin = 0.001
 extents = Vector3( 0.5, 0, 0.5 )
 
 [node name="lin_hover_scale" type="Area"]
