@@ -1,13 +1,12 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://Fight/AI Player/open_cards.gd" type="Script" id=1]
+[ext_resource path="res://Card/open_cards.gd" type="Script" id=1]
 [ext_resource path="res://lin_hover_scale.tscn" type="PackedScene" id=2]
 
 [node name="open_cards" type="Spatial"]
 script = ExtResource( 1 )
 
 [node name="lin_hover_scale" parent="." instance=ExtResource( 2 )]
-transform = Transform( 1.5, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 
 [connection signal="left_click" from="lin_hover_scale" to="." method="_on_lin_hover_scale_left_click"]
 [connection signal="mouse_exited" from="lin_hover_scale" to="." method="_on_lin_hover_scale_mouse_exited"]
