@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://Fight/fight_location.gd" type="Script" id=1]
 [ext_resource path="res://Fight/AI Player/ai_player.tscn" type="PackedScene" id=2]
@@ -12,6 +12,7 @@
 [ext_resource path="res://Fight/Human Player/human_player.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Map/map_environment.tres" type="Environment" id=11]
 [ext_resource path="res://Fight/fight_loger.gd" type="Script" id=12]
+[ext_resource path="res://Fight/fight_input_manager.gd" type="Script" id=13]
 [ext_resource path="res://Models/Scene/Bones/bonegltf.tscn" type="PackedScene" id=14]
 [ext_resource path="res://Models/Scene/Bones/skull_broken.tscn" type="PackedScene" id=15]
 [ext_resource path="res://Models/Scene/lightninggltf.tscn" type="PackedScene" id=16]
@@ -50,6 +51,9 @@ script = ExtResource( 12 )
 
 [node name="fight_state" type="Node" parent="."]
 script = ExtResource( 8 )
+
+[node name="fight_input_manager" type="Node" parent="."]
+script = ExtResource( 13 )
 
 [node name="human_player_1" parent="." instance=ExtResource( 10 )]
 

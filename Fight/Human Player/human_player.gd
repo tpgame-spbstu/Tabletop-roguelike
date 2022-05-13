@@ -12,6 +12,7 @@ onready var turn_end_pause_timer := $turn_end_pause_timer
 const TURN_END_PAUSE_TIME = 0.5
 
 signal card_to_play_selected(card)
+signal input_requested(input_request)
 
 var board
 var fight_state
@@ -21,6 +22,7 @@ var player_number
 var input_allowed := true
 
 var TurnState := preload("res://Fight/fight_state.gd").TurnState
+var InputRequest := preload("res://Fight/fight_input_manager.gd").InputRequest
 
 func initialize(fight_state, fight_global_signals, board, deck_config, player_number, params):
 	self.fight_state = fight_state
@@ -108,10 +110,23 @@ func _on_board_left_click(board_cell, card):
 		# Selected card to play
 		if card != null:
 			# cell not empty, can't play card, so clear selection
+			var inpur_request = InputRequest.new("board_cancel_play_not_empty_click", {"board_cell": board_cell, "card": card})
+			emit_signal("input_requested", inpur_request)
+			if not inpur_request.is_allowed:
+				return
 			cancel_selection()
 			return
 		if !board_cell.is_friendly_base(player_number):
 			# cell not a friendly base, can't play
+			var inpur_request = InputRequest.new("board_play_not_base_click", {"board_cell": board_cell, "card": card})
+			emit_signal("input_requested", inpur_request)
+			if not inpur_request.is_allowed:
+				return
+			return
+		
+		var inpur_request = InputRequest.new("board_correct_play_click", {"board_cell": board_cell, "card": card})
+		emit_signal("input_requested", inpur_request)
+		if not inpur_request.is_allowed:
 			return
 		var card_to_play = human_player_state.card_to_play
 		# Pay cost for card
@@ -127,20 +142,36 @@ func _on_board_left_click(board_cell, card):
 		# Selected card to move
 		if card == human_player_state.card_to_move:
 			# clicked on selected card, reset selection
+			var inpur_request = InputRequest.new("board_cancel_move_self_click", {"board_cell": board_cell, "card": card})
+			emit_signal("input_requested", inpur_request)
+			if not inpur_request.is_allowed:
+				return
 			human_player_state.card_to_move = null
 			selector.set_state("hide")
 			highlight_possible_moves()
 			return
 		var move_cost = human_player_state.card_to_move.get_move_cost_or_null(board_cell)
 		if move_cost == null:
+			var inpur_request = InputRequest.new("board_cancel_move_unreachable_click", {"board_cell": board_cell, "card": card})
+			emit_signal("input_requested", inpur_request)
+			if not inpur_request.is_allowed:
+				return
 			cancel_selection()
 			# Can't move card
 			highlight_possible_moves()
 			return
 		if !move_cost.is_obtainable(human_player_state):
+			var inpur_request = InputRequest.new("board_cancel_move_cant_pay_click", {"board_cell": board_cell, "card": card})
+			emit_signal("input_requested", inpur_request)
+			if not inpur_request.is_allowed:
+				return
 			cancel_selection()
 			# Can't pay cost
 			highlight_possible_moves()
+			return
+		var inpur_request = InputRequest.new("board_correct_move_click", {"board_cell": board_cell, "card": card})
+		emit_signal("input_requested", inpur_request)
+		if not inpur_request.is_allowed:
 			return
 		# Pay cost to move
 		move_cost.pay(human_player_state)
@@ -155,11 +186,23 @@ func _on_board_left_click(board_cell, card):
 		# No selected cards
 		if card == null:
 			# Cell is empty
+			var inpur_request = InputRequest.new("board_cant_select_move_empty_click", {"board_cell": board_cell, "card": card})
+			emit_signal("input_requested", inpur_request)
+			if not inpur_request.is_allowed:
+				return
 			return
 		if card.owner_number != player_number:
 			# Clicked on enemy card
+			var inpur_request = InputRequest.new("board_cant_select_move_enemy_click", {"board_cell": board_cell, "card": card})
+			emit_signal("input_requested", inpur_request)
+			if not inpur_request.is_allowed:
+				return
 			return
 		# Select card to move
+		var inpur_request = InputRequest.new("board_correct_select_move_click", {"board_cell": board_cell, "card": card})
+		emit_signal("input_requested", inpur_request)
+		if not inpur_request.is_allowed:
+			return
 		human_player_state.card_to_move = card
 		cancel_highlight()
 		highlight_possible_card_moves(board_cell)
@@ -177,17 +220,28 @@ func _on_hand_left_click(hand_cell, card):
 	if fight_state.turn_state != TurnState.PLACE_AND_MOVE:
 		# PLACE_AND_MOVE not allowed
 		return
-		cancel_highlight()
 	if human_player_state.card_to_play != null:
 		# Selected card to play
 		# Reset selected card
+		var inpur_request = InputRequest.new("hand_cancel_play_click", {})
+		emit_signal("input_requested", inpur_request)
+		if not inpur_request.is_allowed:
+			return
 		cancel_selection()
 	elif human_player_state.card_to_move != null:
 		# Selected card to move
 		# Reset selected card
+		var inpur_request = InputRequest.new("hand_cancel_move_click", {})
+		emit_signal("input_requested", inpur_request)
+		if not inpur_request.is_allowed:
+			return
 		cancel_selection()
 	else:
 		# No selected cards
+		var inpur_request = InputRequest.new("hand_select_card_click", {"card": card})
+		emit_signal("input_requested", inpur_request)
+		if not inpur_request.is_allowed:
+			return
 		if !card.card_config.play_cost.is_obtainable(human_player_state):
 			# Can't pay for card
 			return
@@ -207,6 +261,10 @@ func _on_deck_click(deck, card):
 		# other player's turn
 		return
 	cancel_selection()
+	var inpur_request = InputRequest.new("deck_click", {"deck": deck, "card": card})
+	emit_signal("input_requested", inpur_request)
+	if not inpur_request.is_allowed:
+		return
 	match fight_state.turn_state:
 		TurnState.DRAW_CARDS:
 			# State DRAW_CARDS
@@ -259,6 +317,10 @@ func _on_bell_click(bell):
 		# if other player's turn
 		return
 	if fight_state.turn_state == TurnState.PLACE_AND_MOVE:
+		var inpur_request = InputRequest.new("bell_click", {})
+		emit_signal("input_requested", inpur_request)
+		if not inpur_request.is_allowed:
+			return
 		# Go to attack when PLACE_AND_MOVE finished
 		cancel_selection()
 		input_allowed = false

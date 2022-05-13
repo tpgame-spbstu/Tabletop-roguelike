@@ -9,6 +9,7 @@ onready var fight_state := $fight_state
 onready var fight_loger := $fight_loger
 onready var fight_global_signals := $fight_global_signals
 onready var fight_location_ui := $fight_ui
+onready var fight_input_manager := $fight_input_manager
 
 
 var TurnState := preload("res://Fight/fight_state.gd").TurnState
@@ -24,6 +25,7 @@ func initialize(deck_config , inventory_config , params : Dictionary):
 		self, "_on_fight_state_player_1_win")
 	fight_state.connect(fight_state.get_turn_state_signal(TurnState.WIN, 2), 
 		self, "_on_fight_state_player_2_win")
+	fight_input_manager.initialize(fight_state, player_1)
 	start()
 
 
