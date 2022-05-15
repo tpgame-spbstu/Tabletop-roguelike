@@ -1,7 +1,7 @@
 extends Spatial
 
 # CardVisuals node - visualization of CardConfig in card form
-
+var texture_enemy = preload("res://Card/Textures/enemy_material.tres")
 onready var card_name_label = $Viewport/card_visuals_2d/Card_name
 onready var health_label = $Viewport/card_visuals_2d/Health/count
 onready var attack_label = $Viewport/card_visuals_2d/Attack/count
@@ -34,18 +34,26 @@ func draw_symbols(path, sym_id):
 
 
 func set_owner_number(owner_number):
-	var newMaterial = SpatialMaterial.new()
-	newMaterial.albedo_color = Color("09165d") # синий
 	if(owner_number == PLAYER_2):
-		platform.material_override = newMaterial
+		platform.material_override = texture_enemy
+		pass
 	else:
 		pass
+
+
+func wrap_image(card_texture):
+	image.texture = card_texture
+	var template_pixels_image = 230
+	var scale_x = template_pixels_image / image.texture.get_size().x
+	var scale_y = template_pixels_image / image.texture.get_size().y
+	var min_scale = min(scale_x, scale_y)
+	image.scale = Vector2(min_scale, min_scale)
 
 
 func update():
 	card_name_label.text = card_config.card_name
 	var card_texture  = load(card_config.card_texture)
-	image.texture = card_texture
+	self.wrap_image(card_texture)
 	if card_config.play_cost != null:
 		cost_label.text = String(card_config.play_cost.energy)
 	else:

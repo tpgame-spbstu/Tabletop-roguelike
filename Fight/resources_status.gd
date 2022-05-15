@@ -17,7 +17,6 @@ var blood_start_pos = Vector3(-2.594,0,-1.714)
 
 var t_gems = preload("res://Models/Scene/gems.tscn").instance()
 
-
 func _energy_null() :
 	var energy_child = $energy_status.get_children()
 	for i in energy_child:

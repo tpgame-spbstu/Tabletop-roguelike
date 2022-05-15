@@ -1,7 +1,6 @@
 extends Spatial
 
 # Card class - card class for fight
-
 var BoardCell := load("res://Fight/board_cell.gd") as Script
 var CardConfig := load("res://Card/card_config.gd")
 
