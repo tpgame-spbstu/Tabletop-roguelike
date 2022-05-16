@@ -47,6 +47,10 @@ func get_last_hovered_card():
 func add_card(card, position = 'front'):
 	assert(position == 'front' or position == 'back')
 	if position == 'front':
+		if _last_hovered_index in range(_cards.size()):
+			_last_hovered_index = _last_hovered_index + 1
+		else:
+			_last_hovered_index = 0
 		_cards.push_front(card)
 	else:
 		_cards.push_back(card)
@@ -61,11 +65,12 @@ func remove_empty():
 	while i < _cards.size():
 		if _cards[i] == null:
 			_cards.remove(i)
+			if i == _last_hovered_index:
+				_is_hovered = false
+				_last_hovered_index = _cards.size() - 1
 		else:
 			i += 1
-	_is_hovered = false
-	_set_hovered_index(0)
-
+	reset_cards_positions()
 
 func remove_card(card):
 	assert(card != null)
@@ -104,11 +109,7 @@ func _get_correct_scale_size():
 	var size = margin_left + margin_right
 	if _cards.size() > 0:
 		size += (_cards.size() - 1) * max_dist_between
-	if size < max_scale_size:
-		if size < min_scale_size:
-			return min_scale_size
-		return size
-	return max_scale_size
+	return clamp(size, min_scale_size, max_scale_size)
 
 
 func _get_pos_from_index(index):
@@ -128,10 +129,7 @@ func _get_index_from_value(value):
 	left_margin_fraction = left_margin_fraction / right_margin_fraction
 	value = (value - left_margin_fraction) / (1 - left_margin_fraction)
 	var index = floor((value * (_cards.size() - 1) * 2 + 1) / 2)
-	if index < 0:
-		index = 0
-	if index >= _cards.size():
-		index = _cards.size() - 1
+	index = clamp(index, 0, _cards.size() - 1)
 	return index
 
 
