@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://fonts/ubuntu_b_16.tres" type="Theme" id=1]
 [ext_resource path="res://fonts/ubuntu_b_32.tres" type="Theme" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://Fight/Assets/textures/icHope.png" type="Texture" id=6]
 [ext_resource path="res://Fight/Assets/textures/icStrenght.png" type="Texture" id=7]
 [ext_resource path="res://fonts/Ubuntu-B.ttf" type="DynamicFontData" id=8]
+[ext_resource path="res://Card/description/description_main.tscn" type="PackedScene" id=9]
 
 [sub_resource type="DynamicFont" id=1]
 size = 84
@@ -340,13 +341,16 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -173.0
-margin_top = -63.0
-margin_right = 152.0
-margin_bottom = 47.0
+margin_left = -241.0
+margin_top = -64.0
+margin_right = 240.0
+margin_bottom = 35.0
 theme = SubResource( 2 )
 custom_colors/default_color = Color( 0.890196, 0.819608, 0.0627451, 1 )
-text = "Победа"
+bbcode_enabled = true
+bbcode_text = "[center] Победа [/center]"
+text = " Победа "
+fit_content_height = true
 
 [node name="return_to_map" type="Button" parent="Final_status"]
 margin_left = -39.0
@@ -358,6 +362,10 @@ text = "Карта мира"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="description_card" parent="." instance=ExtResource( 9 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0 )
+visible = false
 
 [connection signal="mouse_entered" from="loop" to="." method="_on_loop_mouse_entered"]
 [connection signal="mouse_exited" from="loop" to="." method="_on_loop_mouse_exited"]

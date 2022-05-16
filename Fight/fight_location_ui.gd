@@ -1,7 +1,7 @@
 extends Control
 
-onready var description_card_scene := preload("res://Card/description/description_main.tscn")
-var description_card
+
+onready var description_card := $description_card
 
 
 signal final_status_return_to_map_pressed()
@@ -9,24 +9,7 @@ signal debug_return_to_map_pressed()
 signal return_to_main_menu()
 
 
-func initialize(board, player):
-	board.connect("board_right_click", self, "_on_board_right_click")
-	player.hand.connect("hand_right_click", self, "_on_hand_right_click")
-	description_card = description_card_scene.instance()
-	description_card.hide()
-	description_card.translate(Vector3(0, 0.4, 0))
-	self.add_child(description_card)
-
-
-func _on_board_right_click(board, card):
-	if card == null:
-		return
-	description_card.set_desription(card.card_config)
-	description_card.show()
-	pass
-	
-
-func _on_hand_right_click(hand_cell, card):
+func show_card_desription(card):
 	if card == null:
 		return
 	description_card.set_desription(card.card_config)
@@ -138,7 +121,7 @@ func _on_loop_mouse_exited():
 
 func show_final_status(message):
 	$Final_status.show()
-	$Final_status/RichTextLabel.text = message
+	$Final_status/RichTextLabel.bbcode_text = message
 	$Final_status/return_to_map.show()
 
 
@@ -159,11 +142,11 @@ func _on_final_status_return_to_map_pressed():
 
 
 func _on_fight_state_player_1_win_enter():
-	show_final_status("Победа")
+	show_final_status("[center]Победа[/center]")
 
 
 func _on_fight_state_player_2_win_enter():
-	show_final_status("Проигрыш")
+	show_final_status("[center]Проигрыш[/center]")
 
 
 func _on_button_exit_to_main_menu_pressed():
