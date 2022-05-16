@@ -17,14 +17,24 @@ func initialize(deck_config , inventory_config , params : Dictionary):
 	.initialize(deck_config , inventory_config , params)
 	$Camera.make_current()
 	board.initialize(fight_global_signals)
+	board.connect("board_right_click", self, "_on_board_right_click")
 	player_1.initialize(fight_state, fight_global_signals, board, self.deck_config, 1, self.params)
+	player_1.connect("show_card_description", self, "_on_show_card_description")
 	player_2.initialize(fight_state, fight_global_signals, board, null, 2, self.params)
-	fight_location_ui.initialize(board, player_1)
+	player_2.connect("show_card_description", self, "_on_show_card_description")
 	fight_state.connect(fight_state.get_turn_state_signal(TurnState.WIN, 1), 
 		self, "_on_fight_state_player_1_win")
 	fight_state.connect(fight_state.get_turn_state_signal(TurnState.WIN, 2), 
 		self, "_on_fight_state_player_2_win")
 	start()
+
+
+func _on_board_right_click(board_cell, card):
+	fight_location_ui.show_card_desription(card)
+
+
+func _on_show_card_description(card):
+	fight_location_ui.show_card_desription(card)
 
 
 func start():

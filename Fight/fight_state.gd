@@ -48,6 +48,15 @@ enum TurnState {
 var turn_state
 var active_player_number
 
+
+func get_enemy_number(player_number):
+	assert(player_number == 1 or player_number == 2)
+	if player_number == 1:
+		return 2
+	else:
+		return 1
+
+
 signal player_1_draw_cards_enter()
 signal player_1_place_and_move_enter()
 signal player_1_attack_enter()
