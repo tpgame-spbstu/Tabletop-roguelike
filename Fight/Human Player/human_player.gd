@@ -280,7 +280,7 @@ func highlight_empty_base_fields():
 	for i in range(board.column_count):
 		cell = board.get_board_cell(base_index, i)
 		if cell.get_card_or_null() == null:
-			cell.highlight()
+			cell.set_highlight_state("playable")
 			
 	
 	
@@ -300,7 +300,7 @@ func highlight_possible_card_moves(board_cell):
 		if i != null and typeof(i) != TYPE_INT:
 			var move_cost = card.get_move_cost_or_null(i)
 			if move_cost != null and move_cost.is_obtainable(human_player_state):
-				i.highlight()
+				i.set_highlight_state("playable")
 
 
 func cancel_highlight():
@@ -350,4 +350,4 @@ func highlight_possible_moves():
 							if move_cost == null:
 								continue
 							if move_cost.is_obtainable(human_player_state):
-								cell.highlight()
+								cell.set_highlight_state("playable")

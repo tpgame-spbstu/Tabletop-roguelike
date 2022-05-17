@@ -1,16 +1,23 @@
 extends Spatial
 
 var Card := load("res://Card/card.gd") as Script
-var base_board_cell_material = preload("res://Fight/Assets/base_board_cell_material.tres")
-var selected_board_cell_material = preload("res://Fight/Assets/selected_board_cell_material.tres")
+
+var highlight_state_dict = {
+	"none": preload("res://Fight/Assets/base_board_cell_material.tres"),
+	"playable": preload("res://Fight/Assets/selected_board_cell_material.tres"),
+	"targeted": preload("res://Fight/Assets/targeted_board_cell_material.tres")
+	}
 
 var row_index = NAN
 var column_index = NAN
 var is_highlighted = false
 var board
+var highlight_state = "none"
 
 
 signal input_event(board_cell, event)
+signal mouse_entered_event(board_cell)
+signal mouse_exited_event(board_cell)
 
 
 # Set up exturnal nodes references and coordinates
@@ -77,15 +84,10 @@ func remove_card(card):
 	card.transform = Transform()
 
 
-func highlight():
-	if !is_highlighted:
-		$MeshInstance.set_surface_material(0, selected_board_cell_material)
-	is_highlighted = true
-	
-func cancel_highlight():
-	if is_highlighted:
-		$MeshInstance.set_surface_material(0, base_board_cell_material)
-	is_highlighted = false
+func set_highlight_state(state):
+	if state != highlight_state:
+		$MeshInstance.set_surface_material(0, highlight_state_dict[state])
+		highlight_state = state
 
 
 func get_size() -> Vector2:
@@ -93,3 +95,11 @@ func get_size() -> Vector2:
 	var mesh = m_inst.get_mesh() as QuadMesh
 	var scale = m_inst.get_scale()
 	return mesh.get_size() * Vector2(scale.x, scale.y)
+
+
+func _on_Area_mouse_entered():
+	emit_signal("mouse_entered_event", self)
+
+
+func _on_Area_mouse_exited():
+	emit_signal("mouse_exited_event", self)

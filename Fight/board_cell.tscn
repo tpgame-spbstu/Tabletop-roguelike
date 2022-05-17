@@ -25,3 +25,5 @@ material/0 = ExtResource( 2 )
 shape = SubResource( 2 )
 
 [connection signal="input_event" from="Area" to="." method="_on_Area_input_event"]
+[connection signal="mouse_entered" from="Area" to="." method="_on_Area_mouse_entered"]
+[connection signal="mouse_exited" from="Area" to="." method="_on_Area_mouse_exited"]
