@@ -23,6 +23,16 @@ onready var viewport = $Viewport
 	#	if mouse_button_event.pressed and mouse_button_event.button_index == BUTTON_LEFT :
 #	viewport.input(event)
 
+func wrap_image(card_texture):
+	image.texture = card_texture
+	var template_pixels_image_x = 250
+	var template_pixels_image_y = 250
+	var scale_x = template_pixels_image_x / image.texture.get_size().x
+	var scale_y = template_pixels_image_y / image.texture.get_size().y
+	var min_scale = min(scale_x, scale_y)
+	image.scale = Vector2(min_scale, min_scale)
+
+
 func draw_symbols(one_symbol, sym_id):
 	var path = one_symbol.symbol_texture
 	var symb_desc = symbol_scene.instance()
@@ -41,7 +51,7 @@ func set_desription(card_config):
 		cost.text = String(card_config.play_cost.energy)
 	health.text = String(card_config.health)
 	attack.text = String(card_config.power)
-	image.texture = load(card_config.card_texture)
+	wrap_image(load(card_config.card_texture))
 	# image.translate(pos_image_card)
 	#image.scale = scale_image_card
 	

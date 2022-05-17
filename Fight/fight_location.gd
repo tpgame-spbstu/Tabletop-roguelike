@@ -10,7 +10,6 @@ onready var fight_loger := $fight_loger
 onready var fight_global_signals := $fight_global_signals
 onready var fight_location_ui := $fight_ui
 
-
 var TurnState := preload("res://Fight/fight_state.gd").TurnState
 
 func initialize(deck_config , inventory_config , params : Dictionary):
