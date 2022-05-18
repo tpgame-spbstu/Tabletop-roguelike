@@ -51,8 +51,10 @@ func initialize(fight_global_signals, fight_state, human_player_state, deck_conf
 		return
 	
 	var local_card_list = deck_config.cards.duplicate() as Array
+	
 	rand_seed(shuffle_seed)
-	local_card_list.shuffle()
+	if shuffle_seed != 0:
+		local_card_list.shuffle()
 	
 	for card_config in local_card_list:
 		add_new_card_to_bottom(card_config, owner_number)

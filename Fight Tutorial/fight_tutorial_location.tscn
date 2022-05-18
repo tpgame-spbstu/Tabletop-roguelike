@@ -1,33 +1,151 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Fight/fight_location.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Fight Tutorial/fight_tutorial_input_manager.gd" type="Script" id=2]
+[ext_resource path="res://Fight Tutorial/focus_back.png" type="Texture" id=3]
+[ext_resource path="res://Fight Tutorial/focus_center.png" type="Texture" id=4]
+[ext_resource path="res://fonts/ubuntu_b_16.tres" type="Theme" id=5]
+[ext_resource path="res://fonts/ubuntu_b_32.tres" type="Theme" id=6]
+[ext_resource path="res://Fight Tutorial/tutorial_ui.gd" type="Script" id=7]
+[ext_resource path="res://Map/map_environment.tres" type="Environment" id=8]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends ViewportContainer
+
+
+
+func _on_ViewportContainer_resized():
+	$Viewport.size = self.rect_size
+"
+
+[sub_resource type="GDScript" id=2]
+script/source = "extends Camera
+
+export(NodePath) var target
+
+func _process(delta):
+	global_transform = get_node(target).global_transform
+"
 
 [node name="fight_tutorial_location" instance=ExtResource( 1 )]
 
-[node name="fight_input_manager" parent="." index="3"]
+[node name="ViewportContainer" type="ViewportContainer" parent="." index="0"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+stretch = true
+script = SubResource( 1 )
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Viewport" type="Viewport" parent="ViewportContainer" index="0"]
+size = Vector2( 1024, 600 )
+transparent_bg = true
+handle_input_locally = false
+render_target_update_mode = 3
+
+[node name="Camera2" type="Camera" parent="ViewportContainer/Viewport" index="0"]
+cull_mask = 512
+environment = ExtResource( 8 )
+current = true
+script = SubResource( 2 )
+target = NodePath("../../../Camera")
+
+[node name="fight_input_manager" parent="." index="4"]
 script = ExtResource( 2 )
 
-[node name="tutorial_ui" type="Control" parent="." index="15"]
+[node name="focus_shade" type="Spatial" parent="fight_input_manager" index="0"]
+visible = false
+
+[node name="Sprite3D" type="Sprite3D" parent="fight_input_manager/focus_shade" index="0"]
+layers = 512
+cast_shadow = 0
+opacity = 0.6
+billboard = 1
+texture = ExtResource( 4 )
+
+[node name="Sprite3D2" type="Sprite3D" parent="fight_input_manager/focus_shade" index="1"]
+layers = 512
+cast_shadow = 0
+opacity = 0.6
+pixel_size = 0.16
+billboard = 1
+texture = ExtResource( 3 )
+
+[node name="tutorial_ui" type="Control" parent="fight_input_manager" index="1"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
+script = ExtResource( 7 )
 __meta__ = {
+"_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 
-[node name="Control" type="Control" parent="tutorial_ui" index="0"]
-anchor_right = 1.0
-anchor_bottom = 1.0
+[node name="tutorial_text" type="Panel" parent="fight_input_manager/tutorial_ui" index="0"]
+self_modulate = Color( 1, 1, 1, 0.462745 )
+anchor_left = 0.495
+anchor_top = 0.053
+anchor_right = 0.495
+anchor_bottom = 0.053
+margin_left = -202.88
+margin_top = 27.2
+margin_right = 201.12
+margin_bottom = 215.2
 mouse_filter = 2
 __meta__ = {
+"_edit_group_": true
+}
+
+[node name="tutorial_label" type="RichTextLabel" parent="fight_input_manager/tutorial_ui/tutorial_text" index="0"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 20.0
+margin_top = 20.0
+margin_right = -20.0
+margin_bottom = -20.0
+mouse_filter = 2
+theme = ExtResource( 5 )
+bbcode_enabled = true
+bbcode_text = "[center] Это текст обучения [/center]"
+text = " Это текст обучения "
+__meta__ = {
+"_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 
-[node name="Polygon2D" type="Polygon2D" parent="tutorial_ui/Control" index="0"]
-color = Color( 0, 0, 0, 0.647059 )
-invert_enable = true
-invert_border = 1571.6
-polygon = PoolVector2Array( 375, 233, 407, 207, 451, 192, 500, 188, 540, 200, 571, 225, 597, 258, 603, 294, 597, 354, 576, 388, 545, 411, 513, 424, 465, 430, 422, 429, 387, 415, 360, 394, 342, 354, 339, 313, 345, 275 )
+[node name="Button" type="Button" parent="fight_input_manager/tutorial_ui/tutorial_text" index="1"]
+anchor_left = 0.506
+anchor_top = 0.5
+anchor_right = 0.506
+anchor_bottom = 0.5
+margin_left = -84.424
+margin_top = 105.0
+margin_right = 84.576
+margin_bottom = 152.0
+theme = ExtResource( 6 )
+text = "Далее"
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="enemy_preview_focus_point" type="Spatial" parent="fight_input_manager" index="2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.00995, 0.110672, 0.258687 )
+
+[node name="resources_focus_point" type="Spatial" parent="fight_input_manager" index="3"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.63714, 0.110672, -1.32885 )
+
+[node name="player_base_focus_point" type="Spatial" parent="fight_input_manager" index="4"]
+transform = Transform( 2.61702, 0, 0, 0, 0.531184, 0, 0, 0, 1, 0, 0.29, -1.5 )
+
+[node name="enemy_base_focus_point" type="Spatial" parent="fight_input_manager" index="5"]
+transform = Transform( 2.61702, 0, 0, 0, 0.531184, 0, 0, 0, 1, 0, 0.29, 1.5 )
+
+[connection signal="resized" from="ViewportContainer" to="ViewportContainer" method="_on_ViewportContainer_resized"]
+[connection signal="pressed" from="fight_input_manager/tutorial_ui/tutorial_text/Button" to="fight_input_manager/tutorial_ui" method="_on_Button_pressed"]
 
 [editable path="human_player_1"]

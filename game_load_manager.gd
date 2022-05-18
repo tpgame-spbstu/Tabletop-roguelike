@@ -79,15 +79,15 @@ static func get_temp_deck_config():
 	var CardConfig := load("res://Card/card_config.gd")
 	var deck_config = DeckConfig.new()
 	deck_config.cards.append(BaseCardsManager.get_card_config_copy("Жук медленный"))
-	deck_config.cards.append(BaseCardsManager.get_card_config_copy("Жук быстрый"))
-	deck_config.cards.append(BaseCardsManager.get_card_config_copy("Жук средний"))
 	deck_config.cards.append(BaseCardsManager.get_card_config_copy("Жук средний"))
 	deck_config.cards.append(BaseCardsManager.get_card_config_copy("Жук средний"))
 	deck_config.cards.append(BaseCardsManager.get_card_config_copy("Жук ослабляющий"))
 	deck_config.cards.append(BaseCardsManager.get_card_config_copy("Жук ослабляющий"))
 	deck_config.cards.append(BaseCardsManager.get_card_config_copy("Жук контратаки"))
 	deck_config.cards.append(BaseCardsManager.get_card_config_copy("Жук дальнобойный"))
+	deck_config.cards.append(BaseCardsManager.get_card_config_copy("Жук быстрый"))
 	deck_config.cards.append(BaseCardsManager.get_card_config_copy("Жук дальнобойный"))
+	deck_config.cards.append(BaseCardsManager.get_card_config_copy("Жук средний"))
 	return deck_config
 
 

@@ -27,7 +27,7 @@ func initialize(deck_config , inventory_config , params : Dictionary):
 		self, "_on_fight_state_player_1_win")
 	fight_state.connect(fight_state.get_turn_state_signal(TurnState.WIN, 2), 
 		self, "_on_fight_state_player_2_win")
-	fight_input_manager.initialize(fight_state, player_1)
+	fight_input_manager.initialize(fight_state, fight_global_signals, board, player_1)
 	start()
 
 
