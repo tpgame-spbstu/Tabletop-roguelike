@@ -73,12 +73,10 @@ func _on_board_cell_input_event(board_cell, event):
 
 
 func _on_board_cell_mouse_entered_event(board_cell):
-	print("entered")
 	emit_signal("board_cell_mouse_entered", board_cell)
 
 
 func _on_board_cell_mouse_exited_event(board_cell):
-	print("exited")
 	emit_signal("board_cell_mouse_exited", board_cell)
 
 
@@ -139,11 +137,13 @@ func move_card(board_cell, card_to_move):
 	fight_global_signals.emit_signal("card_moved", prev_board_cell, board_cell, card_to_move)
 
 
-func cancel_highlight():
+func cancel_highlight(clear_targets = true):
 	for row_index in range(rows_count):
 		for column_index in range(column_count):
 			var cell = get_board_cell(row_index, column_index)
-			cell.set_highlight_state("none")
+			if clear_targets == true || cell.highlight_state != "targeted":
+				cell.set_highlight_state("none")
+
 
 
 func has_free_base_cells(player_number):
