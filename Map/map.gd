@@ -8,6 +8,7 @@ var map_config
 var current_map_point
 var PathSection = load("res://Map/Path/path_section.tscn")
 var utils = preload("res://Map/utils.gd").new()
+onready var tutorial = preload("res://Map/Tutorial/tutorial_map.tscn").instance()
 # stores paths between points
 # [[start_vertex, end_vertex]]: path
 var _paths = Dictionary()
@@ -18,6 +19,7 @@ var _points = Dictionary()
 onready var character = $character
 enum _MapState { BLOCKED, MOVING, CHOOSING}
 var _state
+var is_tutorial_active = true
 
 export(Color) var unreachable_edge_color = Color(0.5, 0.5, 0.5, 0.5)
 export(Color) var reachable_edge_color = Color(1, 1, 1, 1)
@@ -25,9 +27,25 @@ export(float, 0.1, 5.0, 2.0) var PATH_WIDTH = 2
 export(float, 1.0, 30.0, 15.0) var SPACE = 15.0
 
 
+func run_tutorial():
+	$".".add_child(tutorial)
+	$DirectionalLight.light_energy = 0
+	var scr = tutorial.run()
+	tutorial.connect("end_tutorial", self, "on_end_tutorial")
+	scr = null
+	pass
+
+
+func on_end_tutorial():
+	tutorial.queue_free()
+	is_tutorial_active = false
+	$DirectionalLight.light_energy = 1.3
+	continue_game()
+	pass
+
+
 func initialize(game_config):
 	get_node("character/Camera").make_current()
-	
 	assert(game_config != null)
 	assert(game_config.map_config != null)
 	assert(game_config.deck_config != null)
@@ -35,6 +53,13 @@ func initialize(game_config):
 	self.game_config = game_config
 	map_config = game_config.map_config
 	
+	if is_tutorial_active:
+		run_tutorial()
+	else:
+		continue_game()
+
+
+func continue_game():
 	_generate_points()
 	_repaint_paths_availablility()
 	
