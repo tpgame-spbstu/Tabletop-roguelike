@@ -32,6 +32,16 @@ rect_pivot_offset = Vector2( -133, 379 )
 mouse_filter = 2
 script = ExtResource( 4 )
 __meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="TutorialTips" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 

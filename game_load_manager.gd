@@ -8,6 +8,13 @@ static func get_temp_map_config():
 	var MapConfig = preload("res://Map/map_config.gd")
 	var MapPointConfig = preload("res://Map/Location/map_point_config.gd")
 	
+	var card_queue_tutorial = []
+	card_queue_tutorial.append(CardQueueItem.new(BaseCardsManager.get_card_config_copy("Жук"), 1, 0))
+	card_queue_tutorial.append(CardQueueItem.new(BaseCardsManager.get_card_config_copy("Жук"), 2, 2))
+	card_queue_tutorial.append(CardQueueItem.new(BaseCardsManager.get_card_config_copy("Жук"), 3, 1))
+	card_queue_tutorial.append(CardQueueItem.new(BaseCardsManager.get_card_config_copy("Жук"), 3, 3))
+	
+	
 	var card_queue1 = []
 	card_queue1.append(CardQueueItem.new(BaseCardsManager.get_card_config_copy("Жук"), 1, 0))
 	card_queue1.append(CardQueueItem.new(BaseCardsManager.get_card_config_copy("Жук"), 1, 3))
@@ -34,6 +41,7 @@ static func get_temp_map_config():
 	card_queue3.append(CardQueueItem.new(BaseCardsManager.get_card_config_copy("Жук"), 6, 3))
 
 	var fight_scene : String = "res://Fight/fight_location.tscn"
+	var fight_tutorial_scene : String = "res://Fight Tutorial/fight_tutorial_location.tscn"
 	var sacrifice_scene : String = "res://Sacrifice_location/sacrifice_location.tscn"
 	var win_scene : String = "res://Winner_location/win_location.tscn"
 	var loc5 = MapPointConfig.new(fight_scene, {"shuffle_seed": 5, 
@@ -45,7 +53,8 @@ static func get_temp_map_config():
 		false)
 	var loc1 = MapPointConfig.new(fight_scene, {"shuffle_seed": 10, "ai_card_queue": card_queue2},
 		Vector2(0, 0), MapPointConfig.types_map.FIGHT)
-	var loc0 = MapPointConfig.new("", {}, Vector2(0, -1), MapPointConfig.types_map.FIGHT, true)
+	var loc0 = MapPointConfig.new(fight_tutorial_scene, {"shuffle_seed": 0, "ai_card_queue": card_queue_tutorial}, Vector2(0, -1), MapPointConfig.types_map.FIGHT)
+	var start = MapPointConfig.new("", {}, Vector2(0, -2), MapPointConfig.types_map.FIGHT, true)
 
 	# creating the graph `vertex`: [`available_vertexes`]
 	var point_map = {
@@ -55,11 +64,12 @@ static func get_temp_map_config():
 		loc2: [loc3],
 		loc1: [loc2, loc5],
 		loc0: [loc1],
+		start: [loc0],
 	}
 
 	var temp_map_config = MapConfig.new()
 	temp_map_config.map_point_graph = point_map
-	temp_map_config.current_map_point_config = loc0
+	temp_map_config.current_map_point_config = start
 
 	return temp_map_config
 
@@ -69,15 +79,15 @@ static func get_temp_deck_config():
 	var CardConfig := load("res://Card/card_config.gd")
 	var deck_config = DeckConfig.new()
 	deck_config.cards.append(BaseCardsManager.get_card_config_copy("Жук медленный"))
-	deck_config.cards.append(BaseCardsManager.get_card_config_copy("Жук быстрый"))
-	deck_config.cards.append(BaseCardsManager.get_card_config_copy("Жук средний"))
 	deck_config.cards.append(BaseCardsManager.get_card_config_copy("Жук средний"))
 	deck_config.cards.append(BaseCardsManager.get_card_config_copy("Жук средний"))
 	deck_config.cards.append(BaseCardsManager.get_card_config_copy("Жук ослабляющий"))
 	deck_config.cards.append(BaseCardsManager.get_card_config_copy("Жук ослабляющий"))
 	deck_config.cards.append(BaseCardsManager.get_card_config_copy("Жук контратаки"))
 	deck_config.cards.append(BaseCardsManager.get_card_config_copy("Жук дальнобойный"))
+	deck_config.cards.append(BaseCardsManager.get_card_config_copy("Жук быстрый"))
 	deck_config.cards.append(BaseCardsManager.get_card_config_copy("Жук дальнобойный"))
+	deck_config.cards.append(BaseCardsManager.get_card_config_copy("Жук средний"))
 	return deck_config
 
 

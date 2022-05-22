@@ -13,6 +13,7 @@ const TURN_END_PAUSE_TIME = 0.5
 
 signal show_card_description(card)
 signal card_to_play_selected(card)
+signal input_requested(input_request)
 
 var board
 var fight_state
@@ -22,6 +23,8 @@ var player_number
 var input_allowed := true
 
 var TurnState := preload("res://Fight/fight_state.gd").TurnState
+var InputRequest := preload("res://Fight/fight_input_manager.gd").InputRequest
+
 
 func initialize(fight_state, fight_global_signals, board, deck_config, player_number, params):
 	self.fight_state = fight_state
@@ -96,6 +99,12 @@ func play_card(board_cell, card_to_play):
 	fight_global_signals.emit_signal("card_played", board_cell, card_to_play)
 
 
+func send_input(type, data= {}):
+	var inpur_request = InputRequest.new(type, data)
+	emit_signal("input_requested", inpur_request)
+	return inpur_request.is_allowed
+
+
 func _on_board_left_click(board_cell, card):
 	if !input_allowed:
 		return
@@ -105,15 +114,21 @@ func _on_board_left_click(board_cell, card):
 	if fight_state.turn_state != TurnState.PLACE_AND_MOVE:
 		# PLACE_AND_MOVE not allowed
 		return
-	cancel_highlight()
 	if human_player_state.card_to_play != null:
 		# Selected card to play
 		if card != null:
 			# cell not empty, can't play card, so clear selection
+			if not send_input("board_cancel_play_not_empty_click", {"board_cell": board_cell, "card": card}):
+				return
 			cancel_selection()
 			return
 		if !board_cell.is_friendly_base(player_number):
 			# cell not a friendly base, can't play
+			if not send_input("board_play_not_base_click", {"board_cell": board_cell, "card": card}):
+				return
+			return
+		
+		if not send_input("board_correct_play_click", {"board_cell": board_cell, "card": card}):
 			return
 		var card_to_play = human_player_state.card_to_play
 		# Pay cost for card
@@ -129,20 +144,29 @@ func _on_board_left_click(board_cell, card):
 		# Selected card to move
 		if card == human_player_state.card_to_move:
 			# clicked on selected card, reset selection
+			if not send_input("board_cancel_move_self_click", {"board_cell": board_cell, "card": card}):
+				return
 			human_player_state.card_to_move = null
 			selector.set_state("hide")
+			cancel_highlight()
 			highlight_possible_moves()
 			return
 		var move_cost = human_player_state.card_to_move.get_move_cost_or_null(board_cell)
 		if move_cost == null:
+			if not send_input("board_cancel_move_unreachable_click", {"board_cell": board_cell, "card": card}):
+				return
 			cancel_selection()
 			# Can't move card
 			highlight_possible_moves()
 			return
 		if !move_cost.is_obtainable(human_player_state):
+			if not send_input("board_cancel_move_cant_pay_click", {"board_cell": board_cell, "card": card}):
+				return
 			cancel_selection()
 			# Can't pay cost
 			highlight_possible_moves()
+			return
+		if not send_input("board_correct_move_click", {"board_cell": board_cell, "card": card}):
 			return
 		# Pay cost to move
 		move_cost.pay(human_player_state)
@@ -157,11 +181,17 @@ func _on_board_left_click(board_cell, card):
 		# No selected cards
 		if card == null:
 			# Cell is empty
+			if not send_input("board_cant_select_move_empty_click", {"board_cell": board_cell, "card": card}):
+				return
 			return
 		if card.owner_number != player_number:
 			# Clicked on enemy card
+			if not send_input("board_cant_select_move_enemy_click", {"board_cell": board_cell, "card": card}):
+				return
 			return
 		# Select card to move
+		if not send_input("board_correct_select_move_click", {"board_cell": board_cell, "card": card}):
+			return
 		human_player_state.card_to_move = card
 		cancel_highlight()
 		highlight_possible_card_moves(board_cell)
@@ -184,17 +214,22 @@ func _on_hand_left_click(hand_cell, card):
 	if fight_state.turn_state != TurnState.PLACE_AND_MOVE:
 		# PLACE_AND_MOVE not allowed
 		return
-		cancel_highlight()
 	if human_player_state.card_to_play != null:
 		# Selected card to play
 		# Reset selected card
+		if not send_input("hand_cancel_play_click"):
+			return
 		cancel_selection()
 	elif human_player_state.card_to_move != null:
 		# Selected card to move
 		# Reset selected card
+		if not send_input("hand_cancel_move_click"):
+			return
 		cancel_selection()
 	else:
 		# No selected cards
+		if not send_input("hand_select_card_click", {"card": card}):
+			return
 		if !card.card_config.play_cost.is_obtainable(human_player_state):
 			# Can't pay for card
 			return
@@ -214,6 +249,8 @@ func _on_deck_click(deck, card):
 		# other player's turn
 		return
 	cancel_selection()
+	if not send_input("deck_click", {"deck": deck, "card": card}):
+		return
 	match fight_state.turn_state:
 		TurnState.DRAW_CARDS:
 			# State DRAW_CARDS
@@ -257,6 +294,8 @@ func draw_card(deck, card):
 	hand.draw_cards()
 	card.set_global_transform(hand._proxies[~0].get_global_transform())
 	card.global_rotate(Vector3.UP, -PI)
+	
+	fight_global_signals.emit_signal("card_drawn", deck, card)
 
 
 func _on_bell_click(bell):
@@ -266,6 +305,8 @@ func _on_bell_click(bell):
 		# if other player's turn
 		return
 	if fight_state.turn_state == TurnState.PLACE_AND_MOVE:
+		if not send_input("bell_click"):
+			return
 		# Go to attack when PLACE_AND_MOVE finished
 		cancel_selection()
 		input_allowed = false

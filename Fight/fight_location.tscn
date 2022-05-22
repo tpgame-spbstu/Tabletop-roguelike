@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://Fight/fight_location.gd" type="Script" id=1]
 [ext_resource path="res://Fight/AI Player/ai_player.tscn" type="PackedScene" id=2]
@@ -12,6 +12,7 @@
 [ext_resource path="res://Fight/Human Player/human_player.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Map/map_environment.tres" type="Environment" id=11]
 [ext_resource path="res://Fight/fight_loger.gd" type="Script" id=12]
+[ext_resource path="res://Fight/fight_input_manager.gd" type="Script" id=13]
 [ext_resource path="res://Models/Scene/Bones/bonegltf.tscn" type="PackedScene" id=14]
 [ext_resource path="res://Models/Scene/Bones/skull_broken.tscn" type="PackedScene" id=15]
 [ext_resource path="res://Models/Scene/lightninggltf.tscn" type="PackedScene" id=16]
@@ -44,6 +45,9 @@ script = ExtResource( 12 )
 
 [node name="fight_state" type="Node" parent="."]
 script = ExtResource( 8 )
+
+[node name="fight_input_manager" type="Node" parent="."]
+script = ExtResource( 13 )
 
 [node name="human_player_1" parent="." instance=ExtResource( 10 )]
 
@@ -149,6 +153,7 @@ transform = Transform( -1, -8.64016e-08, 1.33232e-08, 0, 0.152399, 0.988319, -8.
 
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( -1, -8.63376e-08, 1.37317e-08, 0, 0.157072, 0.987587, -8.74228e-08, 0.987587, -0.157072, 0, 3.544, -1.371 )
+cull_mask = 1048063
 environment = ExtResource( 11 )
 current = true
 script = ExtResource( 9 )
@@ -169,6 +174,9 @@ material/0 = SubResource( 12 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1 )
 mesh = SubResource( 11 )
 material/0 = SubResource( 13 )
+
+[node name="skull_broken" parent="." instance=ExtResource( 15 )]
+transform = Transform( 0.254197, 0.415806, -0.873206, 0, 0.902863, 0.429928, -0.967152, 0.109286, -0.229505, 2.901, -0.183, 1.303 )
 
 [node name="resources_status" type="Spatial" parent="."]
 script = ExtResource( 7 )
@@ -195,9 +203,6 @@ material/1 = null
 material/2 = null
 
 [node name="blood_status" type="Spatial" parent="resources_status"]
-
-[node name="skull_broken" parent="resources_status" instance=ExtResource( 15 )]
-transform = Transform( 0.254197, 0.415806, -0.873206, 0, 0.902863, 0.429928, -0.967152, 0.109286, -0.229505, 2.901, -0.183, 1.303 )
 
 [node name="Desk" parent="." instance=ExtResource( 20 )]
 transform = Transform( 5, 0, 0, 0, 5, 0, 0, 0, 5, -3.90537, -1.5388, 0.0392361 )
