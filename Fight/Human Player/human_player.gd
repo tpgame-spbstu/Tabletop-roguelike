@@ -127,6 +127,7 @@ func _on_board_left_click(board_cell, card):
 		input_allowed = true
 		# Reset selected card
 		cancel_selection()
+		cancel_highlight()
 		highlight_possible_moves()
 	elif human_player_state.card_to_move != null:
 		# Selected card to move
@@ -180,7 +181,8 @@ func _on_board_cell_mouse_entered(board_cell):
 	var card = null
 	if (fight_state.turn_state == TurnState.PLACE_AND_MOVE 
 	and fight_state.active_player_number == player_number):
-		if(human_player_state.card_to_play != null):
+		if(human_player_state.card_to_play != null and board_cell.is_friendly_base(player_number)
+			and board_cell.get_card_or_null() == null):
 			card = human_player_state.card_to_play
 		elif(human_player_state.card_to_move != null):
 			card = human_player_state.card_to_move
