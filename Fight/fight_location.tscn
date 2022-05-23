@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=32 format=2]
 
 [ext_resource path="res://Fight/fight_location.gd" type="Script" id=1]
 [ext_resource path="res://Fight/AI Player/ai_player.tscn" type="PackedScene" id=2]
@@ -12,6 +12,7 @@
 [ext_resource path="res://Fight/Human Player/human_player.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Map/map_environment.tres" type="Environment" id=11]
 [ext_resource path="res://Fight/fight_loger.gd" type="Script" id=12]
+[ext_resource path="res://fonts/Ubuntu-B.ttf" type="DynamicFontData" id=13]
 [ext_resource path="res://Models/Scene/Bones/bonegltf.tscn" type="PackedScene" id=14]
 [ext_resource path="res://Models/Scene/Bones/skull_broken.tscn" type="PackedScene" id=15]
 [ext_resource path="res://Models/Scene/lightninggltf.tscn" type="PackedScene" id=16]
@@ -19,6 +20,9 @@
 [ext_resource path="res://Fight/hand_hightlight.gd" type="Script" id=18]
 [ext_resource path="res://Models/Models/potion/potionSmall_red.obj" type="ArrayMesh" id=19]
 [ext_resource path="res://Models/Scene/Desk.tscn" type="PackedScene" id=20]
+[ext_resource path="res://Models/Scene/heart_teamRedgltf.tscn" type="PackedScene" id=21]
+[ext_resource path="res://Fight/hp_status_bot.gd" type="Script" id=22]
+[ext_resource path="res://Fight/hp_status_player.gd" type="Script" id=23]
 
 [sub_resource type="QuadMesh" id=10]
 material = ExtResource( 17 )
@@ -32,6 +36,19 @@ albedo_color = Color( 0.0196078, 0.203922, 0.262745, 1 )
 
 [sub_resource type="SpatialMaterial" id=13]
 albedo_color = Color( 0, 0.231373, 0.623529, 1 )
+
+[sub_resource type="DynamicFont" id=1]
+size = 50
+font_data = ExtResource( 13 )
+
+[sub_resource type="Theme" id=2]
+default_font = SubResource( 1 )
+
+[sub_resource type="ViewportTexture" id=14]
+viewport_path = NodePath("hp_status_player/Viewport")
+
+[sub_resource type="ViewportTexture" id=15]
+viewport_path = NodePath("hp_status_bot/Viewport")
 
 [node name="fight_location" type="Spatial"]
 script = ExtResource( 1 )
@@ -171,6 +188,7 @@ mesh = SubResource( 11 )
 material/0 = SubResource( 13 )
 
 [node name="resources_status" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.272722 )
 script = ExtResource( 7 )
 
 [node name="lightninggltf" parent="resources_status" instance=ExtResource( 16 )]
@@ -197,10 +215,72 @@ material/2 = null
 [node name="blood_status" type="Spatial" parent="resources_status"]
 
 [node name="skull_broken" parent="resources_status" instance=ExtResource( 15 )]
-transform = Transform( 0.254197, 0.415806, -0.873206, 0, 0.902863, 0.429928, -0.967152, 0.109286, -0.229505, 2.901, -0.183, 1.303 )
+transform = Transform( 0.254197, 0.415806, -0.873206, 0, 0.902863, 0.429928, -0.967152, 0.109286, -0.229505, 3.85967, -0.183, 1.303 )
 
 [node name="Desk" parent="." instance=ExtResource( 20 )]
-transform = Transform( 5, 0, 0, 0, 5, 0, 0, 0, 5, -3.90537, -1.5388, 0.0392361 )
+transform = Transform( 7, 0, 0, 0, 5, 0, 0, 0, 7, -4.57422, -1.5388, 0.0392361 )
+
+[node name="hp_status_player" type="Spatial" parent="."]
+transform = Transform( 0.7, 0, 0, 0, 1, 0, 0, 0, 0.7, -3.20635, 0.0862778, -2.31636 )
+script = ExtResource( 23 )
+
+[node name="Viewport" type="Viewport" parent="hp_status_player"]
+size = Vector2( 100, 100 )
+transparent_bg = true
+
+[node name="Control" type="Control" parent="hp_status_player/Viewport"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="hp_status_player/Viewport/Control"]
+margin_right = 246.0
+margin_bottom = 210.0
+theme = SubResource( 2 )
+text = "5"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite3D" type="Sprite3D" parent="hp_status_player"]
+transform = Transform( -0.999999, 8.74227e-08, -3.82137e-15, 0, -4.37114e-08, -1, -8.74228e-08, -0.999999, 4.37114e-08, -0.0331702, -0.075078, 0.25905 )
+texture = SubResource( 14 )
+
+[node name="heart_teamRedgltf" parent="hp_status_player" instance=ExtResource( 21 )]
+transform = Transform( 0.499999, 0, 0, 0, -2.18557e-08, -0.5, 0, 0.499999, -2.18557e-08, 0.791661, -0.19316, 0.392092 )
+
+[node name="hp_status_bot" type="Spatial" parent="."]
+transform = Transform( 0.7, 0, 0, 0, 1, 0, 0, 0, 0.7, 2.53505, 0.0862788, 1.10917 )
+script = ExtResource( 22 )
+
+[node name="Viewport" type="Viewport" parent="hp_status_bot"]
+size = Vector2( 100, 100 )
+transparent_bg = true
+
+[node name="Control" type="Control" parent="hp_status_bot/Viewport"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="hp_status_bot/Viewport/Control"]
+margin_right = 246.0
+margin_bottom = 210.0
+theme = SubResource( 2 )
+text = "5"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite3D" type="Sprite3D" parent="hp_status_bot"]
+transform = Transform( -0.999999, 8.74227e-08, -3.82137e-15, 0, -4.37114e-08, -1, -8.74228e-08, -0.999999, 4.37114e-08, -0.104192, -0.14084, 0.25905 )
+texture = SubResource( 15 )
+
+[node name="heart_teamRedgltf" parent="hp_status_bot" instance=ExtResource( 21 )]
+transform = Transform( 0.499999, 0, 0, 0, -2.18557e-08, -0.5, 0, 0.499999, -2.18557e-08, 0.791661, -0.177967, 0.392092 )
 
 [connection signal="loop_number_changed" from="fight_state" to="fight_loger" method="_on_fight_state_loop_number_changed"]
 [connection signal="loop_number_changed" from="fight_state" to="fight_ui" method="_on_fight_state_loop_number_changed"]
@@ -209,7 +289,7 @@ transform = Transform( 5, 0, 0, 0, 5, 0, 0, 0, 5, -3.90537, -1.5388, 0.0392361 )
 [connection signal="player_1_draw_cards_enter" from="fight_state" to="fight_loger" method="_on_fight_state_player_1_draw_cards_enter"]
 [connection signal="player_1_draw_cards_enter" from="fight_state" to="fight_ui" method="_on_fight_state_player_1_draw_cards_enter"]
 [connection signal="player_1_health_changed" from="fight_state" to="fight_loger" method="_on_fight_state_player_1_health_changed"]
-[connection signal="player_1_health_changed" from="fight_state" to="fight_ui" method="_on_fight_state_player_1_health_changed"]
+[connection signal="player_1_health_changed" from="fight_state" to="hp_status_player" method="_on_fight_state_player_1_health_changed"]
 [connection signal="player_1_place_and_move_enter" from="fight_state" to="fight_loger" method="_on_fight_state_player_1_place_and_move_enter"]
 [connection signal="player_1_place_and_move_enter" from="fight_state" to="fight_ui" method="_on_fight_state_player_1_place_and_move_enter"]
 [connection signal="player_1_win_enter" from="fight_state" to="fight_loger" method="_on_fight_state_player_1_win_enter"]
@@ -219,20 +299,17 @@ transform = Transform( 5, 0, 0, 0, 5, 0, 0, 0, 5, -3.90537, -1.5388, 0.0392361 )
 [connection signal="player_2_draw_cards_enter" from="fight_state" to="fight_loger" method="_on_fight_state_player_2_draw_cards_enter"]
 [connection signal="player_2_draw_cards_enter" from="fight_state" to="fight_ui" method="_on_fight_state_player_2_draw_cards_enter"]
 [connection signal="player_2_health_changed" from="fight_state" to="fight_loger" method="_on_fight_state_player_2_health_changed"]
-[connection signal="player_2_health_changed" from="fight_state" to="fight_ui" method="_on_fight_state_player_2_health_changed"]
+[connection signal="player_2_health_changed" from="fight_state" to="hp_status_bot" method="_on_fight_state_player_2_health_changed"]
 [connection signal="player_2_place_and_move_enter" from="fight_state" to="fight_loger" method="_on_fight_state_player_2_place_and_move_enter"]
 [connection signal="player_2_place_and_move_enter" from="fight_state" to="fight_ui" method="_on_fight_state_player_2_place_and_move_enter"]
 [connection signal="player_2_win_enter" from="fight_state" to="fight_loger" method="_on_fight_state_player_2_win_enter"]
 [connection signal="player_2_win_enter" from="fight_state" to="fight_ui" method="_on_fight_state_player_2_win_enter"]
 [connection signal="card_to_play_selected" from="human_player_1" to="Camera" method="_on_human_player_1_card_to_play_selected"]
 [connection signal="bones_changed" from="human_player_1/human_player_state" to="fight_loger" method="_on_human_player_state_bones_changed"]
-[connection signal="bones_changed" from="human_player_1/human_player_state" to="fight_ui" method="_on_human_player_state_bones_changed"]
 [connection signal="bones_changed" from="human_player_1/human_player_state" to="resources_status" method="_on_human_player_state_bones_changed"]
 [connection signal="energy_changed" from="human_player_1/human_player_state" to="fight_loger" method="_on_human_player_state_energy_changed"]
-[connection signal="energy_changed" from="human_player_1/human_player_state" to="fight_ui" method="_on_human_player_state_energy_changed"]
 [connection signal="energy_changed" from="human_player_1/human_player_state" to="resources_status" method="_on_human_player_state_energy_changed"]
 [connection signal="extra_draws_count_changed" from="human_player_1/human_player_state" to="fight_loger" method="_on_human_player_state_extra_draws_count_changed"]
-[connection signal="extra_draws_count_changed" from="human_player_1/human_player_state" to="fight_ui" method="_on_human_player_state_extra_draws_count_changed"]
 [connection signal="debug_return_to_map_pressed" from="fight_ui" to="." method="_on_fight_ui_debug_return_to_map_pressed"]
 [connection signal="return_to_main_menu" from="fight_ui" to="." method="_on_return_to_main_menu"]
 
