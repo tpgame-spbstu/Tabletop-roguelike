@@ -72,14 +72,18 @@ func _on_Area_input_event(camera: Node, event: InputEvent, position: Vector3, no
 	if event is InputEventMouseButton:
 		var mouse_button_event := event as InputEventMouseButton
 		if mouse_button_event.pressed and mouse_button_event.button_index == BUTTON_LEFT :
-			var card = null
-			if get_card_count() != 0:
-				card = deck_list.get_child(deck_list.get_child_count()-1)
+			var card = get_top_card_or_null()
 			emit_signal("deck_click", self, card)
 
 
 func get_card_count():
 	return deck_list.get_child_count()
+	
+func get_top_card_or_null():
+	var card = null
+	if get_card_count() != 0:
+		card = deck_list.get_child(deck_list.get_child_count()-1)
+	return card
 
 
 func highlight():

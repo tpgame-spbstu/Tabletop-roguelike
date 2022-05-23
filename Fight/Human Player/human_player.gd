@@ -258,6 +258,19 @@ func draw_card(deck, card):
 	card.set_global_transform(hand._proxies[~0].get_global_transform())
 	card.global_rotate(Vector3.UP, -PI)
 
+func draw_start_cards():
+	var main_cards_start_count = 2
+	var dummy_cards_start_count = 1
+	for i in range(main_cards_start_count):
+		var card = main_deck.get_top_card_or_null()
+		if card == null:
+			break
+		yield(draw_card(main_deck, card), "completed")
+	for i in range(dummy_cards_start_count):
+		var card = dummy_deck.get_top_card_or_null()
+		if card == null:
+			break
+		yield(draw_card(dummy_deck, card), "completed")
 
 func _on_bell_click(bell):
 	if !input_allowed:
