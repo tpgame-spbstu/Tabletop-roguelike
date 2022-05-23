@@ -1,12 +1,9 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://fonts/ubuntu_b_16.tres" type="Theme" id=1]
 [ext_resource path="res://fonts/ubuntu_b_32.tres" type="Theme" id=2]
 [ext_resource path="res://fonts/ubuntu_b_13.tres" type="Theme" id=3]
 [ext_resource path="res://Fight/fight_location_ui.gd" type="Script" id=4]
-[ext_resource path="res://Fight/Assets/textures/icTough.png" type="Texture" id=5]
-[ext_resource path="res://Fight/Assets/textures/icHope.png" type="Texture" id=6]
-[ext_resource path="res://Fight/Assets/textures/icStrenght.png" type="Texture" id=7]
 [ext_resource path="res://fonts/Ubuntu-B.ttf" type="DynamicFontData" id=8]
 [ext_resource path="res://Card/description/description_main.tscn" type="PackedScene" id=9]
 
@@ -31,6 +28,32 @@ anchor_bottom = 1.0
 rect_pivot_offset = Vector2( -133, 379 )
 mouse_filter = 2
 script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="button_exit_to_main_menu" type="Button" parent="."]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 3.0
+margin_top = -50.0
+margin_right = 122.0
+margin_bottom = -3.0
+theme = ExtResource( 1 )
+text = "Главное меню"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="button_exit_to_map" type="Button" parent="."]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 1.0
+margin_top = -102.0
+margin_right = 166.0
+margin_bottom = -55.0
+theme = ExtResource( 1 )
+text = "Пропуск боя (debug)"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -97,234 +120,6 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ColorRect" type="ColorRect" parent="."]
-anchor_bottom = 1.0
-margin_right = 57.0
-color = Color( 0.152941, 0.160784, 0.2, 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Control3" type="Control" parent="ColorRect"]
-anchor_top = 0.567
-anchor_bottom = 0.567
-margin_top = -21.2
-margin_right = 47.0
-margin_bottom = 20.8
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="IcTough2" type="Sprite" parent="ColorRect/Control3"]
-modulate = Color( 0.733333, 0.227451, 0.227451, 1 )
-position = Vector2( 17.3125, 14.5 )
-scale = Vector2( 0.07075, 0.066 )
-texture = ExtResource( 5 )
-
-[node name="Control2" type="Control" parent="ColorRect"]
-anchor_top = 0.427
-anchor_bottom = 0.427
-margin_top = -21.2
-margin_right = 47.0
-margin_bottom = 20.8
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="IcTough" type="Sprite" parent="ColorRect/Control2"]
-modulate = Color( 0.745098, 0.258824, 0.258824, 1 )
-position = Vector2( 16.5, 12.5 )
-scale = Vector2( 0.07, 0.066 )
-texture = ExtResource( 5 )
-
-[node name="Control4" type="Control" parent="ColorRect"]
-anchor_top = 0.758
-anchor_bottom = 0.758
-margin_top = -20.8
-margin_right = 47.0
-margin_bottom = 21.2
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="IcStrenght" type="Sprite" parent="ColorRect/Control4"]
-modulate = Color( 0.788235, 0.635294, 0.168627, 1 )
-position = Vector2( 14, 12 )
-scale = Vector2( 0.072, 0.057375 )
-texture = ExtResource( 7 )
-
-[node name="Control" type="Control" parent="ColorRect"]
-modulate = Color( 0.329412, 0.337255, 0.564706, 1 )
-anchor_top = 0.841
-anchor_bottom = 0.841
-margin_top = -22.6
-margin_right = 47.0
-margin_bottom = 22.4
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="IcHope" type="Sprite" parent="ColorRect/Control"]
-position = Vector2( 14, 16 )
-scale = Vector2( 0.069375, 0.062 )
-texture = ExtResource( 6 )
-
-[node name="HP2" type="RichTextLabel" parent="ColorRect"]
-anchor_top = 0.433
-anchor_bottom = 0.433
-margin_left = 20.0
-margin_top = -22.8
-margin_right = 51.0
-margin_bottom = 22.2
-theme = ExtResource( 2 )
-custom_colors/default_color = Color( 1, 1, 1, 1 )
-text = "5"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Energy" type="RichTextLabel" parent="ColorRect"]
-anchor_top = 0.764
-anchor_bottom = 0.764
-margin_left = 22.0
-margin_top = -22.4
-margin_right = 53.0
-margin_bottom = 22.6
-theme = ExtResource( 2 )
-custom_colors/default_color = Color( 1, 1, 1, 1 )
-text = "5"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="HP1" type="RichTextLabel" parent="ColorRect"]
-anchor_top = 0.574
-anchor_bottom = 0.574
-margin_left = 21.0
-margin_top = -22.4
-margin_right = 52.0
-margin_bottom = 22.6
-theme = ExtResource( 2 )
-custom_colors/default_color = Color( 1, 1, 1, 1 )
-text = "5"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Bones" type="RichTextLabel" parent="ColorRect"]
-anchor_top = 0.849
-anchor_bottom = 0.849
-margin_left = 22.0
-margin_top = -22.4
-margin_right = 53.0
-margin_bottom = 22.6
-theme = ExtResource( 2 )
-custom_colors/default_color = Color( 1, 1, 1, 1 )
-text = "0"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="card" type="RichTextLabel" parent="ColorRect"]
-anchor_top = 0.964
-anchor_bottom = 0.964
-margin_left = 21.0
-margin_top = -21.4
-margin_right = 52.0
-margin_bottom = 21.5999
-theme = ExtResource( 2 )
-custom_colors/default_color = Color( 1, 1, 1, 1 )
-text = "2"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="HP_bot_label" type="RichTextLabel" parent="ColorRect"]
-visible = false
-anchor_top = 0.427
-anchor_bottom = 0.427
-margin_left = 52.0
-margin_top = -9.19998
-margin_right = 203.0
-margin_bottom = 7.80002
-theme = ExtResource( 3 )
-text = "Здоровье противника"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="HP_player_label" type="RichTextLabel" parent="ColorRect"]
-visible = false
-anchor_top = 0.564
-anchor_bottom = 0.564
-margin_left = 53.0
-margin_top = -8.39999
-margin_right = 134.0
-margin_bottom = 8.60001
-theme = ExtResource( 3 )
-text = "Здоровье"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Energy_label" type="RichTextLabel" parent="ColorRect"]
-visible = false
-anchor_top = 0.76
-anchor_bottom = 0.76
-margin_left = 53.0
-margin_top = -10.0
-margin_right = 118.0
-margin_bottom = 9.99997
-theme = ExtResource( 3 )
-text = "Энергия"
-
-[node name="Bones_label" type="RichTextLabel" parent="ColorRect"]
-visible = false
-anchor_top = 0.845
-anchor_bottom = 0.845
-margin_left = 54.0
-margin_top = -11.0
-margin_right = 112.0
-margin_bottom = 11.0
-theme = ExtResource( 3 )
-text = "Кости"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Card_label" type="RichTextLabel" parent="ColorRect"]
-visible = false
-anchor_top = 0.959
-anchor_bottom = 0.959
-margin_left = 53.0
-margin_top = -9.40002
-margin_right = 162.0
-margin_bottom = 9.59998
-theme = ExtResource( 3 )
-text = "Доступных карт"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="button_exit_to_main_menu" type="Button" parent="ColorRect"]
-margin_right = 106.0
-margin_bottom = 47.0
-theme = ExtResource( 1 )
-text = "Главное меню"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="button_exit_to_map" type="Button" parent="ColorRect"]
-margin_top = 47.0
-margin_right = 106.0
-margin_bottom = 94.0
-theme = ExtResource( 1 )
-text = "Пропуск боя (debug)"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="Final_status" type="Control" parent="."]
 visible = false
 anchor_left = 0.5
@@ -367,18 +162,8 @@ __meta__ = {
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0 )
 visible = false
 
+[connection signal="pressed" from="button_exit_to_main_menu" to="." method="_on_button_exit_to_main_menu_pressed"]
+[connection signal="pressed" from="button_exit_to_map" to="." method="_on_button_exit_to_map_pressed"]
 [connection signal="mouse_entered" from="loop" to="." method="_on_loop_mouse_entered"]
 [connection signal="mouse_exited" from="loop" to="." method="_on_loop_mouse_exited"]
-[connection signal="mouse_entered" from="ColorRect/HP2" to="." method="_on_HP2_mouse_entered"]
-[connection signal="mouse_exited" from="ColorRect/HP2" to="." method="_on_HP2_mouse_exited"]
-[connection signal="mouse_entered" from="ColorRect/Energy" to="." method="_on_Energy_mouse_entered"]
-[connection signal="mouse_exited" from="ColorRect/Energy" to="." method="_on_Energy_mouse_exited"]
-[connection signal="mouse_entered" from="ColorRect/HP1" to="." method="_on_HP1_mouse_entered"]
-[connection signal="mouse_exited" from="ColorRect/HP1" to="." method="_on_HP1_mouse_exited"]
-[connection signal="mouse_entered" from="ColorRect/Bones" to="." method="_on_Bones_mouse_entered"]
-[connection signal="mouse_exited" from="ColorRect/Bones" to="." method="_on_Bones_mouse_exited"]
-[connection signal="mouse_entered" from="ColorRect/card" to="." method="_on_card_mouse_entered"]
-[connection signal="mouse_exited" from="ColorRect/card" to="." method="_on_card_mouse_exited"]
-[connection signal="pressed" from="ColorRect/button_exit_to_main_menu" to="." method="_on_button_exit_to_main_menu_pressed"]
-[connection signal="pressed" from="ColorRect/button_exit_to_map" to="." method="_on_button_exit_to_map_pressed"]
 [connection signal="pressed" from="Final_status/return_to_map" to="." method="_on_final_status_return_to_map_pressed"]
