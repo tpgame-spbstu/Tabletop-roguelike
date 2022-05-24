@@ -55,7 +55,8 @@ func _on_card_input_event(cell, event):
 			cur_card = cell.get_node("card_visuals")
 			cur_board_cell = cell.get_node("cell")
 			is_card_pressed = true
-			selector.select(cur_card)
+			selector.global_transform = cur_card.global_transform
+			selector.show()
 			pass
 		elif mouse_button_event.pressed and mouse_button_event.button_index == BUTTON_RIGHT:
 			# добавить подробное описание
@@ -63,7 +64,7 @@ func _on_card_input_event(cell, event):
 
 func _on_Area_1_input_event(camera, event, position, normal, shape_idx):
 	if event is InputEventMouseButton:
-		selector.cancel_selection()
+		selector.hide()
 		var mouse_button_event := event as InputEventMouseButton
 		if mouse_button_event.pressed and mouse_button_event.button_index == BUTTON_LEFT :
 			if is_card_pressed:
@@ -76,7 +77,7 @@ func _on_Area_1_input_event(camera, event, position, normal, shape_idx):
 
 func _on_Area_2_input_event(camera, event, position, normal, shape_idx):
 	if event is InputEventMouseButton:
-		selector.cancel_selection()
+		selector.hide()
 		var mouse_button_event := event as InputEventMouseButton
 		if mouse_button_event.pressed and mouse_button_event.button_index == BUTTON_LEFT :
 			if is_card_pressed:
