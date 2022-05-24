@@ -41,6 +41,7 @@ func start():
 	fight_state.player_1_health = 5
 	fight_state.player_2_health = 5
 	fight_state.set_state(TurnState.DRAW_CARDS, 1)
+	player_1.draw_start_cards()
 
 
 func _on_fight_state_player_1_win():
