@@ -1,12 +1,14 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Symbols/Textures/energy.tres" type="Texture" id=1]
+[ext_resource path="res://Card/Textures/image-removebg-preview (1) (2).png" type="Texture" id=2]
 [ext_resource path="res://fonts/Ubuntu-B.ttf" type="DynamicFontData" id=3]
-[ext_resource path="res://Symbols/Textures/attack.tres" type="Texture" id=4]
+[ext_resource path="res://Card/Textures/sword.png" type="Texture" id=4]
 [ext_resource path="res://Symbols/Textures/health.tres" type="Texture" id=5]
+[ext_resource path="res://Card/Textures/image-removebg-preview (3) (1).png" type="Texture" id=6]
 
 [sub_resource type="DynamicFont" id=11]
-size = 50
+size = 45
 outline_color = Color( 0.984314, 0.984314, 0.984314, 1 )
 use_mipmaps = true
 use_filter = true
@@ -44,11 +46,16 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="background_name" type="Sprite" parent="."]
+position = Vector2( 201, 36 )
+scale = Vector2( 0.800948, 0.544041 )
+texture = ExtResource( 2 )
+
 [node name="Card_name" type="Label" parent="."]
-margin_left = 1.0
-margin_top = -1.0
-margin_right = 401.0
-margin_bottom = 108.0
+margin_left = 16.0
+margin_top = 10.0
+margin_right = 391.0
+margin_bottom = 70.0
 theme = SubResource( 2 )
 text = "card_name"
 align = 1
@@ -56,8 +63,13 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 211, 195.75 )
+scale = Vector2( 1, 1.20437 )
+texture = ExtResource( 6 )
+
 [node name="Image" type="Sprite" parent="."]
-position = Vector2( 193, 195 )
+position = Vector2( 200, 200 )
 
 [node name="Cost" type="Control" parent="."]
 margin_left = 172.0
@@ -119,16 +131,16 @@ __meta__ = {
 }
 
 [node name="Sprite" type="Sprite" parent="Attack"]
-position = Vector2( 1, -26 )
-scale = Vector2( 2.27679, 2.17949 )
+position = Vector2( -15, -39 )
+scale = Vector2( 0.400067, 0.38297 )
 texture = ExtResource( 4 )
 centered = false
 
 [node name="count" type="Label" parent="Attack"]
-margin_left = 19.0
-margin_top = -37.0
-margin_right = 70.0
-margin_bottom = 69.0
+margin_left = 23.0
+margin_top = -36.0
+margin_right = 74.0
+margin_bottom = 70.0
 theme = SubResource( 14 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "5"

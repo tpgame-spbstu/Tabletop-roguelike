@@ -1,0 +1,11 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Models/Models/gems/Yellow.material" type="Material" id=1]
+[ext_resource path="res://Models/Models/gems/diamond_teamYellow.gltf.glb" type="PackedScene" id=2]
+[ext_resource path="res://Models/Scene/gems_mesh.tres" type="ArrayMesh" id=3]
+
+[node name="diamond_teamYellowgltf" instance=ExtResource( 2 )]
+
+[node name="diamond_teamYellow" parent="." index="0"]
+mesh = ExtResource( 3 )
+material/0 = ExtResource( 1 )

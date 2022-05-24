@@ -1,7 +1,6 @@
 extends Spatial
 
 # Card class - card class for fight
-
 var BoardCell := load("res://Fight/board_cell.gd") as Script
 var CardConfig := load("res://Card/card_config.gd")
 
@@ -73,15 +72,9 @@ func process_attack():
 	var anim_name = "attack_" + str(owner_number)
 	print(anim_name)
 	assert(board_cell != null)
-	if card_config.power <= 0 or card_config.health <= 0:
-		# can't attack if power 0 or less or dead
-		return
-	# Get target cell to attack
-	var attack_range = 1
 	if has_symbol("range"):
 		anim_name = "range_attack_" + str(owner_number)
-		attack_range += 1
-	var target_board_cell = board_cell.get_relative_board_cell(attack_range * player_attack_direction[owner_number], 0)
+	var target_board_cell = get_target_cell_from(board_cell)
 	if target_board_cell == null:
 		# can't attack if target cell completely out of bounds
 		return
@@ -110,9 +103,21 @@ func process_attack():
 	yield(target_card.reduce_health(card_config.power), "completed")
 
 
+func get_target_cell_from(board_cell):
+	if card_config.power <= 0 or card_config.health <= 0:
+		# can't attack if power 0 or less or dead
+		return null
+	var attack_range = 1
+	if has_symbol("range"):
+		attack_range += 1
+	var target_board_cell = board_cell.get_relative_board_cell(attack_range * player_attack_direction[owner_number], 0)
+	return target_board_cell
+
+
 func get_move_cost_or_null(target_board_cell):
 	var board_cell = get_board_cell_or_null()
-	assert(board_cell != null)
+	if board_cell == null:
+		return null
 	if target_board_cell == board_cell:
 		# target cell is a current cell
 		return null

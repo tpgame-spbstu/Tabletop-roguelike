@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Models/Scene/gems_mesh.tres" type="ArrayMesh" id=1]
+
+[node name="energy8" type="MeshInstance"]
+transform = Transform( 0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -2.32496, 8.74996e-05, -1.0398 )
+mesh = ExtResource( 1 )
+material/0 = null
