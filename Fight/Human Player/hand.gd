@@ -80,10 +80,11 @@ func has_obtainable_cards(human_player_state):
 				return true
 	return false
 
-
+#---------------------to-remove-------------------------
 func highlight():
 	highlighter.highlight()
 	
 	
 func cancel_highlight():
 	highlighter.cancel_highlight()
+#-------------------------------------------------------

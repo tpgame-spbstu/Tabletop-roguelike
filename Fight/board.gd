@@ -10,6 +10,8 @@ var _board_width: float
 var fight_global_signals
 signal board_left_click(board_cell, card)
 signal board_right_click(board_cell, card)
+signal board_cell_mouse_entered(board_cell)
+signal board_cell_mouse_exited(board_cell)
 
 
 # Set up exturnal nodes, initialize and connect cells
@@ -23,6 +25,8 @@ func initialize(fight_global_signals):
 			var cell = get_board_cell(row_index, column_index)
 			cell.initialize(self, row_index, column_index)
 			cell.connect("input_event", self, "_on_board_cell_input_event")
+			cell.connect("mouse_entered_event", self, "_on_board_cell_mouse_entered_event")
+			cell.connect("mouse_exited_event", self, "_on_board_cell_mouse_exited_event")
 	# get the distance between centers, add the `card_width / 2` from both sides
 	_board_width = abs(get_board_cell(0, 0).get_global_transform().origin.x - get_board_cell(0, rows.get_child(0).get_child_count() - 1).get_global_transform().origin.x) + get_board_cell(0, 0).get_size().x
 
@@ -66,6 +70,14 @@ func _on_board_cell_input_event(board_cell, event):
 		elif mouse_button_event.pressed and mouse_button_event.button_index == BUTTON_RIGHT :
 			# Right click on board cell
 			emit_signal("board_right_click", board_cell, board_cell.get_card_or_null())
+
+
+func _on_board_cell_mouse_entered_event(board_cell):
+	emit_signal("board_cell_mouse_entered", board_cell)
+
+
+func _on_board_cell_mouse_exited_event(board_cell):
+	emit_signal("board_cell_mouse_exited", board_cell)
 
 
 # Give a chance to attack to all player's cards in right order
@@ -125,11 +137,13 @@ func move_card(board_cell, card_to_move):
 	fight_global_signals.emit_signal("card_moved", prev_board_cell, board_cell, card_to_move)
 
 
-func cancel_highlight():
+func cancel_highlight(clear_targets = true):
 	for row_index in range(rows_count):
 		for column_index in range(column_count):
 			var cell = get_board_cell(row_index, column_index)
-			cell.cancel_highlight()
+			if clear_targets == true || cell.highlight_state != "targeted":
+				cell.set_highlight_state("none")
+
 
 
 func has_free_base_cells(player_number):
