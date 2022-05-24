@@ -1,6 +1,7 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Sacrifice_location/sacrifice_location.gd" type="Script" id=1]
+[ext_resource path="res://Sacrifice_location/selector.gd" type="Script" id=2]
 
 [sub_resource type="CubeMesh" id=1]
 size = Vector3( 6, 0.01, 8 )
@@ -24,6 +25,14 @@ albedo_color = Color( 0.309804, 0.341176, 0.776471, 1 )
 
 [sub_resource type="BoxShape" id=8]
 extents = Vector3( 0.455, 0.014, 0.454 )
+
+[sub_resource type="SpatialMaterial" id=10]
+flags_transparent = true
+albedo_color = Color( 0, 0.498039, 0.498039, 0.498039 )
+
+[sub_resource type="CubeMesh" id=9]
+material = SubResource( 10 )
+size = Vector3( 1, 0.025, 1 )
 
 [node name="sacrifice_location" type="Spatial"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000866532, -0.00209808, 0.00696051 )
@@ -87,6 +96,13 @@ text = "Return to map"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="selector" type="Spatial" parent="."]
+script = ExtResource( 2 )
+
+[node name="MeshInstance" type="MeshInstance" parent="selector"]
+mesh = SubResource( 9 )
+material/0 = null
 
 [connection signal="input_event" from="cell_from/Area_1" to="." method="_on_Area_1_input_event"]
 [connection signal="input_event" from="cell_to/Area_2" to="." method="_on_Area_2_input_event"]

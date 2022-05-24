@@ -1,6 +1,7 @@
 extends "res://Map/Location/location.gd"
 
 onready var deck = $deck;
+onready var selector = $selector
 onready var cell_scene = preload("res://Sacrifice_location/cell_sacrifice_loc.tscn")
 onready var cell_from = $cell_from
 onready var cell_to = $cell_to
@@ -54,6 +55,7 @@ func _on_card_input_event(cell, event):
 			cur_card = cell.get_node("card_visuals")
 			cur_board_cell = cell.get_node("cell")
 			is_card_pressed = true
+			selector.select(cur_card)
 			pass
 		elif mouse_button_event.pressed and mouse_button_event.button_index == BUTTON_RIGHT:
 			# добавить подробное описание
@@ -61,19 +63,20 @@ func _on_card_input_event(cell, event):
 
 func _on_Area_1_input_event(camera, event, position, normal, shape_idx):
 	if event is InputEventMouseButton:
+		selector.cancel_selection()
 		var mouse_button_event := event as InputEventMouseButton
 		if mouse_button_event.pressed and mouse_button_event.button_index == BUTTON_LEFT :
 			if is_card_pressed:
 				if card_on_from != null:
 					var cell_first_pos = card_on_from.get_parent().get_node("cell")
 					move_card(cell_first_pos, card_on_from, cell_from)
-					
 				move_card(cell_from, cur_card, cur_board_cell)
 				card_on_from = cur_card
 				pass
 
 func _on_Area_2_input_event(camera, event, position, normal, shape_idx):
 	if event is InputEventMouseButton:
+		selector.cancel_selection()
 		var mouse_button_event := event as InputEventMouseButton
 		if mouse_button_event.pressed and mouse_button_event.button_index == BUTTON_LEFT :
 			if is_card_pressed:
