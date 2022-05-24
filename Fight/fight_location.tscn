@@ -31,21 +31,6 @@
 material = ExtResource( 17 )
 size = Vector2( 4.2, 1.1 )
 
-[sub_resource type="PlaneMesh" id=7]
-size = Vector2( 10, 10 )
-
-[sub_resource type="SpatialMaterial" id=8]
-albedo_color = Color( 0.113725, 0.117647, 0.2, 1 )
-
-[sub_resource type="CubeMesh" id=11]
-size = Vector3( 4, 0.02, 0.02 )
-
-[sub_resource type="SpatialMaterial" id=12]
-albedo_color = Color( 0.0196078, 0.203922, 0.262745, 1 )
-
-[sub_resource type="SpatialMaterial" id=13]
-albedo_color = Color( 0, 0.231373, 0.623529, 1 )
-
 [sub_resource type="DynamicFont" id=1]
 size = 50
 font_data = ExtResource( 13 )
