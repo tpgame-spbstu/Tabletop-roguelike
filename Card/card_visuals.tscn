@@ -1,16 +1,19 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Card/card_visuals.gd" type="Script" id=1]
 [ext_resource path="res://Card/card_visuals_2d.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Card/Textures/skin_08_scattering.jpg" type="Texture" id=3]
 
 [sub_resource type="ViewportTexture" id=5]
+flags = 4
 viewport_path = NodePath("Viewport")
 
 [sub_resource type="CubeMesh" id=2]
 size = Vector3( 0.8, 0.002, 1 )
 
-[sub_resource type="SpatialMaterial" id=4]
-albedo_color = Color( 0.611765, 0.490196, 0.247059, 1 )
+[sub_resource type="SpatialMaterial" id=6]
+albedo_color = Color( 0.345098, 0.262745, 0.368627, 1 )
+albedo_texture = ExtResource( 3 )
 
 [node name="card_visuals" type="Spatial"]
 script = ExtResource( 1 )
@@ -30,4 +33,4 @@ texture = SubResource( 5 )
 
 [node name="platform" type="MeshInstance" parent="."]
 mesh = SubResource( 2 )
-material/0 = SubResource( 4 )
+material/0 = SubResource( 6 )
